@@ -1,0 +1,13 @@
+body {
+	margin: 0;
+	background-image: url('../public/overlay.png'), linear-gradient(45deg, #6e436c 25%, #2a4584 75%);
+	background-size: 256px, cover;
+	background-position: center, center;
+	background-repeat: repeat, no-repeat;
+	height: 110vh;
+	width: 110vw;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

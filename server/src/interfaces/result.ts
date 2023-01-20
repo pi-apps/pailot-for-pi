@@ -1,5 +1,4 @@
-import { Result } from "../constants/result";
-
+import { Result } from '../constants/result';
 
 export interface SuccessResult<T> {
 	type: Result.SUCCESS;

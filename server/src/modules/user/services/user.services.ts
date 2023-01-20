@@ -3,6 +3,4 @@
  * Authenticating or making payment with the PlatformAPIClient (found in the utils folder)
  */
 
-export function getAllUsers () {
-    
-}
+export function getAllUsers() {}
