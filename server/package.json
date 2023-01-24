@@ -8,9 +8,9 @@
     "prebuild": "rimraf build",
     "build": "tsc --project ./tsconfig.build.json",
     "build:watch": "tsc --watch --project ./tsconfig.build.json",
-    "prestart": "npm run build",
-    "start": "nodemon dist/main",
-    "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"npm run build:watch\" \"npm run start\"",
+    "prestart": "yarn build",
+    "start": "nodemon build/index.js",
+    "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"yarn build:watch\" \"yarn start\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format:write": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\""
@@ -20,7 +20,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "stellar-sdk": "^10.4.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
