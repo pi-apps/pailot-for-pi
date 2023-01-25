@@ -1,11 +1,13 @@
 import fs from 'fs';
 import path from 'path';
+import * as dotenv from 'dotenv';
 import express from 'express';
 import logger from 'morgan';
 import { corsMiddleware } from './middlewares/cors';
 import { apiRouter } from './modules/router';
 
 const PORT = process.env.PORT || 3333;
+dotenv.config();
 
 const app = express();
 
