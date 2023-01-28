@@ -1,22 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryColumn, Column } from "typeorm"
 
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryColumn({
+        type: "uuid"
+    })
+    user_uid: string
 
     @Column({
         type: "varchar",
         length: 255,
     })
     username: string
-
-     @Column({
-        type: "varchar",
-        length: 255,
-    })
-    user_uid: string
 
      @Column({
         type: "varchar",
