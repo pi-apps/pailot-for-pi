@@ -1,0 +1,17 @@
+#wrapper {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#logo_wrapper {
+	background-color: #ff9524;
+	border-radius: 50%;
+	height: 100px;
+	width: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
