@@ -1,54 +1,54 @@
 .allowPi {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 5%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	text-align: center;
+	padding: 5%;
 }
 
-.allowPi h3{
-    color: #fff;
-    margin: 2% 0;
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 5px; 
+.allowPi h3 {
+	color: #fff;
+	margin: 2% 0;
+	font-size: 20px;
+	font-weight: 400;
+	letter-spacing: 5px;
 }
 
-.allowPi p{
-    font-size: 16px;
+.allowPi p {
+	font-size: 16px;
 }
-.allowBtn{
-    font-weight: bolder;
-    border: none;
-    width: 100%;
-    color: #fff;
-    padding:10px;
-    border-radius: 4px;
-}
-
-.allowBtnActive{
-    background-color: #304596;
+.allowBtn {
+	font-weight: bolder;
+	border: none;
+	width: 100%;
+	color: #fff;
+	padding: 10px;
+	border-radius: 4px;
 }
 
-.allowBtnInactive{
-    background-color: #424242;
+.allowBtnActive {
+	background-color: #304596;
 }
 
-.terms{
-    font-size: 10px;
-    text-align: left;
-    width: 100%;
+.allowBtnInactive {
+	background-color: #424242;
 }
 
-.tick{
-    display: flex;
-    align-items: center;
-    gap:10px;
+.terms {
+	font-size: 10px;
+	text-align: left;
+	width: 100%;
 }
 
-.tick input{
-    outline: 2px solid black;
-    accent-color:  #FF9524;
+.tick {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.tick input {
+	outline: 2px solid black;
+	accent-color: #ff9524;
 }
