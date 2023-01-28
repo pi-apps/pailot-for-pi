@@ -11,19 +11,18 @@ if (result.error) {
 		);
 		throw result.error;
 	}
-
-	// In production, environment variables are injected into the container environment. We should not even have
-	// a .env file inside the running container.
 }
 
 interface Environment {
-	pi_api_key: string;
-	platform_api_url: string;
+	PI_API_KEY: string;
+	PLATFORM_API_URL: string;
+	SESSION_SECRET: string;
 }
 
 const env: Environment = {
-	pi_api_key: process.env.PI_API_KEY || '',
-	platform_api_url: process.env.PLATFORM_API_URL || '',
+	PI_API_KEY: process.env.PI_API_KEY || '',
+	PLATFORM_API_URL: process.env.PLATFORM_API_URL || '',
+	SESSION_SECRET: process.env.SESSION_SECRET || '',
 };
 
 export default env;
