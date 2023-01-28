@@ -7,14 +7,20 @@ import { motion } from "framer-motion"
 export const WelcomeScreen = () => {
   const [closeFingerPrint, setCloseFingerPrint] = useState(false)
   return (
-    <div id={styles.wrapper}>
+    <motion.div
+      id={styles.wrapper}
+      // animate={slideLeft}
+      initial={{ x: '100%', opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: '-100%', opacity: 0 }}
+    >
       <SelectLanguage />
       <AllowPi setCloseFingerPrint={setCloseFingerPrint} />
-      {closeFingerPrint && 
-      <motion.div
-        animate={slideUp}
-        transition={{ duration: 0.3 }} ><FingerPrint setCloseFingerPrint={setCloseFingerPrint} />
+      {closeFingerPrint &&
+        <motion.div
+          animate={slideUp}
+          transition={{ duration: 0.3 }} ><FingerPrint setCloseFingerPrint={setCloseFingerPrint} />
         </motion.div>}
-    </div>
+    </motion.div>
   )
 }
