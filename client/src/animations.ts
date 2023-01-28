@@ -31,7 +31,10 @@ export const fadeIn = {
 // }
 
 export const slideUp={
-
+y:[100,0],
+transition:{
+  y:{duration:0.3},
+}
 }
 
 // export const slideUp = {
