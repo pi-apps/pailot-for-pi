@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Home.module.css';
-import { Button } from '../../components/Button';
+import { Button } from '../../components';
 
 export const Home = () => {
 	return (
