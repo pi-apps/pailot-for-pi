@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ScreenOne, ScreenTwo } from '../../components';
-
+import {SplashScreenState} from '../../types/SplashScreenState'
 export const SplashScreen = () => {
-	const [next_screen, setNext_screen] = useState('first_screen');
+	const [next_screen, setNext_screen] = useState<SplashScreenState>('first_screen');
 
 	return (
 		<>

@@ -3,9 +3,10 @@ import { logo } from '../../../assets/images';
 import { motion } from 'framer-motion';
 import { scaleRotate, fadeIn } from '../../../animations';
 import styles from './ScreenOne.module.css';
+import {SplashScreenState} from '../../../types/SplashScreenState'
 
 type Props = {
-	setNext_screen: React.Dispatch<React.SetStateAction<string>>;
+	setNext_screen: React.Dispatch<React.SetStateAction<SplashScreenState>>;
 };
 
 export const ScreenOne = ({ setNext_screen }: Props) => {
