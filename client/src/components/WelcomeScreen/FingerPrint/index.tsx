@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './FingerPrint.module.css'
 import { RiFingerprintFill, GrFormClose, BiError } from '../../../assets/icons'
 
+
 type Props = {
   setCloseFingerPrint: React.Dispatch<React.SetStateAction<boolean>>;
 };
