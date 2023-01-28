@@ -1,0 +1,18 @@
+.language{
+    display: flex;
+    align-self: flex-start;
+    justify-content: right;
+    width: 100%;
+    padding: 5%;
+    box-sizing: border-box;
+}
+.language >div{
+    display: flex;
+    align-items: center;
+}
+.language select{
+    background-color: transparent;
+    border: none;
+    color:#304596;
+    font-weight: 400;
+}

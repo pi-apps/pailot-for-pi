@@ -1,8 +1,17 @@
 import React from 'react';
-import { Home } from './pages/Home';
+import { Home, SplashScreen, WelcomeScreen } from './pages';
 
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 function App() {
-	return <Home />;
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<SplashScreen />} />
+				<Route path='/welcome' element={<WelcomeScreen />} />
+				<Route path='/home' element={<Home />} />
+			</Routes>
+		</BrowserRouter>
+	)
 }
 
 export default App;
