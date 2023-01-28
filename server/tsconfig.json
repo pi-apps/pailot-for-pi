@@ -1,19 +1,15 @@
 {
-   "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
+    "compilerOptions": {
       "module": "commonjs",
       "declaration": true,
-      "moduleResolution": "node",
-      "outDir": "./build",
+      "removeComments": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
+      "target": "es2017",
       "sourceMap": true,
+      "outDir": "./build",
       "incremental": true,
       "skipLibCheck": true,
       "strictNullChecks": false,
@@ -21,5 +17,5 @@
       "strictBindCallApply": false,
       "forceConsistentCasingInFileNames": false,
       "noFallthroughCasesInSwitch": false
-   }
-}
+    }
+  }
