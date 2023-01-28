@@ -6,16 +6,16 @@ import styles from './ScreenOne.module.css';
 import {SplashScreenState} from '../../../types/SplashScreenState'
 
 type Props = {
-	setNext_screen: React.Dispatch<React.SetStateAction<SplashScreenState>>;
+	setNextScreen: React.Dispatch<React.SetStateAction<SplashScreenState>>;
 };
 
-export const ScreenOne = ({ setNext_screen }: Props) => {
+export const ScreenOne = ({ setNextScreen }: Props) => {
 	return (
 		<div id={styles.wrapper}>
 			<motion.div
 				id={styles.logo_wrapper}
 				animate={scaleRotate}
-				onAnimationComplete={() => setNext_screen('progress_bar')}
+				onAnimationComplete={() => setNextScreen('progress_bar')}
 			>
 				<motion.div animate={fadeIn}>
 					<img src={logo} />
