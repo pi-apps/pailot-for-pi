@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column } from "typeorm"
+import { Entity, PrimaryColumn,OneToMany, Column } from "typeorm"
+import { Transaction_Request } from "./Transaction_Requests"
 
 @Entity()
 export class User {
@@ -7,6 +8,10 @@ export class User {
         type: "uuid"
     })
     user_uid: string
+
+    @Column()
+    sender_user_id: string
+
 
     @Column({
         type: "varchar",

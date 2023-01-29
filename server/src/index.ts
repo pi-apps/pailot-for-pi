@@ -15,7 +15,7 @@ import { User } from './entity/User';
 AppDataSource
    .initialize()
    .then(async () => {
-       console.log("Data Source has been initialized!")
+       console.log("Data Source has been initialized")
    })
    .catch(error => console.error("Error during Data Source initialization:", error))
 
