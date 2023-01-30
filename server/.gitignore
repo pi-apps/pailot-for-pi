@@ -1,6 +1,7 @@
-.idea/
-.vscode/
-node_modules/
-build/
-tmp/
-temp/
+node_modules
+build
+/log/*
+!/log/.gitkeep
+.env
+.env.local
+.env.development
