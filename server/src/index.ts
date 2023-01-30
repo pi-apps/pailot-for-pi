@@ -7,6 +7,16 @@ import { apiRouter } from './modules/router';
 
 const PORT = process.env.PORT || 3333;
 
+import { AppDataSource } from './data-source';
+import { User } from './entity/User';
+
+//establish connection
+AppDataSource.initialize()
+	.then(async () => {
+		console.log('Data Source has been initialized');
+	})
+	.catch((error) => console.error('Error during Data Source initialization:', error));
+
 const app = express();
 
 app.use(express.json());
