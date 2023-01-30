@@ -22,6 +22,7 @@ interface Environment {
 	DATABASE_USERNAME: string;
 	DATABASE_PASSWORD: string;
 	DATABASE_PORT: number;
+	NODE_ENV: string;
 }
 
 const env: Environment = {
@@ -30,9 +31,10 @@ const env: Environment = {
 	SESSION_SECRET: process.env.SESSION_SECRET || '',
 	DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
 	DATABASE_TYPE: process.env.DATABASE_TYPE || 'postgres',
-	DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'postgres',
-	DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || '123456',
+	DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'pailot_development',
+	DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'password',
 	DATABASE_PORT: parseInt(process.env.DATABASE_PORT) || 5432,
+	NODE_ENV: process.env.NODE_ENV,
 };
 
 export default env;

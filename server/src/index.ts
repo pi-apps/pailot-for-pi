@@ -6,17 +6,20 @@ import session from 'express-session';
 import { TypeormStore } from 'connect-typeorm';
 import { corsMiddleware } from './middlewares/cors';
 import { apiRouter } from './modules/router';
+import { AppDataSource } from './db/data-source';
 import env from './constants/environments';
 import './middlewares/session';
+import { Session } from './db/entity/Session';
 
 const PORT = process.env.PORT || 3333;
-
 const app = express();
+
+const sessionRepository = AppDataSource.getRepository(Session);
 
 app.use(express.json());
 
 // Log requests to the console in a compact format:
-app.use(logger('dev'));
+if (process.env.NODE_ENV === 'development') app.use(logger('dev'));
 
 // Full log of all requests to /log/access.log:
 app.use(
@@ -36,7 +39,7 @@ app.use(
 			cleanupLimit: 2,
 			limitSubquery: false, // If using MariaDB.
 			ttl: 86400,
-		}).connect(this.sessionRepository), // TODO:Add session table
+		}).connect(sessionRepository),
 	})
 );
 
@@ -48,6 +51,13 @@ app.get('/', (req, res) => {
 
 app.use('/', apiRouter);
 
-app.listen(PORT, () => {
-	console.log(`Example app listening on port ${PORT}`);
-});
+AppDataSource.initialize()
+	.then(() => {
+		console.log('DataSource is initialized');
+		app.listen(PORT, () => {
+			console.log(`Example app listening on port ${PORT}`);
+		});
+	})
+	.catch((err) => {
+		console.error('Error during DataSource initialization:', err);
+	});
