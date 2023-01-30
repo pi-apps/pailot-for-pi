@@ -6,7 +6,7 @@ import session from 'express-session';
 import { TypeormStore } from 'connect-typeorm';
 import { corsMiddleware } from './middlewares/cors';
 import { apiRouter } from './modules/router';
-import { AppDataSource } from './db/data-source';
+import { AppDataSource } from './db/dataSource';
 import env from './constants/environments';
 import './middlewares/session';
 import { Session } from './db/entity/Session';

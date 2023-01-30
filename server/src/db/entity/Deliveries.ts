@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
-import { Courier_Data } from './Courier_Data';
+import { CourierData } from './CourierData';
 import { User } from './User';
 
 @Entity()
