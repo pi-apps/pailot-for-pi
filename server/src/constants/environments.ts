@@ -22,7 +22,7 @@ interface Environment {
 	DATABASE_USERNAME: string;
 	DATABASE_PASSWORD: string;
 	DATABASE_PORT: number;
-	NODE_ENV: string;
+	DATABASE_NAME: string;
 }
 
 const env: Environment = {
@@ -34,7 +34,7 @@ const env: Environment = {
 	DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'pailot_development',
 	DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'password',
 	DATABASE_PORT: parseInt(process.env.DATABASE_PORT) || 5432,
-	NODE_ENV: process.env.NODE_ENV,
+	DATABASE_NAME: process.env.DATABASE_NAME || 'pailot_development',
 };
 
 export default env;

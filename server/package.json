@@ -9,6 +9,7 @@
     "build": "tsc --project ./tsconfig.build.json",
     "build:watch": "tsc --watch --project ./tsconfig.build.json",
     "prestart": "npm run build",
+		"db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
     "start:db": "docker-compose up database",
     "start": "nodemon build/index",
     "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"yarn start:db\" \"yarn build:watch\" \"yarn start\"",
@@ -26,7 +27,8 @@
     "morgan": "^1.10.0",
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.11"
+    "typeorm": "^0.3.11",
+    "typeorm-extension": "^2.4.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

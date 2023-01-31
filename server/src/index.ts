@@ -19,7 +19,7 @@ const sessionRepository = AppDataSource.getRepository(Session);
 app.use(express.json());
 
 // Log requests to the console in a compact format:
-if (process.env.NODE_ENV === 'development') app.use(logger('dev'));
+app.use(logger('dev'));
 
 // Full log of all requests to /log/access.log:
 app.use(
