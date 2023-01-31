@@ -37,8 +37,6 @@ app.use(
 		saveUninitialized: false,
 		store: new TypeormStore({
 			cleanupLimit: 2,
-			limitSubquery: false, // If using MariaDB.
-			ttl: 86400,
 		}).connect(sessionRepository),
 		cookie: {
 			maxAge: 1000 * 60 * 60 * 24, //Equals 1 day
