@@ -28,7 +28,7 @@ interface Environment {
 const env: Environment = {
 	PI_API_KEY: process.env.PI_API_KEY || '',
 	PLATFORM_API_URL: process.env.PLATFORM_API_URL || '',
-	SESSION_SECRET: process.env.SESSION_SECRET || '',
+	SESSION_SECRET: process.env.SESSION_SECRET || 'pailot development secret',
 	DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
 	DATABASE_TYPE: process.env.DATABASE_TYPE || 'postgres',
 	DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'pailot_development',
