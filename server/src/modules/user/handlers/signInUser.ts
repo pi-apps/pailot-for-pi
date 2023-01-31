@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
+import { AppDataSource } from '../../../db/dataSource';
+import { User } from '../../../db/entity/User';
 import { platformAPIClient } from '../../../utils/platformAPIClient';
 
-const User = new Map();
+const UserModel = AppDataSource.getRepository(User);
 
 export async function signInUser(req: Request, res: Response) {
 	const auth = req.body.authResult;
@@ -14,16 +16,18 @@ export async function signInUser(req: Request, res: Response) {
 		return res.status(401).json({ error: 'Invalid access token' });
 	}
 
-	let currentUser = await User.get(auth.user_uid);
+	const currentUser = await UserModel.findOne({ where: { userUid: auth.user.uid } });
 
 	if (currentUser) {
-		const updatedUser = { ...currentUser, accessToken: auth.accessToken };
-		User.delete(auth.user_uid);
-		User.set(updatedUser.user_uid, updatedUser);
+		currentUser.accessToken = auth.accessToken;
+		await UserModel.save(currentUser);
 	} else {
-		User.set(auth.user_uid, auth);
-
-		currentUser = User.get(auth.user_uid);
+		const createdUser = UserModel.create({
+			userUid: auth.user.uid,
+			username: auth.user.username,
+			accessToken: auth.accessToken,
+		});
+		await UserModel.save(createdUser);
 	}
 
 	req.session.currentUser = currentUser;
