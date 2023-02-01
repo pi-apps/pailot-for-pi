@@ -1,13 +1,25 @@
-body {
-	margin: 0;
-	background-image: url('../public/overlay.png'), linear-gradient(45deg, #6e436c 25%, #2a4584 75%);
-	background-size: 256px, cover;
-	background-position: center, center;
-	background-repeat: repeat, no-repeat;
-	height: 110vh;
-	width: 110vw;
+@font-face {
+	font-family: 'Roboto';
+	src: url('./assets/fonts/Roboto-font/Roboto-Black.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-BlackItalic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Bold.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-BoldItalic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Bold.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-BoldItalic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Italic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Light.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-LightItalic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Medium.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-MediumItalic.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Regular.ttf') format('ttf'),
+		url('./assets/fonts/Roboto-font/Roboto-Thin.ttf') format('ttf');
+	font-weight: normal;
+	font-style: normal;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+body {
+	margin: 0;
+	width: 100vw;
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
 }
