@@ -1,6 +1,7 @@
 // Common
 export { Button } from './Common/Button/Button';
 export { FingerPrint } from './Common/FingerPrint';
+export { FooterMenu } from './Common/FooterMenu'
 
 // SplashScreen
 export { ScreenOne } from './SplashScreen/ScreenOne';
