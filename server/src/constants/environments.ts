@@ -23,6 +23,9 @@ interface Environment {
 	DATABASE_PASSWORD: string;
 	DATABASE_PORT: number;
 	DATABASE_NAME: string;
+	CLOUDINARY_NAME:string;
+    CLOUDINARY_API_KEY:string;
+	CLOUDINARY_API_SECRET:string;
 }
 
 const env: Environment = {
@@ -35,6 +38,9 @@ const env: Environment = {
 	DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || 'password',
 	DATABASE_PORT: parseInt(process.env.DATABASE_PORT) || 5432,
 	DATABASE_NAME: process.env.DATABASE_NAME || 'pailot_development',
+	CLOUDINARY_NAME: process.env.CLOUDINARY_NAME || '',
+	CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
+	CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || ''
 };
 
 export default env;
