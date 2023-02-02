@@ -50,7 +50,12 @@ export class Transaction {
 	@Column({ type: 'bigint', name: 'amount' })
 	amount: number;
 
-	@Column({ type: 'enum', length: 255, name: 'delivery_status', default: DeliveryStatus.CREATED })
+	@Column({
+		type: 'enum',
+		enum: DeliveryStatus,
+		name: 'delivery_status',
+		default: DeliveryStatus.CREATED,
+	})
 	deliveryStatus: DeliveryStatus;
 
 	@Column({ type: 'date', nullable: true, name: 'pickup_date' })

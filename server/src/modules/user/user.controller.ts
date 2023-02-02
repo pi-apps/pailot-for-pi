@@ -6,15 +6,22 @@ import { getUser } from './handlers/getUser';
 import { updateUser } from './handlers/updateUser';
 import { signInUser } from './handlers/signInUser';
 import { signOutUser } from './handlers/signOutUser';
+import { isAuthenticated } from '../../middlewares/session';
+import { createCourier } from './handlers/createCourier';
+import { updateCourier } from './handlers/updateCourier';
+import { deleteCourier } from './handlers/deleteCourier';
 
 const userRouter = Router();
 
-userRouter.get('/', getAllUsers);
-userRouter.post('/', createUser);
-userRouter.get('/:id', getUser);
-userRouter.delete('/:id', deleteUser);
-userRouter.patch('/:id', updateUser);
+userRouter.get('/', isAuthenticated, getAllUsers);
+userRouter.post('/', isAuthenticated, createUser);
+userRouter.post('/courier', isAuthenticated, createCourier);
+userRouter.get('/:id', isAuthenticated, getUser);
+userRouter.delete('/:id', isAuthenticated, deleteUser);
+userRouter.delete('/courier/:id', isAuthenticated, deleteCourier);
+userRouter.patch('/:id', isAuthenticated, updateUser);
+userRouter.patch('/courier/:id', isAuthenticated, updateCourier);
 userRouter.post('/sign-in', signInUser);
-userRouter.get('/sign-out', signOutUser);
+userRouter.get('/sign-out', isAuthenticated, signOutUser);
 
 export const UserController = { router: userRouter };

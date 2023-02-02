@@ -1,26 +1,43 @@
-/**
- * Handle all business logic for the user module, like fetching information from the db,
- * Authenticating or making payment with the PlatformAPIClient (found in the utils folder)
- */
-
 import { Result } from '../../../constants/result';
+import { AppDataSource } from '../../../db/dataSource';
+import { Courier } from '../../../db/entity/Courier';
+import { User } from '../../../db/entity/User';
+import { UserCourier } from '../../../db/entity/UserCourier';
 import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/result';
-import { User } from '../../../interfaces/user';
+import { CreateUserDTO, ICourier, UpdateCourierDTO, UpdateUserDTO } from '../../../interfaces/user';
 
 export type CreateOrUpdateUserResult = SuccessResult<User> | ErrorResult;
+export type CreateOrUpdateCourierResult = SuccessResult<Courier> | ErrorResult;
 export type DeleteUserResult = SuccessResult<null> | ErrorResult;
 export type UsersResult = SuccessResult<User[]> | ErrorResult;
-export type UserResult = SuccessResult<User> | NotFoundResult | ErrorResult;
-type IUser = Pick<User, 'userUid' | 'username'>;
+export type UserResult = SuccessResult<UserCourier> | NotFoundResult | ErrorResult;
 
-const database = new Map<string, User>();
+const UserRepository = AppDataSource.getRepository(User);
+const CourierRepository = AppDataSource.getRepository(Courier);
+const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 
-export async function createUserEntry(user: IUser): Promise<CreateOrUpdateUserResult> {
+export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpdateUserResult> {
 	try {
-		await database.set(user.userUid, user);
+		let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
+		if (currentUser) {
+			currentUser.accessToken = user.accessToken;
+			currentUser = await UserRepository.save(currentUser);
+		} else {
+			const createdUser = UserRepository.create({
+				userUid: user.user.uid,
+				username: user.user.username,
+				accessToken: user.accessToken,
+			});
+			currentUser = await UserRepository.save(createdUser);
+
+			const courierUser = UserCourierRepository.create({
+				user: currentUser,
+			});
+			await UserCourierRepository.save(courierUser);
+		}
 		return {
 			type: Result.SUCCESS,
-			data: user,
+			data: currentUser,
 		};
 	} catch (error) {
 		return {
@@ -33,12 +50,15 @@ export async function createUserEntry(user: IUser): Promise<CreateOrUpdateUserRe
 
 export async function updateUserEntry(
 	userUid: string,
-	userData: Record<string, any>
+	userData: UpdateUserDTO
 ): Promise<CreateOrUpdateUserResult> {
 	try {
-		const user = await database.get(userUid);
-		const updatedUser = { ...user, ...userData };
-		await database.set(userUid, updatedUser);
+		await UserRepository.update(userUid, userData);
+		const updatedUser = await UserRepository.findOne({
+			where: {
+				userUid,
+			},
+		});
 		return {
 			type: Result.SUCCESS,
 			data: updatedUser,
@@ -52,10 +72,36 @@ export async function updateUserEntry(
 	}
 }
 
+export async function updateCourierInfo(
+	courierUserId: string,
+	courierData: UpdateCourierDTO
+): Promise<CreateOrUpdateCourierResult> {
+	try {
+		await CourierRepository.update(courierUserId, courierData);
+		const updatedCourier = await CourierRepository.findOne({
+			where: {
+				courierUserId: courierUserId,
+			},
+		});
+		return {
+			type: Result.SUCCESS,
+			data: updatedCourier,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: `An unexpected error occurred during updating user with id ${courierUserId}`,
+			error,
+		};
+	}
+}
+
 export async function findUser(userUid: string): Promise<UserResult> {
 	try {
-		const result = await database.get(userUid);
-		if (!result) {
+		const currentUser = await UserCourierRepository.findOne({
+			where: { user: { userUid } },
+		});
+		if (!currentUser) {
 			return {
 				type: Result.NOT_FOUND,
 				message: `Could not find user with id: ${userUid}`,
@@ -63,7 +109,7 @@ export async function findUser(userUid: string): Promise<UserResult> {
 		}
 		return {
 			type: Result.SUCCESS,
-			data: result,
+			data: currentUser,
 		};
 	} catch (error) {
 		return {
@@ -76,7 +122,11 @@ export async function findUser(userUid: string): Promise<UserResult> {
 
 export async function deleteUserEntry(userUid: string): Promise<DeleteUserResult> {
 	try {
-		database.delete(userUid);
+		const userCourier = await UserCourierRepository.findOne({
+			where: { user: { userUid } },
+		});
+		await UserCourierRepository.delete(userCourier.id);
+		await UserRepository.delete(userUid);
 		return {
 			type: Result.SUCCESS,
 			data: null,
@@ -90,9 +140,30 @@ export async function deleteUserEntry(userUid: string): Promise<DeleteUserResult
 	}
 }
 
+export async function deleteCourierEntry(courierUid: string): Promise<DeleteUserResult> {
+	try {
+		const userCourier = await UserCourierRepository.findOne({
+			where: { user: { userUid: courierUid } },
+		});
+		userCourier.courier = null;
+		await UserCourierRepository.save(userCourier);
+		await CourierRepository.delete(courierUid);
+		return {
+			type: Result.SUCCESS,
+			data: null,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: `An unexpected error occurred while deleting user with id ${courierUid}`,
+			error: error,
+		};
+	}
+}
+
 export async function getUsersEntry(): Promise<UsersResult> {
 	try {
-		const results = Object.values(database) as User[];
+		const results = await UserRepository.find();
 		return {
 			type: Result.SUCCESS,
 			data: results,
@@ -101,6 +172,43 @@ export async function getUsersEntry(): Promise<UsersResult> {
 		return {
 			type: Result.ERROR,
 			message: error.message,
+			error,
+		};
+	}
+}
+
+export async function createCourierEntry(courier: ICourier): Promise<CreateOrUpdateCourierResult> {
+	try {
+		let currentCourier = await CourierRepository.findOne({
+			where: { courierUserId: courier.courierUserId },
+		});
+		if (!currentCourier) {
+			const createdUser = CourierRepository.create({
+				courierUserId: courier.courierUserId,
+				modeOfTransportation: courier.modeOfTransportation,
+				activeAddress1: courier.activeAddress1,
+				activeAddress2: courier.activeAddress2,
+			});
+			currentCourier = await CourierRepository.save(createdUser);
+			const courierUser = await UserCourierRepository.findOne({
+				where: { user: { userUid: courier.courierUserId } },
+			});
+			if (courierUser) {
+				await UserCourierRepository.save({
+					id: courierUser.id,
+					courier: currentCourier,
+				});
+			}
+		}
+		return {
+			type: Result.SUCCESS,
+			data: currentCourier,
+		};
+	} catch (error) {
+		console.log(error);
+		return {
+			type: Result.ERROR,
+			message: `An unexpected error occurred while creating user`,
 			error,
 		};
 	}

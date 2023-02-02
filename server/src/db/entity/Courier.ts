@@ -9,7 +9,7 @@ export class Courier {
 	@OneToMany(() => Transaction, (transaction) => transaction.courierUserId)
 	deliveries: Transaction[];
 
-	@Column({ type: 'int', name: 'number_of_likes', default: 0 })
+	@Column({ type: 'bigint', name: 'number_of_likes', default: 0 })
 	numberOfLikes: number;
 
 	@Column({ type: 'float4', name: 'rating', default: 0.0 })
@@ -24,6 +24,9 @@ export class Courier {
 	@Column({ type: 'varchar', length: 255, name: 'xactive_address2' })
 	activeAddress2: string;
 
-	@Column({ type: 'float64', name: 'earnings', default: 0.0 })
+	@Column({ type: 'float', name: 'delivery_amount', default: 0 })
+	deliveryAmount: number;
+
+	@Column({ type: 'float', name: 'earnings', default: 0 })
 	earnings: number;
 }

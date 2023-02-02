@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
-import { AppDataSource } from '../../../db/dataSource';
-import { User } from '../../../db/entity/User';
+import { Result } from '../../../constants/result';
 import { platformAPIClient } from '../../../utils/platformAPIClient';
-
-const UserModel = AppDataSource.getRepository(User);
+import { createUserEntry } from '../services/user.services';
 
 export async function signInUser(req: Request, res: Response) {
 	const auth = req.body.authResult;
@@ -16,21 +14,17 @@ export async function signInUser(req: Request, res: Response) {
 		return res.status(401).json({ error: 'Invalid access token' });
 	}
 
-	const currentUser = await UserModel.findOne({ where: { userUid: auth.user.uid } });
+	const result = await createUserEntry(auth);
 
-	if (currentUser) {
-		currentUser.accessToken = auth.accessToken;
-		await UserModel.save(currentUser);
+	if (result.type === Result.SUCCESS) {
+		req.session.currentUser = {
+			userUid: result.data.userUid,
+			username: result.data.username,
+			accessToken: result.data.accessToken,
+			isAuthenticated: true,
+		};
+		return res.status(200).json({ message: 'User signed in', data: result.data });
 	} else {
-		const createdUser = UserModel.create({
-			userUid: auth.user.uid,
-			username: auth.user.username,
-			accessToken: auth.accessToken,
-		});
-		await UserModel.save(createdUser);
+		return res.status(500).json({ message: result.message, error: result.error });
 	}
-
-	req.session.currentUser = currentUser;
-
-	return res.status(200).json({ message: 'User signed in' });
 }
