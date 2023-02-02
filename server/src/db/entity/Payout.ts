@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
 import { User } from './User';
 
-export enum paymentStatus {
+export enum PaymentStatus {
 	CREATED = 'created',
 	SUBMITTED = 'submitted',
 	COMPLETED = 'completed',
 }
 
-@Entity()
+@Entity({ name: 'payouts' })
 export class Payout {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -22,8 +22,13 @@ export class Payout {
 	@Column({ type: 'bigint' })
 	amount: number;
 
-	@Column({ type: 'enum', length: 255, name: 'payment_status', default: paymentStatus.CREATED })
-	paymentStatus: paymentStatus;
+	@Column({
+		type: 'enum',
+		enum: PaymentStatus,
+		name: 'payment_status',
+		default: PaymentStatus.CREATED,
+	})
+	paymentStatus: PaymentStatus;
 
 	@Column({ type: 'varchar', name: 'transaction_id', nullable: true })
 	transactionId: string;
