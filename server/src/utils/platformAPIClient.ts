@@ -2,7 +2,7 @@ import axios from 'axios';
 import env from '../constants/environments';
 
 export const platformAPIClient = axios.create({
-	baseURL: env.platform_api_url,
+	baseURL: env.PLATFORM_API_URL,
 	timeout: 20000,
-	headers: { Authorization: `Key ${env.pi_api_key}` },
+	headers: { Authorization: `Key ${env.PI_API_KEY}` },
 });
