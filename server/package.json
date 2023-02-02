@@ -9,7 +9,7 @@
     "build": "tsc --project ./tsconfig.build.json",
     "build:watch": "tsc --watch --project ./tsconfig.build.json",
     "prestart": "npm run build",
-		"db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
+    "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
     "start:db": "docker-compose up database",
     "start": "nodemon build/index",
     "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"yarn start:db\" \"yarn build:watch\" \"yarn start\"",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^1.2.3",
+    "cloudinary": "^1.33.0",
     "connect-typeorm": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
