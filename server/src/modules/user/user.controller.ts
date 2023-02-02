@@ -10,6 +10,7 @@ import { isAuthenticated } from '../../middlewares/session';
 import { createCourier } from './handlers/createCourier';
 import { updateCourier } from './handlers/updateCourier';
 import { deleteCourier } from './handlers/deleteCourier';
+import { multerUploadImage } from '../../middlewares/multer';
 
 const userRouter = Router();
 
@@ -19,7 +20,7 @@ userRouter.post('/courier', isAuthenticated, createCourier);
 userRouter.get('/:id', isAuthenticated, getUser);
 userRouter.delete('/:id', isAuthenticated, deleteUser);
 userRouter.delete('/courier/:id', isAuthenticated, deleteCourier);
-userRouter.patch('/:id', isAuthenticated, updateUser);
+userRouter.patch('/:id', isAuthenticated, multerUploadImage, updateUser);
 userRouter.patch('/courier/:id', isAuthenticated, updateCourier);
 userRouter.post('/sign-in', signInUser);
 userRouter.get('/sign-out', isAuthenticated, signOutUser);
