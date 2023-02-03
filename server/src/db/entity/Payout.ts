@@ -1,20 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
-import { User } from './User';
-
-export enum PaymentStatus {
-	CREATED = 'created',
-	SUBMITTED = 'submitted',
-	COMPLETED = 'completed',
-}
+import { PaymentStatus } from '../../interfaces/payment';
+import { Courier } from './Courier';
 
 @Entity({ name: 'payouts' })
 export class Payout {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@ManyToOne(() => User)
+	@ManyToOne(() => Courier)
 	@JoinColumn({ name: 'courier_user_id' })
-	courierUserId: User;
+	courierUserId: Courier;
 
 	@Column({ type: 'varchar', length: 255, name: 'payment_id', nullable: true })
 	PaymentId: string;
