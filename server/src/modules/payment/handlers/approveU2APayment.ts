@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
-import { platformAPIClient } from '../../../utils/platformAPIClient';
+import { Result } from '../../../constants/result';
+import { approveUserToAppPayment } from '../services/payment.services';
 
-export async function approveU2APayment(req: Request, res: Response): Promise<Response<any>> {
-	const paymentId = req.body.paymentId;
-	await platformAPIClient.post(`/v2/payments/${paymentId}/approve`, {});
-	return res.status(200).json({ message: `Approved the payment ${paymentId}` });
+export async function approveU2APayment(req: Request, res: Response) {
+	const paymentData = req.body.paymentId;
+
+	const result = await approveUserToAppPayment(paymentData);
+	if (result.type === Result.ERROR) {
+		return res.status(500).json(result);
+	}
+	return res.status(200).json(result);
 }

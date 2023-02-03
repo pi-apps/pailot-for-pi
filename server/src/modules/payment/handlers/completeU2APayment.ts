@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
-import { platformAPIClient } from '../../../utils/platformAPIClient';
+import { Result } from '../../../constants/result';
+import { completeUserToAppPayment } from '../services/payment.services';
 
-export async function completeU2APayment(req: Request, res: Response): Promise<void> {
+export async function completeU2APayment(req: Request, res: Response) {
 	const paymentId = req.body.paymentId;
-	const txid = req.body.txid;
+	const txid = req.body.transactioId;
 
-	/* let Pi server know that the payment is completed */
-	await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { txid });
-	res.status(200).json({ message: `Completed the payment ${paymentId}` });
+	const completePaymentResult = await completeUserToAppPayment(paymentId, txid);
+	if (completePaymentResult.type === Result.ERROR) {
+		res.status(500).json(completePaymentResult);
+	}
+	res.status(200).json(completePaymentResult);
 }

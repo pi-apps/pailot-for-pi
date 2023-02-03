@@ -12,9 +12,9 @@ export type DeleteUserResult = SuccessResult<null> | ErrorResult;
 export type UsersResult = SuccessResult<User[]> | ErrorResult;
 export type UserResult = SuccessResult<UserCourier> | NotFoundResult | ErrorResult;
 
-const UserRepository = AppDataSource.getRepository(User);
-const CourierRepository = AppDataSource.getRepository(Courier);
-const UserCourierRepository = AppDataSource.getRepository(UserCourier);
+export const UserRepository = AppDataSource.getRepository(User);
+export const CourierRepository = AppDataSource.getRepository(Courier);
+export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 
 export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpdateUserResult> {
 	try {
