@@ -64,6 +64,9 @@ export class Transaction {
 	@Column({ type: 'date', name: 'delivery_date', nullable: true })
 	deliveryDate: Date;
 
+	@Column({ type: 'varchar', length: 50, name: 'deleted_date', nullable: true })
+	deletedDate: string;
+
 	@Column({ type: 'int', name: 'delivery_code', unique: true, nullable: true })
 	deliveryCode: number;
 
