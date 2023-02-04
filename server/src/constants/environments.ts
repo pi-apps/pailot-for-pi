@@ -27,6 +27,9 @@ interface Environment {
 	CLOUDINARY_NAME: string;
 	CLOUDINARY_API_KEY: string;
 	CLOUDINARY_API_SECRET: string;
+	TWILIO_ACCOUNT_SID: string;
+	TWILIO_AUTH_TOKEN: string;
+	TWILIO_OTP_VERIFICATION_SID: string;
 }
 
 const env: Environment = {
@@ -43,6 +46,9 @@ const env: Environment = {
 	CLOUDINARY_NAME: process.env.CLOUDINARY_NAME || '',
 	CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
 	CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
+	TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID || '',
+	TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN || '',
+	TWILIO_OTP_VERIFICATION_SID: process.env.TWILIO_OTP_VERIFICATION_SID || '',
 };
 
 export default env;

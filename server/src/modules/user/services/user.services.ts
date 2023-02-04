@@ -1,3 +1,5 @@
+import twilio from 'twilio';
+import env from '../../../constants/environments';
 import { Result } from '../../../constants/result';
 import { AppDataSource } from '../../../db/dataSource';
 import { Courier } from '../../../db/entity/Courier';
@@ -15,6 +17,8 @@ export type UserResult = SuccessResult<UserCourier> | NotFoundResult | ErrorResu
 export const UserRepository = AppDataSource.getRepository(User);
 export const CourierRepository = AppDataSource.getRepository(Courier);
 export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
+
+const twilioClient = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 
 export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpdateUserResult> {
 	try {
@@ -91,6 +95,52 @@ export async function updateCourierInfo(
 		return {
 			type: Result.ERROR,
 			message: `An unexpected error occurred during updating user with id ${courierUserId}`,
+			error,
+		};
+	}
+}
+
+export async function sendVerificationCode(phoneNumber: string) {
+	try {
+		await twilioClient.verify.v2
+			.services(env.TWILIO_OTP_VERIFICATION_SID)
+			.verifications.create({ to: phoneNumber, channel: 'sms' });
+
+		return {
+			type: Result.SUCCESS,
+			message: `Verification code sent to user's sms.`,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: `An error occurred while trying to send verification code to ${phoneNumber}`,
+			error,
+		};
+	}
+}
+
+export async function validateVerificationCode(
+	userUid: string,
+	code: string,
+	phoneNumber: string
+): Promise<CreateOrUpdateUserResult> {
+	try {
+		const verification = await twilioClient.verify.v2
+			.services(env.TWILIO_OTP_VERIFICATION_SID)
+			.verificationChecks.create({ to: phoneNumber, code });
+
+		if (verification.status !== 'approved') {
+			return {
+				type: Result.ERROR,
+				message: `The OTP ${code} provided is not valid`,
+			};
+		}
+		const number = Number(phoneNumber.replace('+', ''));
+		return await updateUserEntry(userUid, { phoneNumber: number });
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: `An unexpected error occurred during updating phone number with id ${userUid}`,
 			error,
 		};
 	}
