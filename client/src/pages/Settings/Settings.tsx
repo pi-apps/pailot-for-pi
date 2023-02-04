@@ -1,7 +1,8 @@
 import React from 'react'
 import { leftArrow, logOut } from '../../assets/icons'
+import { userImage } from '../../assets/images'
 import { Header } from '../../components'
-
+import Styles from './Settings.module.css'
 export const Settings = () => {
   return (
     <div>
@@ -11,9 +12,13 @@ export const Settings = () => {
         left_route_location="/home"
         right_route_location="/"
         title="Settings"
-      />
-      <div>
         
+      />
+      <div className={Styles.card}>
+        <div className={Styles.image_wrapper}>
+        <img src={userImage} alt="" className={Styles.image_size}/>
+        </div>
+        <div></div>
       </div>
     </div>
   )

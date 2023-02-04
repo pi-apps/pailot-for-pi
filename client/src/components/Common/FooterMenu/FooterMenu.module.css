@@ -16,7 +16,9 @@
 .icon {
 	font-size: 20px;
 }
-
+.pailotIcon{
+	font-size: 1.2rem;
+}
 .icon:hover {
 	color: #30007e;
 }

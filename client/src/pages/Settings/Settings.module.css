@@ -1,0 +1,13 @@
+.card{
+    background: #E2E8FF;
+    margin-top: 20%;
+}
+
+.image_wrapper {
+	border-radius: 50%;
+}
+.image_size {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}

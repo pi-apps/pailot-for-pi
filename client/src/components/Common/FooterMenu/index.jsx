@@ -5,7 +5,7 @@ export const FooterMenu = () => {
 	return (
 		<div id={Styles.wrapper}>
 			<div className={Styles.menu}>
-				<img src={pailot} alt='icon' className={Styles.icon} />
+				<img style={{width:'1.2rem'}} src={pailot} alt='icon' />
 				<span>Pailot</span>
 			</div>
 			<div className={Styles.menu}>
