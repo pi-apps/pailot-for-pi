@@ -1,0 +1,24 @@
+#wrapper {
+	display: flex;
+	color: #fff;
+	justify-content: space-between;
+	background: #30007e;
+	width: 100vw;
+	padding: 3% 6%;
+	box-sizing: border-box;
+	position: fixed;
+	z-index: 1;
+}
+#wrapper > div {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.image_wrapper {
+	border-radius: 50%;
+}
+.image_size {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}

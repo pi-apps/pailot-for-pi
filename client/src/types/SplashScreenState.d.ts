@@ -1,1 +1,1 @@
-export type SplashScreenState = 'first_screen' | 'progress_bar' ;
+export type SplashScreenState = 'first_screen' | 'progress_bar';

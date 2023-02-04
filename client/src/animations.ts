@@ -16,6 +16,13 @@ export const fadeIn = {
 	},
 };
 
+export const fadeInFast = {
+	opacity: [0, 1],
+	transition: {
+		opacity: { duration: 1, exit: 0 },
+	},
+};
+
 export const slideUp = {
 	y: [100, 0],
 	transition: {

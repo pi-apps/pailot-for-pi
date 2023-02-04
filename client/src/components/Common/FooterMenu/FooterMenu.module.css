@@ -1,3 +1,35 @@
-#wrapper{
-    
+#wrapper {
+	background: linear-gradient(0deg, rgba(103, 80, 164, 0.08), rgba(103, 80, 164, 0.08)), #fffbfe;
+	/* position: fixed; */
+	position: fixed;
+	bottom: 0;
+	min-height: 8vh;
+	width: 100%;
+	display: flex;
+	align-items:flex-end;
+	box-sizing: border-box;
+	gap: 5%;
+	justify-content: space-between;
+	padding: 5%;
+}
+
+.icon {
+	font-size: 20px;
+}
+
+.icon:hover {
+	color: #30007e;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 0.8rem;
+	font-weight: lighter;
+	gap: 5px;
+}
+
+.menu :hover {
+	color: #30007e;
 }

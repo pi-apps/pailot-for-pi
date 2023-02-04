@@ -1,0 +1,20 @@
+#Wrapper {
+	padding-top: 5%;
+	width: 100%;
+	box-sizing: border-box;
+}
+.FirstItem {
+	background-color: #f0fbff;
+	font-size: 13px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.FirstItem .Content {
+	padding: 5%;
+}
+
+.FirstItem .SliderImage {
+	flex-grow: 1;
+}
