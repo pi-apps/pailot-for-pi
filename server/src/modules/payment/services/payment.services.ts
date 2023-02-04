@@ -15,9 +15,7 @@ export const PayoutRepository = AppDataSource.getRepository(Payout);
 export const EarningRepository = AppDataSource.getRepository(Earning);
 export const TransactionRepository = AppDataSource.getRepository(Transaction);
 
-const apiKey = env.PI_API_KEY;
-const walletPrivateSeed = env.WALLET_PRIVATE_SEED;
-const Pi = new PiNetwork(apiKey, walletPrivateSeed);
+const Pi = new PiNetwork(env.PI_API_KEY, env.WALLET_PRIVATE_SEED);
 
 export interface PaymentData {
 	amount: number;
