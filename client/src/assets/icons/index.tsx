@@ -1,11 +1,27 @@
 export { default as worldLogo } from './wordIcon.svg';
 export { default as mapIcon } from './mapIcon.svg';
-export { default as pailot } from './pailot.svg'
-export { default as scan } from './scan.svg'
-export {default as leftArrow} from './leftArrow.svg'
-export {default as logOut} from './logOut.svg'
+export { default as pailot } from './pailot.svg';
+export { default as scan } from './scan.svg';
+export { default as leftArrow } from './leftArrow.svg';
+export { default as logOut } from './logOut.svg';
+export { default as profileIcon } from './profileIcon.svg';
+export { default as addressIcon } from './addressIcon.svg';
+export { default as backgroundIcon } from './backgroundIcon.svg';
+export { default as editIcon } from './editIcon.svg';
+export { default as nameIcon } from './nameIcon.svg';
+export { default as phoneIcon } from './phoneIcon.svg';
+export { default as pictureIcon } from './pictureIcon.svg';
+export { default as piIcon } from './piIcon.svg';
+export { default as plusIcon } from './plusIcon.svg';
+export { default as profileAvatarIcon } from './profileAvatarIcon.svg';
+export { default as settingIcon } from './settingIcon.svg';
+export { default as userIcon } from './userIcon.svg';
+export { default as walletIcon } from './walletIcon.svg';
+export { default as cameraIcon } from './cameraIcon.svg';
+export { default as clearIcon } from './clearIcon.svg';
+export { CustomClearIcon } from './CustomClearIcon';
 export { RiFingerprintFill, RiCalendarTodoLine, RiLogoutCircleRLine } from 'react-icons/ri';
 export { GrFormClose } from 'react-icons/gr';
 export { BiError } from 'react-icons/bi';
-export { BsPentagon } from 'react-icons/bs'
-export {AiOutlineShoppingCart, AiOutlineWallet} from 'react-icons/ai'
+export { BsPentagon } from 'react-icons/bs';
+export { AiOutlineShoppingCart, AiOutlineWallet } from 'react-icons/ai';

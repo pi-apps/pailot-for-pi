@@ -13,7 +13,7 @@ function App() {
 						<Route path="/" element={<SplashScreen />} />
 						<Route path="/welcome" element={<WelcomeScreen />} />
 						<Route path="/home" element={<Home />} />
-						<Route path="/settings" element={<Settings />} />
+						<Route path="/settings/*" element={<Settings />} />
 					</Routes>
 				</motion.div>
 			</AnimatePresence>

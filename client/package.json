@@ -17,6 +17,8 @@
 		"react-elastic-carousel": "^0.11.5",
 		"react-icons": "^4.7.1",
 		"react-multi-carousel": "^2.8.2",
+		"react-otp-input": "^2.4.0",
+		"react-phone-number-input": "^3.2.18",
 		"react-router-dom": "^6.7.0",
 		"react-scripts": "5.0.1",
 		"react-slick": "^0.29.0",

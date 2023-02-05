@@ -1,11 +1,17 @@
 import React from 'react';
 import Styles from './FooterMenu.module.css';
-import { RiCalendarTodoLine, pailot, AiOutlineShoppingCart, AiOutlineWallet, scan } from '../../../assets/icons';
+import {
+	RiCalendarTodoLine,
+	pailot,
+	AiOutlineShoppingCart,
+	AiOutlineWallet,
+	scan,
+} from '../../../assets/icons';
 export const FooterMenu = () => {
 	return (
 		<div id={Styles.wrapper}>
 			<div className={Styles.menu}>
-				<img style={{width:'1.2rem'}} src={pailot} alt='icon' />
+				<img style={{ width: '1.2rem' }} src={pailot} alt="icon" />
 				<span>Pailot</span>
 			</div>
 			<div className={Styles.menu}>
@@ -21,7 +27,7 @@ export const FooterMenu = () => {
 				<span>My Delivery</span>
 			</div>
 			<div className={Styles.menu}>
-				<img src={scan} alt='icon' className={Styles.icon} />
+				<img src={scan} alt="icon" className={Styles.icon} />
 				<span>Code Verify</span>
 			</div>
 		</div>

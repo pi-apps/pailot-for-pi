@@ -6,7 +6,7 @@
 	min-height: 8vh;
 	width: 100%;
 	display: flex;
-	align-items:flex-end;
+	align-items: flex-end;
 	box-sizing: border-box;
 	gap: 5%;
 	justify-content: space-between;
@@ -16,7 +16,7 @@
 .icon {
 	font-size: 20px;
 }
-.pailotIcon{
+.pailotIcon {
 	font-size: 1.2rem;
 }
 .icon:hover {

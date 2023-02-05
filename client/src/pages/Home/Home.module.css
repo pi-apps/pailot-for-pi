@@ -1,5 +1,5 @@
 .HomeContainer {
-	padding: 5%;
+	padding: 5% 5% 25% 5%;
 	gap: 20px;
 	display: flex;
 	flex-direction: column;
@@ -28,7 +28,7 @@
 .div1 .main_contents .image_wrapper {
 	display: flex;
 	flex-direction: column;
-	justify-content: end;
+	justify-content: flex-end;
 	gap: 10px;
 	color: #30007e;
 }

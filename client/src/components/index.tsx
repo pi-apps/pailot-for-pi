@@ -14,3 +14,9 @@ export { SelectLanguage } from './WelcomeScreen/SelectLanguage';
 
 // Home Screen
 export { Slider } from './Home/Slider';
+
+// Settings Screen
+export { SettingsHome } from './Settings/SettingsHome';
+export { PersonalDetails } from './Settings/PersonalDetails';
+export { PhoneNumber } from './Settings/PhoneNumber';
+export { Wallet } from './Settings/Wallet';
