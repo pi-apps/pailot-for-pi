@@ -3,6 +3,7 @@ export { Button } from './Common/Button/Button';
 export { FingerPrint } from './Common/FingerPrint';
 export { Header } from './Common/Header';
 export { FooterMenu } from './Common/FooterMenu';
+export { AlertModal } from './Common/AlertModal';
 
 // SplashScreen
 export { ScreenOne } from './SplashScreen/ScreenOne';

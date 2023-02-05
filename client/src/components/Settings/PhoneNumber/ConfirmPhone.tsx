@@ -2,10 +2,11 @@ import React from 'react';
 import Styles from './PhoneNumber.module.css';
 import OtpInput from 'react-otp-input';
 import usePhoneNumber from './usePhoneNumber';
-import { AiOutlineArrowLeft, checkIcon } from '../../../assets/icons';
+import { AiOutlineArrowLeft } from '../../../assets/icons';
+import { AlertModal } from '../../../components';
 
 export const ConfirmPhone = () => {
-	const { otp, handleOtp, successIcon } = usePhoneNumber();
+	const { otp, handleOtp, setSuccessIcon, successIcon } = usePhoneNumber();
 	return (
 		<div id={Styles.wrapper}>
 			{!successIcon ? (
@@ -39,11 +40,9 @@ export const ConfirmPhone = () => {
 					</form>
 				</div>
 			) : (
-				<div className={Styles.settingsConfirm}>
-					<img src={checkIcon} />
-				</div>
+				<AlertModal title="Success" type="success" setOnClose={setSuccessIcon} duration={2} />
 			)}
-
+{successIcon}
 			<div className={Styles.settingFooter}>
 				<p>
 					Didn&lsquo;t get code? <span style={{ color: '#30007E' }}>Resend code</span>
