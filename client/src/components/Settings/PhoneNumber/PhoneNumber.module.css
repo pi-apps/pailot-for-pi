@@ -64,7 +64,7 @@
 	border-radius: 4px;
 }
 
-.settingsBtnDisabled button {
+.settingsBtnDisabled button:disabled {
 	border: none;
 	width: 100%;
 	background-color: #d9d9d9;
@@ -118,14 +118,17 @@
 
 .settingGoBack {
 	margin-top: 10%;
+
+}
+
+.settingGoBack a {
 	display: flex;
 	align-items: center;
+	text-decoration: none;
 	justify-content: center;
 	gap: 10px;
 }
 
 .settingsConfirm {
 	text-align: center;
-	/* display: flex;
-	flex-direction: column; */
 }

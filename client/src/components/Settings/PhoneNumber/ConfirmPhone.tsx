@@ -4,6 +4,7 @@ import OtpInput from 'react-otp-input';
 import usePhoneNumber from './usePhoneNumber';
 import { AiOutlineArrowLeft } from '../../../assets/icons';
 import { AlertModal } from '../../../components';
+import { Link } from 'react-router-dom';
 
 export const ConfirmPhone = () => {
 	const { otp, handleOtp, setSuccessIcon, handleConfirmOtp, successIcon } = usePhoneNumber();
@@ -42,8 +43,10 @@ export const ConfirmPhone = () => {
 						Didn&lsquo;t get code? <span style={{ color: '#30007E' }}>Resend code</span>
 					</p>
 					<div className={Styles.settingGoBack}>
-						<AiOutlineArrowLeft className={Styles.settingIcon} />
-						go back to profile
+						<Link to="/settings">
+							<AiOutlineArrowLeft className={Styles.settingIcon} />
+							go back to profile
+						</Link>
 					</div>
 				</div>
 

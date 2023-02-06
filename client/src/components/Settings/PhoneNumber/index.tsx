@@ -5,7 +5,6 @@ import usePhoneNumber from './usePhoneNumber';
 import { ConfirmPhone } from './ConfirmPhone';
 export const PhoneNumber = () => {
 	const { value, confirmPhoneNumber, handleSubmit, handlePhoneNumberChange } = usePhoneNumber();
-
 	return (
 		<>
 			{!confirmPhoneNumber ? (
@@ -27,8 +26,8 @@ export const PhoneNumber = () => {
 							/>
 							<img src={clearIcon} className={Styles.clearIcon} />
 						</div>
-						<div className={Styles.settingsBtn}>
-							<button type="submit">NEXT</button>
+						<div className={`${!value ? Styles.settingsBtnDisabled : Styles.settingsBtn}`}>
+							<button disabled={!value ? true : false} type="submit">NEXT</button>
 						</div>
 					</form>
 				</div>

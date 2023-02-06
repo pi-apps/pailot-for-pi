@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 function usePhoneNumber() {
-	const [confirmPhoneNumber, setConfirmPhoneNumber] = useState(true);
+	const [confirmPhoneNumber, setConfirmPhoneNumber] = useState(false);
 	const [otp, setOtp] = useState<string>('');
 	const [value, setValue] = useState('');
 	const [successIcon, setSuccessIcon] = useState<boolean>(false);
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setConfirmPhoneNumber(true);
 	};
 	const handlePhoneNumberChange = (value: string) => {
 		setValue(value);
