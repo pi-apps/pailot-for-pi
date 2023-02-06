@@ -25,3 +25,4 @@ export { GrFormClose, GrStatusWarning } from 'react-icons/gr';
 export { BiError, BiErrorAlt } from 'react-icons/bi';
 export { BsPentagon, BsCheckLg, BsInfoLg } from 'react-icons/bs';
 export { AiOutlineShoppingCart, AiOutlineWallet, AiOutlineArrowLeft } from 'react-icons/ai';
+export {MdClose} from 'react-icons/md'

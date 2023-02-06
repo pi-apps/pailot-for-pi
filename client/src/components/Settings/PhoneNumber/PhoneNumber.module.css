@@ -24,6 +24,7 @@
 	padding: 0 8%;
 	box-sizing: border-box;
 }
+
 .settingsInputWrapper {
 	width: 100%;
 	position: relative;
@@ -41,6 +42,7 @@
 	gap: 10px;
 	align-items: stretch;
 }
+
 .PhoneInput input {
 	width: 100%;
 	gap: 10px;
@@ -55,21 +57,37 @@
 	cursor: pointer;
 }
 
-.settingsBtn {
-	width: 100%;
-
+.settingsBtnDisabled {
 	background-color: #d9d9d9;
+	width: 100%;
 	padding: 2%;
 	border-radius: 4px;
 }
 
-.settingsBtn button {
+.settingsBtnDisabled button {
 	border: none;
 	width: 100%;
 	background-color: #d9d9d9;
 	color: #989898;
 	height: 34px;
 }
+
+.settingsBtn {
+	width: 100%;
+	padding: 2%;
+	border-radius: 4px;
+	background-color: #30007E;
+}
+
+.settingsBtn button {
+	border: none;
+	width: 100%;
+	background-color: #30007E;
+	color: #fff;
+	height: 34px;
+}
+
+
 
 .otpInputContainer {
 	display: flex;

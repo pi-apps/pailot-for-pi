@@ -1,6 +1,117 @@
+.modalOverlay {
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.268);
+	height: 100vh;
+	width: 100vw;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modalContainer {
+	background-color: #fff;
+	margin: 10%;
+	width: 100%;
+	max-width: 70%;
+	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+		rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+	position: relative;
+}
+
+.modalInnerContainer {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	padding: 5%;
+}
+
+.messages {
+	margin: 3% 0;
+	text-align: center;
+	color: rgb(150, 147, 147);
+}
+
+.modalInnerContainer p,
+.modalInnerContainer h3 {
+	margin: 0;
+}
+
+.alertIconBg1 {
+	color: #fff;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50px;
+}
+
+.alertIconBg2 {
+	padding: 10px;
+	height: 50px;
+	width: 50px;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.alertIconBg3 {
+	border: 2px solid white;
+	padding: 5px;
+	width: 25px;
+	height: 25px;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.successAlert1 {
+	background-color: #91e499;
+}
+.successAlert2 {
+	background-color: #14944e;
+}
+
+
+.infoAlert1{
+	background-color: #9298db;
+}
+
+.infoAlert2{
+	background-color: #222eb7;
+}
+
+.warningAlert1{
+background-color: #e7e7d5;
+}
+.warningAlert2{
+	background-color: #ffff00;
+}
+
+.errorAlert1{
+background-color: #f4b0b0;
+}
+
+.errorAlert2{
+background-color: #ff0000;
+}
 .progress_bar {
-	background-color: #304596;
-	height: 8px;
+	background-color: #304496a0;
+	height: 4px;
 	width: 0%;
-	border-radius: 8px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.modalClose {
+	font-size: 30px;
+	position: absolute;
+	right: 0;
+	padding: 5%;
+	color: rgb(137, 135, 135);
 }

@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-
-function useAlertModal( setOnClose: React.Dispatch<React.SetStateAction<boolean>>) {
-const handleClose=()=>{
-    setOnClose(false)
-}
-
-    return { handleClose}
+function useAlertModal(
+	setCloseModal: React.Dispatch<React.SetStateAction<boolean>>,
+	alertType: string
+) {
+	const [convertedAlertType, setConvertedAlertType] = useState(alertType);
+	const handleClose = () => {
+		setCloseModal(false);
+	};
+	useEffect(() => {
+		console.log(convertedAlertType);
+		setConvertedAlertType(
+			convertedAlertType.charAt(0).toUpperCase() + convertedAlertType.slice(1).toLowerCase()
+		);
+	}, [convertedAlertType]);
+	return { handleClose, convertedAlertType };
 }
 
 export default useAlertModal;

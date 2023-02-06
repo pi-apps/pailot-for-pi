@@ -6,51 +6,54 @@ import { AiOutlineArrowLeft } from '../../../assets/icons';
 import { AlertModal } from '../../../components';
 
 export const ConfirmPhone = () => {
-	const { otp, handleOtp, setSuccessIcon, successIcon } = usePhoneNumber();
+	const { otp, handleOtp, setSuccessIcon, handleConfirmOtp, successIcon } = usePhoneNumber();
 	return (
 		<div id={Styles.wrapper}>
-			{!successIcon ? (
-				<div>
-					<h3 className={Styles.settingsTitle}>
-						Confirm the verification code sent to +23400****0000
-					</h3>
-					<form className={Styles.settingsInputForm}>
-						<OtpInput
-							value={otp}
-							onChange={handleOtp}
-							numInputs={6}
-							separator={<span>&nbsp;</span>}
-							containerStyle={Styles.otpInputContainer}
-							inputStyle={{
-								boxSizing: 'border-box',
-								width: '2.5rem',
-								padding: '14px',
-								margin: '10px 0',
-								border: '1px solid #d9d9d9',
-								outline: 'none',
-								color: 'black',
-								background: '#E2E8FF',
-								borderRadius: '4px',
-							}}
-						/>
+			<div>
+				<h3 className={Styles.settingsTitle}>
+					Confirm the verification code sent to +23400****0000
+				</h3>
+				<form className={Styles.settingsInputForm} onSubmit={handleConfirmOtp}>
+					<OtpInput
+						value={otp}
+						onChange={handleOtp}
+						numInputs={6}
+						separator={<span>&nbsp;</span>}
+						containerStyle={Styles.otpInputContainer}
+						inputStyle={{
+							boxSizing: 'border-box',
+							width: '2.5rem',
+							padding: '14px',
+							margin: '10px 0',
+							border: '1px solid #d9d9d9',
+							outline: 'none',
+							color: 'black',
+							background: '#E2E8FF',
+							borderRadius: '4px',
+						}}
+					/>
 
-						<div className={Styles.settingsBtn}>
-							<button type="submit">CONFIRM</button>
-						</div>
-					</form>
+					<div className={`${otp.length < 6 ? Styles.settingsBtnDisabled : Styles.settingsBtn}`} >
+						<button type="submit" disabled={otp.length < 6 ? true : false}>CONFIRM</button>
+					</div>
+				</form>
+				<div className={Styles.settingFooter}>
+					<p>
+						Didn&lsquo;t get code? <span style={{ color: '#30007E' }}>Resend code</span>
+					</p>
+					<div className={Styles.settingGoBack}>
+						<AiOutlineArrowLeft className={Styles.settingIcon} />
+						go back to profile
+					</div>
 				</div>
-			) : (
-				<AlertModal title="Success" type="success" setOnClose={setSuccessIcon} duration={2} />
-			)}
-{successIcon}
-			<div className={Styles.settingFooter}>
-				<p>
-					Didn&lsquo;t get code? <span style={{ color: '#30007E' }}>Resend code</span>
-				</p>
-				<div className={Styles.settingGoBack}>
-					<AiOutlineArrowLeft className={Styles.settingIcon} />
-					go back to profile
-				</div>
+
+				{successIcon && <AlertModal
+					title="Successful!"
+					message="Phone Number Verified"
+					alertType="success"
+					setCloseModal={setSuccessIcon}
+					duration={10}
+				/>}
 			</div>
 		</div>
 	);

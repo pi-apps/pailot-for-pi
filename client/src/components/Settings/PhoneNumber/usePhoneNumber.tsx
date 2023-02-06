@@ -4,7 +4,7 @@ function usePhoneNumber() {
 	const [confirmPhoneNumber, setConfirmPhoneNumber] = useState(true);
 	const [otp, setOtp] = useState<string>('');
 	const [value, setValue] = useState('');
-	const [successIcon, setSuccessIcon] = useState(true);
+	const [successIcon, setSuccessIcon] = useState<boolean>(false);
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -17,12 +17,19 @@ function usePhoneNumber() {
 		setOtp(otp);
 	};
 
+	const handleConfirmOtp = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		setSuccessIcon(true)
+	}
+
 	return {
 		handleSubmit,
 		handlePhoneNumberChange,
 		setConfirmPhoneNumber,
 		handleOtp,
 		setSuccessIcon,
+		handleConfirmOtp,
 		successIcon,
 		otp,
 		confirmPhoneNumber,
