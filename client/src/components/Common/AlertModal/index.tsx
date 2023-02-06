@@ -27,9 +27,9 @@ export const AlertModal = ({ title, alertType, message, duration, setCloseModal 
 				<div className={Styles.modalInnerContainer}>
 
 					{convertedAlertType == 'Success' && (
-						<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg1} ${Styles.successAlert1}`}>
-							<motion.div animate={scale(1.5, 0.5)} className={`${Styles.alertIconBg2} ${Styles.successAlert2}`}>
-								<motion.div animate={scale(2, 0.5)} className={Styles.alertIconBg3}>
+						<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.successAlert1}`}>
+							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.successAlert2}`}>
+								<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
 									<BsCheckLg />
 								</motion.div>
 							</motion.div>
@@ -37,9 +37,9 @@ export const AlertModal = ({ title, alertType, message, duration, setCloseModal 
 					)}
 
 					{convertedAlertType == 'Info' && (
-					<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg1} ${Styles.infoAlert1}`}>
-					<motion.div animate={scale(1.5, 0.5)} className={`${Styles.alertIconBg2} ${Styles.infoAlert2}`}>
-						<motion.div animate={scale(2, 0.5)} className={Styles.alertIconBg3}>
+					<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.infoAlert1}`}>
+					<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.infoAlert2}`}>
+						<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
 								<BsInfoLg />
 								</motion.div>
 							</motion.div>
@@ -47,9 +47,9 @@ export const AlertModal = ({ title, alertType, message, duration, setCloseModal 
 					)}
 
 					{convertedAlertType == 'Warning' && (
-							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg1} ${Styles.warningAlert1}`}>
-							<motion.div animate={scale(1.5, 0.5)} className={`${Styles.alertIconBg2} ${Styles.warningAlert2}`}>
-								<motion.div animate={scale(2, 0.5)} className={Styles.alertIconBg3}>
+							<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.warningAlert1}`}>
+							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.warningAlert2}`}>
+								<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
 								<GrStatusWarning />
 								</motion.div>
 							</motion.div>
