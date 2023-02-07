@@ -1,10 +1,9 @@
 import React from 'react';
 
 function usePersonalDetails() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 	};
-  return {handleSubmit};
+	return { handleSubmit };
 }
- export default usePersonalDetails;
- 
+export default usePersonalDetails;

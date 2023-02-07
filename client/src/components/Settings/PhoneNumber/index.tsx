@@ -27,7 +27,9 @@ export const PhoneNumber = () => {
 							<img src={clearIcon} className={Styles.clearIcon} />
 						</div>
 						<div className={`${!value ? Styles.settingsBtnDisabled : Styles.settingsBtn}`}>
-							<button disabled={!value ? true : false} type="submit">NEXT</button>
+							<button disabled={!value ? true : false} type="submit">
+								NEXT
+							</button>
 						</div>
 					</form>
 				</div>

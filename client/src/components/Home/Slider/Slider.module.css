@@ -3,12 +3,15 @@
 	width: 100%;
 	box-sizing: border-box;
 }
+
 .FirstItem {
 	background-color: #f0fbff;
 	font-size: 13px;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
+	width: 100vw;
+	margin: 0;
 }
 
 .FirstItem .Content {

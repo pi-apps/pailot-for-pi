@@ -77,28 +77,27 @@
 	background-color: #14944e;
 }
 
-
-.infoAlert1{
+.infoAlert1 {
 	background-color: #9298db;
 }
 
-.infoAlert2{
+.infoAlert2 {
 	background-color: #222eb7;
 }
 
-.warningAlert1{
-background-color: #e7e7d5;
+.warningAlert1 {
+	background-color: #e7e7d5;
 }
-.warningAlert2{
+.warningAlert2 {
 	background-color: #ffff00;
 }
 
-.errorAlert1{
-background-color: #f4b0b0;
+.errorAlert1 {
+	background-color: #f4b0b0;
 }
 
-.errorAlert2{
-background-color: #ff0000;
+.errorAlert2 {
+	background-color: #ff0000;
 }
 .progress_bar {
 	background-color: #304496a0;

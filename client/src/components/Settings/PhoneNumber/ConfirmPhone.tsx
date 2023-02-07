@@ -34,8 +34,10 @@ export const ConfirmPhone = () => {
 						}}
 					/>
 
-					<div className={`${otp.length < 6 ? Styles.settingsBtnDisabled : Styles.settingsBtn}`} >
-						<button type="submit" disabled={otp.length < 6 ? true : false}>CONFIRM</button>
+					<div className={`${otp.length < 6 ? Styles.settingsBtnDisabled : Styles.settingsBtn}`}>
+						<button type="submit" disabled={otp.length < 6 ? true : false}>
+							CONFIRM
+						</button>
 					</div>
 				</form>
 				<div className={Styles.settingFooter}>
@@ -50,13 +52,15 @@ export const ConfirmPhone = () => {
 					</div>
 				</div>
 
-				{successIcon && <AlertModal
-					title="Successful!"
-					message="Phone Number Verified"
-					alertType="success"
-					setCloseModal={setSuccessIcon}
-					duration={10}
-				/>}
+				{successIcon && (
+					<AlertModal
+						title="Successful!"
+						message="Phone Number Verified"
+						alertType="success"
+						setCloseModal={setSuccessIcon}
+						duration={10}
+					/>
+				)}
 			</div>
 		</div>
 	);

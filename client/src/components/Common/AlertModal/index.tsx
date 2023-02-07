@@ -21,14 +21,20 @@ export const AlertModal = ({ title, alertType, message, duration, setCloseModal 
 				initial={{ y: -100, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				exit={{ y: -100, opacity: 0 }}
-				transition={{ type: "spring", stiffness: 300, damping: 20 }}
-				className={Styles.modalContainer}>
+				transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+				className={Styles.modalContainer}
+			>
 				<MdClose onClick={handleClose} className={Styles.modalClose} />
 				<div className={Styles.modalInnerContainer}>
-
 					{convertedAlertType == 'Success' && (
-						<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.successAlert1}`}>
-							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.successAlert2}`}>
+						<motion.div
+							animate={scale(0, 0.5)}
+							className={`${Styles.alertIconBg1} ${Styles.successAlert1}`}
+						>
+							<motion.div
+								animate={scale(1, 0.5)}
+								className={`${Styles.alertIconBg2} ${Styles.successAlert2}`}
+							>
 								<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
 									<BsCheckLg />
 								</motion.div>
@@ -37,36 +43,53 @@ export const AlertModal = ({ title, alertType, message, duration, setCloseModal 
 					)}
 
 					{convertedAlertType == 'Info' && (
-					<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.infoAlert1}`}>
-					<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.infoAlert2}`}>
-						<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
-								<BsInfoLg />
+						<motion.div
+							animate={scale(0, 0.5)}
+							className={`${Styles.alertIconBg1} ${Styles.infoAlert1}`}
+						>
+							<motion.div
+								animate={scale(1, 0.5)}
+								className={`${Styles.alertIconBg2} ${Styles.infoAlert2}`}
+							>
+								<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
+									<BsInfoLg />
 								</motion.div>
 							</motion.div>
 						</motion.div>
 					)}
 
 					{convertedAlertType == 'Warning' && (
-							<motion.div animate={scale(0, 0.5)} className={`${Styles.alertIconBg1} ${Styles.warningAlert1}`}>
-							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg2} ${Styles.warningAlert2}`}>
+						<motion.div
+							animate={scale(0, 0.5)}
+							className={`${Styles.alertIconBg1} ${Styles.warningAlert1}`}
+						>
+							<motion.div
+								animate={scale(1, 0.5)}
+								className={`${Styles.alertIconBg2} ${Styles.warningAlert2}`}
+							>
 								<motion.div animate={scale(1.5, 0.5)} className={Styles.alertIconBg3}>
-								<GrStatusWarning />
+									<GrStatusWarning />
 								</motion.div>
 							</motion.div>
 						</motion.div>
 					)}
 
 					{convertedAlertType == 'Error' && (
-							<motion.div animate={scale(1, 0.5)} className={`${Styles.alertIconBg1} ${Styles.errorAlert1}`}>
-							<motion.div animate={scale(1.5, 0.5)} className={`${Styles.alertIconBg2} ${Styles.errorAlert2}`}>
+						<motion.div
+							animate={scale(1, 0.5)}
+							className={`${Styles.alertIconBg1} ${Styles.errorAlert1}`}
+						>
+							<motion.div
+								animate={scale(1.5, 0.5)}
+								className={`${Styles.alertIconBg2} ${Styles.errorAlert2}`}
+							>
 								<motion.div animate={scale(2, 0.5)} className={Styles.alertIconBg3}>
-								<BiError />
+									<BiError />
 								</motion.div>
 							</motion.div>
 						</motion.div>
 					)}
 					<div className={Styles.messages}>
-
 						<h3 className={Styles.title}>{title}</h3>
 						<p className={Styles.message}>{message}</p>
 					</div>

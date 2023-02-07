@@ -2,7 +2,7 @@ import { clearIcon } from '../../../assets/icons';
 import Styles from './PersonalDetails.module.css';
 import usePersonalDetails from './usePersonalDetails';
 export const PersonalDetails = () => {
-	const {handleSubmit} = usePersonalDetails()
+	const { handleSubmit } = usePersonalDetails();
 
 	return (
 		<div id={Styles.wrapper}>

@@ -21,8 +21,8 @@ function usePhoneNumber() {
 	const handleConfirmOtp = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		setSuccessIcon(true)
-	}
+		setSuccessIcon(true);
+	};
 
 	return {
 		handleSubmit,

@@ -1,31 +1,39 @@
 import { clearIcon } from '../../../assets/icons';
-import Styles from './Wallet.module.css'
-import useWallet from './useWallet'
+import Styles from './Wallet.module.css';
+import useWallet from './useWallet';
 import { AlertModal } from '../../Common/AlertModal';
 export const Wallet = () => {
-	const { walletAddress,showAlert, setShowAlert, handleSubmit, handleClear, setWalletAddress } = useWallet()
+	const { walletAddress, showAlert, setShowAlert, handleSubmit, handleClear, setWalletAddress } =
+		useWallet();
 	return (
 		<div id={Styles.wrapper}>
-			<h3 className={Styles.settingsTitle}>
-				Copy and paste your Pi wallet address here
-			</h3>
+			<h3 className={Styles.settingsTitle}>Copy and paste your Pi wallet address here</h3>
 			<form className={Styles.settingsInputWrapper} onSubmit={handleSubmit}>
 				<div className={Styles.settingsInput}>
-					<input type="text" value={walletAddress} onChange={(e) => setWalletAddress(e.target.value)} placeholder='Example: GMAHN9830OIPRTYEUI5' />
+					<input
+						type="text"
+						value={walletAddress}
+						onChange={(e) => setWalletAddress(e.target.value)}
+						placeholder="Example: GMAHN9830OIPRTYEUI5"
+					/>
 					<img src={clearIcon} onClick={handleClear} />
 				</div>
 
 				<div className={`${!walletAddress ? Styles.settingsBtnDisabled : Styles.settingsBtn}`}>
-					<button disabled={!walletAddress ? true : false} type="submit">SAVE</button>
+					<button disabled={!walletAddress ? true : false} type="submit">
+						SAVE
+					</button>
 				</div>
 			</form>
-			{showAlert && <AlertModal
+			{showAlert && (
+				<AlertModal
 					title="Successful!"
 					message="Phone Number Verified"
 					alertType="success"
 					setCloseModal={setShowAlert}
 					duration={10}
-				/>}
+				/>
+			)}
 		</div>
-	)
+	);
 };

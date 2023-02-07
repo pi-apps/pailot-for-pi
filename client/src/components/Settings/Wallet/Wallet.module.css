@@ -4,7 +4,7 @@
 .settingsTitle {
 	color: #30007e;
 	margin: 0;
-    padding: 0 10%;
+	padding: 0 10%;
 	font-weight: lighter;
 	text-align: center;
 }
@@ -42,8 +42,6 @@
 	cursor: pointer;
 }
 
-
-
 .settingsBtnDisabled {
 	background-color: #d9d9d9;
 	width: 100%;
@@ -63,14 +61,13 @@
 	width: 100%;
 	padding: 2%;
 	border-radius: 4px;
-	background-color: #30007E;
+	background-color: #30007e;
 }
 
 .settingsBtn button {
 	border: none;
 	width: 100%;
-	background-color: #30007E;
+	background-color: #30007e;
 	color: #fff;
 	height: 34px;
 }
-

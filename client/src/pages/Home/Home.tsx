@@ -13,6 +13,7 @@ export const Home = () => {
 				right_route_location="/map"
 				title="Pilot"
 			/>
+
 			<Slider />
 			<div className={Styles.HomeContainer}>
 				<div className={Styles.div1}>
