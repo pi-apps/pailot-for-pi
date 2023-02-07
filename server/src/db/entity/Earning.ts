@@ -1,11 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { PaymentStatus } from '../../interfaces/payment';
 import { Transaction } from './Transaction';
-
-export enum PaymentStatus {
-	CREATED = 'created',
-	SUBMITTED = 'submitted',
-	COMPLETED = 'completed',
-}
 
 @Entity({ name: 'earnings' })
 export class Earning {
@@ -17,7 +12,7 @@ export class Earning {
 	delivery: Transaction;
 
 	@Column({ type: 'varchar', length: 255, name: 'payment_id', nullable: true })
-	PaymentId: string;
+	paymentId: string;
 
 	@Column({ type: 'bigint' })
 	amount: number;

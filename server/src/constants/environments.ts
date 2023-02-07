@@ -16,6 +16,7 @@ if (result.error) {
 interface Environment {
 	PI_API_KEY: string;
 	PLATFORM_API_URL: string;
+	WALLET_PRIVATE_SEED: string;
 	SESSION_SECRET: string;
 	DATABASE_HOST: string;
 	DATABASE_TYPE: string;
@@ -26,11 +27,15 @@ interface Environment {
 	CLOUDINARY_NAME: string;
 	CLOUDINARY_API_KEY: string;
 	CLOUDINARY_API_SECRET: string;
+	TWILIO_ACCOUNT_SID: string;
+	TWILIO_AUTH_TOKEN: string;
+	TWILIO_OTP_VERIFICATION_SID: string;
 }
 
 const env: Environment = {
 	PI_API_KEY: process.env.PI_API_KEY || '',
 	PLATFORM_API_URL: process.env.PLATFORM_API_URL || '',
+	WALLET_PRIVATE_SEED: process.env.WALLET_PRIVATE_SEED || '',
 	SESSION_SECRET: process.env.SESSION_SECRET || 'pailot development secret',
 	DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
 	DATABASE_TYPE: process.env.DATABASE_TYPE || 'postgres',
@@ -41,6 +46,9 @@ const env: Environment = {
 	CLOUDINARY_NAME: process.env.CLOUDINARY_NAME || '',
 	CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
 	CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
+	TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID || '',
+	TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN || '',
+	TWILIO_OTP_VERIFICATION_SID: process.env.TWILIO_OTP_VERIFICATION_SID || '',
 };
 
 export default env;
