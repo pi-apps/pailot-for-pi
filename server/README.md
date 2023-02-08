@@ -17,29 +17,47 @@ npm/yarn
 
 Clone the repository:
 
-git clone https://github.com/[username]/pailot-for-pi.git
+```TypeScript
+git clone https://github.com/pi-apps/pailot-for-pi.git
+
+```
 
 Navigate to the project directory:
 
+```TypeScript
 cd server
+
+```
 
 Install the dependencies:
 
+```TypeScript
 npm install OR yarn install
+
+```
 
 # Compiling the TypeScript code
 
 To compile the TypeScript code, run the following command in the terminal:
 
+```TypeScript
 npm run build OR yarn build
+
+```
 
 # Running the application 
 
 To start the application, run the following command in the terminal:
 
+```TypeScript
 npm start OR yarn start
 
-The application should now be ruuning at "http://localhost:3333"
+```
+
+The application should now be running at:
+```TypeScript
+ "http://localhost:3333"
+ ```
 
 # Built with
  Node.js - The JavaScript runtime
