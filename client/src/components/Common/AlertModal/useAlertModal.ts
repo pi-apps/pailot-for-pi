@@ -9,7 +9,6 @@ function useAlertModal(
 		setCloseModal(false);
 	};
 	useEffect(() => {
-		console.log(convertedAlertType);
 		setConvertedAlertType(
 			convertedAlertType.charAt(0).toUpperCase() + convertedAlertType.slice(1).toLowerCase()
 		);
