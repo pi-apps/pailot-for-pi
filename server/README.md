@@ -17,7 +17,6 @@ npm/yarn
 
 Clone the repository:
 
-`#0969DA`
 ```TypeScript 
 git clone https://github.com/pi-apps/pailot-for-pi.git
 
@@ -55,10 +54,14 @@ npm start OR yarn start
 
 ```
 
-The application should now be running at:``` "http://localhost:3333" ```
+The application should now be running at:
+```
+ "http://localhost:3333" 
+
+```
 
 # Built with
- -Node.js: The JavaScript runtime
- -TypeScript: The typed superset of JavaScript
- -npm: The package manager for Node.js
- -yarn: Fast, reliable and secure dependency management
+ - Node.js: The JavaScript runtime
+ - TypeScript: The typed superset of JavaScript
+ - npm: The package manager for Node.js
+ - yarn: Fast, reliable and secure dependency management
