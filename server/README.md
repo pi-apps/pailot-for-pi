@@ -17,7 +17,7 @@ npm/yarn
 
 Clone the repository:
 
-```TypeScript 
+```bash 
 git clone https://github.com/pi-apps/pailot-for-pi.git
 
 ```
