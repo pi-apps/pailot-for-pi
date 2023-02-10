@@ -11,12 +11,6 @@ export class User {
 	@Column({ type: 'varchar', length: 255 })
 	username: string;
 
-	@Column({ name: 'first_name', type: 'varchar', length: 255, nullable: true })
-	firstName: string;
-
-	@Column({ name: 'last_name', type: 'varchar', length: 255, nullable: true })
-	lastName: string;
-
 	@Column({ name: 'wallet_address', type: 'varchar', length: 255, nullable: true })
 	walletAddress: string;
 
@@ -25,12 +19,6 @@ export class User {
 
 	@Column({ name: 'profile_img', type: 'varchar', nullable: true })
 	profileImg: string;
-
-	@Column({ name: 'phone_number', type: 'bigint', unique: true, nullable: true })
-	phoneNumber: number;
-
-	@Column({ type: 'varchar', length: 255, nullable: true })
-	address: string;
 
 	@Column({ name: 'access_token', type: 'varchar', length: 255, unique: true })
 	accessToken: string;

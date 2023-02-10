@@ -1,39 +1,35 @@
 export interface IUser {
 	userUid: string;
 	username: string;
-	firstName?: string;
-	lastName?: string;
-	walletAddress?: string;
-	profileImg?: string;
-	phoneNumber?: number;
-	address?: string;
+	walletAddress: string | null;
+	profileImg: string | null;
 	accessToken: string;
 }
 
 export interface ICourier {
 	courierUserId: string;
+	numberOfLikes: number;
+	rating: number;
 	modeOfTransportation: string;
-	activeAddress1: string;
-	activeAddress2: string;
-	deliveryAmount: number;
+	regionOfOperation: string;
+	preferredDeliveryAmount: number;
+	country: string;
+	earnings: number;
 }
 
 export interface UpdateCourierDTO {
 	modeOfTransportation?: string;
-	activeAddress1?: string;
-	activeAddress2?: string;
-	deliveryAmount?: number;
+	regionOfOperation?: string;
+	preferredDeliveryAmount?: number;
 	numberOfLikes?: number;
 	rating?: number;
+	country?: string;
 	earnings?: number;
 }
+
 export interface UpdateUserDTO {
-	firstName?: string;
-	lastName?: string;
 	walletAddress?: string;
 	profileImg?: string;
-	phoneNumber?: number;
-	address?: string;
 	accessToken?: string;
 }
 
