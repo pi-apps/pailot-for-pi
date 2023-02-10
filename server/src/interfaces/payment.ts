@@ -26,6 +26,12 @@ export interface PaymentDTO {
 	};
 }
 
+export interface ApprovePaymentData {
+	deliveryId: string;
+	paymentId: string;
+	amount: number;
+}
+
 export enum PaymentStatus {
 	CREATED = 'created',
 	SUBMITTED = 'submitted',

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
 import { PaymentStatus } from '../../interfaces/payment';
 import { Transaction } from './Transaction';
 
@@ -8,7 +8,6 @@ export class Earning {
 	id: string;
 
 	@OneToOne(() => Transaction)
-	@JoinColumn()
 	delivery: Transaction;
 
 	@Column({ type: 'varchar', length: 255, name: 'payment_id', nullable: true })
