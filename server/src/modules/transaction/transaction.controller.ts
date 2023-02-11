@@ -9,6 +9,10 @@ import { updateTransactionStatus } from './handlers/updateTransactionStatus';
 import { acceptPendingTransaction } from './handlers/acceptPendingTransaction';
 import { updateTransaction } from './handlers/updateTransaction';
 import { getAllPendingTransactions } from './handlers/getAllPendingTransaction';
+import { getAllTransactionsForSender } from './handlers/getAllTransactionsForSender';
+import { getAllTransactionsForCourier } from './handlers/getAllTransactionsForCourier';
+import { getAllTransactionsForReceiver } from './handlers/getAllTransactionsForReceiver';
+import { getAllTransactionsForReceiverByUsername } from './handlers/getAllTransactionsForReceiver';
 
 const transactionRouter = Router();
 
@@ -20,5 +24,9 @@ transactionRouter.patch('/:id', isAuthenticated, multerUploadImage, updateTransa
 transactionRouter.patch('/status/:id', isAuthenticated, updateTransactionStatus);
 transactionRouter.patch('/requests/accept-pending', isAuthenticated, acceptPendingTransaction);
 transactionRouter.delete('/:id', isAuthenticated, deleteTransaction);
+transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForSender);
+transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForCourier);
+transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForReceiver);
+transactionRouter.get('/username', isAuthenticated, getAllTransactionsForReceiverByUsername);
 
 export const TransactionController = { router: transactionRouter };

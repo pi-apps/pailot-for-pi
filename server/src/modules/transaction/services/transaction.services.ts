@@ -50,12 +50,11 @@ export async function createTransactionEntry(
 	transactionData: CreateTransactionDTO
 ): Promise<CreateTransactionResult> {
 	try {
-		const { secureURL, publicId } = await uploadeImageToCloudinary(transactionData.itemImage);
 		const transactionObject: CreateTransaction = {
 			fromAddress: transactionData.fromAddress,
 			toAddress: transactionData.toAddress,
-			imagePublicId: publicId,
-			itemImage: secureURL,
+			imagePublicId: '',
+			itemImage: '',
 			itemName: transactionData.itemName,
 			itemDescription: transactionData.itemDescription,
 			itemWeight: transactionData.itemWeight,
@@ -108,6 +107,10 @@ export async function createTransactionEntry(
 			transactionObject.transactionAmount = transactionData.transactionAmount;
 			transactionObject.deliveryStatus = DeliveryStatus.PENDING;
 		}
+
+		const { secureURL, publicId } = await uploadeImageToCloudinary(transactionData.itemImage);
+		transactionObject.imagePublicId = publicId;
+		transactionObject.itemImage = secureURL;
 
 		const transaction = TransactionRepository.create(transactionObject);
 		const createdTransaction = await TransactionRepository.save(transaction);
@@ -194,9 +197,16 @@ type CodeType = {
 export async function updateDeliverystatus(
 	id: string,
 	status: { deliveryStatus: DeliveryStatus }
-): Promise<SuccessResult<ITransaction> | ErrorResult> {
+): Promise<TransactionResult> {
 	const transactionCodes = {} as CodeType;
 	try {
+		const transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		if (status.deliveryStatus === DeliveryStatus.ACCEPTED) {
 			// Generate tracking Id and add to the object
 			// transactionCodes.trackingNumber = generated trackingNumber
@@ -226,6 +236,13 @@ export async function acceptPendingTransactionRequest(
 	courierId: string
 ): Promise<TransactionResult> {
 	try {
+		const transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		const courier = await CourierRepository.findOne({ where: { courierUserId: courierId } });
 		if (!courier) {
 			return {
@@ -233,7 +250,6 @@ export async function acceptPendingTransactionRequest(
 				message: `The courier with id ${courierId} is not found`,
 			};
 		}
-		const transaction = await TransactionRepository.findOne({ where: { id } });
 		const modeOfTransports = transaction.preferredModeOfDelivery.split(',');
 		if (!modeOfTransports.includes(courier.modeOfTransportation)) {
 			return {
@@ -262,7 +278,13 @@ export async function updateTransactionEntry(
 	updateData: UpdateTransaction
 ): Promise<TransactionResult> {
 	try {
-		let transaction = await TransactionRepository.findOne({ where: { id } });
+		let transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		if (updateData.courierId) {
 			const courier = await CourierRepository.findOne({
 				where: { courierUserId: updateData.courierId },
@@ -307,7 +329,7 @@ export async function updateTransactionEntry(
 export async function getAllPendingTransaction(): Promise<TransactionsResult> {
 	try {
 		const pendingTransactions = await TransactionRepository.find({
-			where: { deliveryStatus: DeliveryStatus.PENDING },
+			where: { deliveryStatus: DeliveryStatus.PENDING, deletedDate: null },
 		});
 		return {
 			type: Result.SUCCESS,
@@ -318,6 +340,98 @@ export async function getAllPendingTransaction(): Promise<TransactionsResult> {
 			type: Result.ERROR,
 			message: `An unexpected error occurred while retreiving pending transactions`,
 			error: error,
+		};
+	}
+}
+
+export async function getTransactionsEntryForSenderById(
+	userUid: string
+): Promise<TransactionsResult> {
+	try {
+		const results = await TransactionRepository.find({
+			where: {
+				senderUserId: { userUid },
+				deletedDate: null,
+			},
+		});
+		return {
+			type: Result.SUCCESS,
+			data: results,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: error.message,
+			error,
+		};
+	}
+}
+
+export async function getTransactionsEntryForReceiverById(
+	userUid: string
+): Promise<TransactionsResult> {
+	try {
+		const results = await TransactionRepository.find({
+			where: {
+				receiverUserId: { userUid },
+				deletedDate: null,
+			},
+		});
+		return {
+			type: Result.SUCCESS,
+			data: results,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: error.message,
+			error,
+		};
+	}
+}
+
+export async function getTransactionsEntryForReceiverByUsername(
+	username: string
+): Promise<TransactionsResult> {
+	try {
+		const results = await TransactionRepository.find({
+			where: {
+				receiverUserId: { username },
+				deletedDate: null,
+			},
+		});
+		return {
+			type: Result.SUCCESS,
+			data: results,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: error.message,
+			error,
+		};
+	}
+}
+
+export async function getTransactionsEntryForCourierId(
+	userUid: string
+): Promise<TransactionsResult> {
+	try {
+		const results = await TransactionRepository.find({
+			where: {
+				courierUserId: { courierUserId: userUid },
+				deletedDate: null,
+			},
+		});
+		return {
+			type: Result.SUCCESS,
+			data: results,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: error.message,
+			error,
 		};
 	}
 }
