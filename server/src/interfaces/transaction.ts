@@ -10,6 +10,7 @@ export interface ITransaction {
 	preferredModeOfDelivery: string;
 	fromAddress: string;
 	toAddress: string;
+	imagePublicId: string;
 	itemImage: string;
 	itemName: string;
 	itemDescription: string;
@@ -22,11 +23,53 @@ export interface ITransaction {
 	fromState: string;
 	toState: string | null;
 	estimatedDeliveryTime: Date | null;
-	pickupDate: Date;
+	pickupDate: Date | null;
 	deliveryDate: Date;
 	deletedDate: string | null;
 	deliveryCode: number;
 	paymentId: IEarning | null;
+}
+
+export interface CreateTransactionDTO {
+	senderUserId: string;
+	courierUserId?: string;
+	receiverUsername: string;
+	preferredModeOfDelivery?: string;
+	fromAddress: string;
+	toAddress: string;
+	itemImage: string;
+	itemName: string;
+	itemDescription: string;
+	itemWeight: number;
+	itemWorth: number;
+	transactionAmount?: number;
+	deliveryStatus: DeliveryStatus;
+	itemCategory: ItemCategory;
+	deliveryRange: DeliveryRange;
+	fromState: string;
+	toState: string | null;
+	estimatedDeliveryTime?: Date;
+}
+
+export interface UpdateTransaction {
+	courierId?: string;
+	preferredModeOfDelivery?: string;
+	fromAddress?: string;
+	toAddress?: string;
+	itemImage?: string;
+	itemName?: string;
+	itemDescription?: string;
+	itemWeight?: number;
+	itemWorth?: number;
+	transactionAmount?: number;
+	itemCategory?: ItemCategory;
+	deliveryRange?: DeliveryRange;
+	fromState?: string;
+	toState?: string;
+	estimatedDeliveryTime?: Date;
+	pickupDate?: Date;
+	deliveryDate?: Date;
+	deliveryCode?: number;
 }
 
 export enum DeliveryStatus {

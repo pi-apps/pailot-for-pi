@@ -4,6 +4,7 @@ export interface IUser {
 	walletAddress: string | null;
 	profileImg: string | null;
 	accessToken: string;
+	imagePublicId: string | null;
 }
 
 export interface ICourier {
