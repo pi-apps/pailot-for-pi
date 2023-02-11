@@ -1,14 +1,12 @@
 import { Request, Response } from 'express';
 import { Result } from '../../../constants/result';
-import { uploadeImageToCloudinary } from '../../../middlewares/cloudinary';
 import { updateUserEntry } from '../services/user.services';
 
 export async function updateUser(req: Request, res: Response) {
 	const userUid = req.params.id;
 	const userData = req.body;
 	if (req.file) {
-		const secureURL = await uploadeImageToCloudinary(req.file.path);
-		userData.profileImg = secureURL;
+		userData.profileImg = req.file.path;
 	}
 	const updateResult = await updateUserEntry(userUid, userData);
 

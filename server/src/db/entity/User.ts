@@ -17,6 +17,9 @@ export class User {
 	@Column({ name: 'user_role', enum: UserRole, type: 'enum', default: UserRole.USER })
 	userRole: UserRole;
 
+	@Column({ name: 'image_public_id', type: 'varchar', nullable: true })
+	imagePublicId: string;
+
 	@Column({ name: 'profile_img', type: 'varchar', nullable: true })
 	profileImg: string;
 

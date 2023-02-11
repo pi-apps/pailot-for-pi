@@ -8,7 +8,7 @@ cloudinary.v2.config({
 	secure: true,
 });
 
-export const uploadeImageToCloudinary = async (path: string) => {
-	const result = await cloudinary.v2.uploader.upload(path);
-	return result.secure_url;
+export const uploadeImageToCloudinary = async (path: string, options = {}) => {
+	const result = await cloudinary.v2.uploader.upload(path, options);
+	return { publicId: result.public_id, secureURL: result.secure_url };
 };

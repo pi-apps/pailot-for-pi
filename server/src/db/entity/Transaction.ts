@@ -41,6 +41,9 @@ export class Transaction {
 	@Column({ name: 'item_image', type: 'varchar' })
 	itemImage: string;
 
+	@Column({ name: 'image_public_id', type: 'varchar' })
+	imagePublicId: string;
+
 	@Column({ type: 'varchar', name: 'item_name' })
 	itemName: string;
 

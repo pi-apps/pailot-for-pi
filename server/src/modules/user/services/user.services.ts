@@ -5,6 +5,7 @@ import { User } from '../../../db/entity/User';
 import { UserCourier } from '../../../db/entity/UserCourier';
 import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/result';
 import { CreateUserDTO, ICourier, UpdateCourierDTO, UpdateUserDTO } from '../../../interfaces/user';
+import { uploadeImageToCloudinary } from '../../../middlewares/cloudinary';
 
 export type CreateOrUpdateUserResult = SuccessResult<User> | ErrorResult;
 export type CreateOrUpdateCourierResult = SuccessResult<Courier> | ErrorResult;
@@ -53,12 +54,24 @@ export async function updateUserEntry(
 	userData: UpdateUserDTO
 ): Promise<CreateOrUpdateUserResult> {
 	try {
-		await UserRepository.update(userUid, userData);
-		const updatedUser = await UserRepository.findOne({
+		const user = await UserRepository.findOne({
 			where: {
 				userUid,
 			},
 		});
+		if (userData.profileImg) {
+			const option = user.imagePublicId
+				? {
+						public_id: user.imagePublicId,
+				  }
+				: {};
+			const { secureURL, publicId } = await uploadeImageToCloudinary(userData.profileImg, option);
+			user.profileImg = secureURL;
+			user.imagePublicId = publicId;
+		}
+		user.accessToken = userData?.accessToken || user.accessToken;
+		user.walletAddress = userData?.walletAddress || user.walletAddress;
+		const updatedUser = await UserRepository.save(user);
 		return {
 			type: Result.SUCCESS,
 			data: updatedUser,
