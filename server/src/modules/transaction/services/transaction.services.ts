@@ -197,9 +197,16 @@ type CodeType = {
 export async function updateDeliverystatus(
 	id: string,
 	status: { deliveryStatus: DeliveryStatus }
-): Promise<SuccessResult<ITransaction> | ErrorResult> {
+): Promise<TransactionResult> {
 	const transactionCodes = {} as CodeType;
 	try {
+		const transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		if (status.deliveryStatus === DeliveryStatus.ACCEPTED) {
 			// Generate tracking Id and add to the object
 			// transactionCodes.trackingNumber = generated trackingNumber
@@ -229,6 +236,13 @@ export async function acceptPendingTransactionRequest(
 	courierId: string
 ): Promise<TransactionResult> {
 	try {
+		const transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		const courier = await CourierRepository.findOne({ where: { courierUserId: courierId } });
 		if (!courier) {
 			return {
@@ -236,7 +250,6 @@ export async function acceptPendingTransactionRequest(
 				message: `The courier with id ${courierId} is not found`,
 			};
 		}
-		const transaction = await TransactionRepository.findOne({ where: { id } });
 		const modeOfTransports = transaction.preferredModeOfDelivery.split(',');
 		if (!modeOfTransports.includes(courier.modeOfTransportation)) {
 			return {
@@ -265,7 +278,13 @@ export async function updateTransactionEntry(
 	updateData: UpdateTransaction
 ): Promise<TransactionResult> {
 	try {
-		let transaction = await TransactionRepository.findOne({ where: { id } });
+		let transaction = await TransactionRepository.findOne({ where: { id, deletedDate: null } });
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find transaction with id: ${id}`,
+			};
+		}
 		if (updateData.courierId) {
 			const courier = await CourierRepository.findOne({
 				where: { courierUserId: updateData.courierId },
@@ -310,7 +329,7 @@ export async function updateTransactionEntry(
 export async function getAllPendingTransaction(): Promise<TransactionsResult> {
 	try {
 		const pendingTransactions = await TransactionRepository.find({
-			where: { deliveryStatus: DeliveryStatus.PENDING },
+			where: { deliveryStatus: DeliveryStatus.PENDING, deletedDate: null },
 		});
 		return {
 			type: Result.SUCCESS,
