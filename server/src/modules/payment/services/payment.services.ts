@@ -8,7 +8,7 @@ import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/
 import { CourierRepository } from '../../user/services/user.services';
 import { Transaction } from '../../../db/entity/Transaction';
 import { platformAPIClient } from '../../../utils/platformAPIClient';
-import { PaymentDTO, PaymentStatus } from '../../../interfaces/payment';
+import { ApprovePaymentData, PaymentDTO, PaymentStatus } from '../../../interfaces/payment';
 import axios from 'axios';
 
 export const PayoutRepository = AppDataSource.getRepository(Payout);
@@ -84,6 +84,11 @@ export async function cancelledUserToAppPayment(
 	paymentId: string
 ): Promise<SuccessResult<string> | ErrorResult> {
 	try {
+		const transaction = await TransactionRepository.findOne({
+			where: { paymentId: { paymentId } },
+		});
+		transaction.paymentId = null;
+		await TransactionRepository.save(transaction);
 		await EarningRepository.update({ paymentId }, { paymentStatus: PaymentStatus.CANCELLED });
 		return {
 			type: Result.SUCCESS,
@@ -98,14 +103,8 @@ export async function cancelledUserToAppPayment(
 	}
 }
 
-export interface PaymentData {
-	deliveryId: string;
-	paymentId: string;
-	amount: number;
-}
-
 export async function approveUserToAppPayment(
-	paymentData: PaymentData
+	paymentData: ApprovePaymentData
 ): Promise<SuccessResult<string> | ErrorResult> {
 	try {
 		const transaction = await TransactionRepository.findOne({
@@ -114,10 +113,11 @@ export async function approveUserToAppPayment(
 
 		const createEarning = EarningRepository.create({
 			paymentId: paymentData.paymentId,
-			delivery: transaction,
 			amount: paymentData.amount,
 		});
 		await EarningRepository.save(createEarning);
+		transaction.paymentId = createEarning;
+		await TransactionRepository.save(transaction);
 		await platformAPIClient.post(`/v2/payments/${paymentData.paymentId}/approve`, {});
 		return {
 			type: Result.SUCCESS,

@@ -11,7 +11,6 @@ import { createCourier } from './handlers/createCourier';
 import { updateCourier } from './handlers/updateCourier';
 import { deleteCourier } from './handlers/deleteCourier';
 import { multerUploadImage } from '../../middlewares/multer';
-import { verifyPhoneNumber, validateOTPCode } from './handlers/verifyPhoneNumber';
 
 const userRouter = Router();
 
@@ -20,8 +19,6 @@ userRouter.post('/', isAuthenticated, createUser);
 userRouter.get('/:id', isAuthenticated, getUser);
 userRouter.delete('/:id', isAuthenticated, deleteUser);
 userRouter.patch('/:id', isAuthenticated, multerUploadImage, updateUser);
-userRouter.post('/verify-phone', isAuthenticated, verifyPhoneNumber);
-userRouter.post('/validate-otp/:id', isAuthenticated, validateOTPCode);
 userRouter.post('/courier', isAuthenticated, createCourier);
 userRouter.delete('/courier/:id', isAuthenticated, deleteCourier);
 userRouter.patch('/courier/:id', isAuthenticated, updateCourier);

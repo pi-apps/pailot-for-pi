@@ -15,17 +15,17 @@ export class Courier {
 	@Column({ type: 'float4', name: 'rating', default: 0.0 })
 	rating: number;
 
+	@Column({ type: 'varchar', length: 255 })
+	country: string;
+
 	@Column({ type: 'varchar', length: 255, name: 'mode_of_transportation' })
 	modeOfTransportation: string;
 
-	@Column({ type: 'varchar', length: 255, name: 'active_address1' })
-	activeAddress1: string;
+	@Column({ type: 'varchar', length: 255, name: 'region_of_operation' })
+	regionOfOperation: string;
 
-	@Column({ type: 'varchar', length: 255, name: 'xactive_address2' })
-	activeAddress2: string;
-
-	@Column({ type: 'float', name: 'delivery_amount', default: 0 })
-	deliveryAmount: number;
+	@Column({ type: 'float', name: 'preferred_delivery_amount', default: 0 })
+	preferredDeliveryAmount: number;
 
 	@Column({ type: 'float', name: 'earnings', default: 0 })
 	earnings: number;

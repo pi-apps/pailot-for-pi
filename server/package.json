@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "description": "Pailot is a decentralized delivery service application that is focused on piloting pioneers into full decentralized logistics, food, healthcare, etc.",
+	"license": "~propriety~",
   "private": "true",
   "scripts": {
     "prebuild": "rimraf build",
@@ -22,6 +23,7 @@
     "cloudinary": "^1.33.0",
     "connect-typeorm": "^2.0.0",
     "cors": "^2.8.5",
+    "crypto-random-string": "^5.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
@@ -30,7 +32,6 @@
     "pg": "^8.9.0",
     "pi-backend": "^0.1.3",
     "reflect-metadata": "^0.1.13",
-    "twilio": "^3.84.1",
     "typeorm": "^0.3.11",
     "typeorm-extension": "^2.4.2"
   },

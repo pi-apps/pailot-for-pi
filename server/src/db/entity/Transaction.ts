@@ -1,17 +1,8 @@
-import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { DeliveryRange, DeliveryStatus, ItemCategory } from '../../interfaces/transaction';
 import { Courier } from './Courier';
 import { Earning } from './Earning';
 import { User } from './User';
-
-export enum DeliveryStatus {
-	CREATED = 'Created',
-	PENDING = 'Pending',
-	ACCEPTED = 'Accepted',
-	REJECTED = 'Rejected',
-	PICKED_UP = 'Picked up',
-	IN_TRANSIT = 'In Transit',
-	DELIVERED = 'Delivered',
-}
 
 @Entity({ name: 'transactions' })
 export class Transaction {
@@ -35,20 +26,35 @@ export class Transaction {
 	@JoinColumn({ name: 'receiver_user_id' })
 	receiverUserId: User;
 
-	@Column({ type: 'varchar', length: 255, name: 'from_address' })
+	@Column({ type: 'varchar', length: 255, name: 'preferred_mode_of_delivery' })
+	preferredModeOfDelivery: string;
+
+	@Column({ type: 'float', name: 'transaction_amount', default: 0 })
+	transactionAmount: number;
+
+	@Column({ type: 'varchar', name: 'from_address' })
 	fromAddress: string;
 
-	@Column({ type: 'varchar', length: 255, name: 'to_address' })
+	@Column({ type: 'varchar', name: 'to_address' })
 	toAddress: string;
 
-	@Column({ type: 'varchar', length: 255, name: 'item_description' })
+	@Column({ name: 'item_image', type: 'varchar' })
+	itemImage: string;
+
+	@Column({ name: 'image_public_id', type: 'varchar' })
+	imagePublicId: string;
+
+	@Column({ type: 'varchar', name: 'item_name' })
+	itemName: string;
+
+	@Column({ type: 'varchar', name: 'item_description' })
 	itemDescription: string;
 
 	@Column({ type: 'float', name: 'item_weight' })
 	itemWeight: number;
 
-	@Column({ type: 'bigint', name: 'amount' })
-	amount: number;
+	@Column({ type: 'float', name: 'item_worth' })
+	itemWorth: number;
 
 	@Column({
 		type: 'enum',
@@ -57,6 +63,30 @@ export class Transaction {
 		default: DeliveryStatus.CREATED,
 	})
 	deliveryStatus: DeliveryStatus;
+
+	@Column({
+		type: 'enum',
+		enum: ItemCategory,
+		name: 'item_category',
+	})
+	itemCategory: ItemCategory;
+
+	@Column({
+		type: 'enum',
+		enum: DeliveryRange,
+		name: 'delivery_range',
+		nullable: true,
+	})
+	deliveryRange: DeliveryRange;
+
+	@Column({ type: 'varchar', name: 'from_state' })
+	fromState: string;
+
+	@Column({ type: 'varchar', name: 'to_state', nullable: true })
+	toState: string;
+
+	@Column({ type: 'date', nullable: true, name: 'estimated_delivery_time' })
+	estimatedDeliveryTime: Date;
 
 	@Column({ type: 'date', nullable: true, name: 'pickup_date' })
 	pickupDate: Date;
@@ -70,7 +100,7 @@ export class Transaction {
 	@Column({ type: 'int', name: 'delivery_code', unique: true, nullable: true })
 	deliveryCode: number;
 
-	@ManyToOne(() => Earning, (earning) => earning.delivery, {
+	@OneToOne(() => Earning, (earning) => earning.delivery, {
 		nullable: true,
 	})
 	@JoinColumn({ name: 'payment_id' })
