@@ -1,0 +1,7 @@
+#wrapper {
+	height: 100vh;
+	background-color: var(--purple);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}

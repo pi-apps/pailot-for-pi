@@ -1,0 +1,53 @@
+.finger_print_wrapper {
+	background-color: #e2e8ff;
+	border-radius: 16px 18px 0px 0px;
+	height: 50vh;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 5%;
+}
+.finger_print_wrapper h3 {
+	color: var(--purple);
+	font-size: 5vw;
+	margin: 2% 0;
+}
+
+.finger_print_wrapper > p {
+	font-size: 3vw;
+}
+
+.finger_print_wrapper h4 {
+	margin-top: 15%;
+	font-size: 4vw;
+	font-weight: 400;
+}
+
+.closeWrapper {
+	width: 100%;
+	text-align: right;
+}
+.closeIcon {
+	font-size: x-large;
+}
+
+.fingerPrintIcon {
+	width: 19vw;
+	height: 19vw;
+	color: var(--black);
+	margin: 2% 0;
+}
+
+.error {
+	display: flex;
+	color: red;
+	align-items: center;
+	font-size: 12px;
+	justify-content: center;
+}
+
+.errorIcon {
+	font-size: 2rem;
+}
