@@ -1,0 +1,139 @@
+.card {
+	background: #e2e8ff;
+	padding: 8vh 18px 18px 18px;
+	display: flex;
+	align-items: flex-start;
+	gap: 4%;
+	justify-content: space-between;
+}
+
+.image_wrapper {
+	border-radius: 50%;
+}
+
+.image_size {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.cardProfile {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.cardTitle {
+	font-weight: 700;
+	color: #7e7d7d;
+	margin: 0;
+}
+
+.cardUsername {
+	margin: 0;
+	color: #7e7d7d91;
+}
+
+.cardDateJoin {
+	color: #7e7d7d;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cardCalendar {
+	font-size: 20px;
+}
+
+.cardBtn {
+	background-color: #30007e;
+	border: none;
+	border-radius: 4px;
+	padding: 10px;
+	color: #fff;
+	width: 93px;
+	align-self: center;
+}
+
+.profile,
+.display,
+.address {
+	padding: 18px 25px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	color: #7e7d7d;
+}
+
+.profile small {
+	color: #c4c4c4;
+}
+
+.profileIcons {
+	width: 1rem;
+}
+
+.profileTitle,
+.displayTitle,
+.addressTitle {
+	display: flex;
+	justify-content: space-between;
+	font-size: larger;
+	font-weight: 100;
+	align-items: center;
+}
+
+.profileContent,
+.displayContent,
+.addressContent {
+	font-size: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.profileContentLayout,
+.displayContentLayout,
+.addressContentLayout {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.profileFirstPart,
+.addressFirstPart {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.profileSecondPart,
+.addressSecondPart {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.divider {
+	border-top: 0.2px solid #f2f2f2;
+}
+
+.displayFirstPart {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.displayFirstPart .profileIcons {
+	font-size: 1.5rem;
+}
+
+.addressTextArea {
+	background-color: #f5f5f5;
+	border: none;
+	padding: 5%;
+	margin: 3% 0;
+}
+.addressSecondPart {
+	width: 100%;
+}

@@ -3,7 +3,7 @@ import { logo } from '../../../assets/images';
 import { motion } from 'framer-motion';
 import { scaleRotate, fadeIn } from '../../../animations';
 import styles from './ScreenOne.module.css';
-import {SplashScreenState} from '../../../types/SplashScreenState'
+import { SplashScreenState } from '../../../types/SplashScreenState';
 
 type Props = {
 	setNextScreen: React.Dispatch<React.SetStateAction<SplashScreenState>>;
@@ -18,7 +18,7 @@ export const ScreenOne = ({ setNextScreen }: Props) => {
 				onAnimationComplete={() => setNextScreen('progress_bar')}
 			>
 				<motion.div animate={fadeIn}>
-					<img src={logo} />
+					<img src={logo} alt="Pailot Logo" id={styles.logo} />
 				</motion.div>
 			</motion.div>
 		</div>

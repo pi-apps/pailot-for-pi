@@ -1,0 +1,110 @@
+.container {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+	/* gap: 8px; */
+	width: 100%;
+	padding: 1rem;
+	background-color: var(--purple);
+}
+
+.profile > div:first-child {
+	display: flex;
+	align-items: center;
+}
+
+.photo__and__name {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.back {
+	color: var(--light-purple);
+	font-size: medium;
+}
+
+.profile__photo {
+	margin-left: 16px;
+	aspect-ratio: 1;
+	width: 18px;
+	border-radius: 100%;
+}
+
+.profile span {
+	color: var(--white);
+}
+
+.page__content {
+	padding-top: 10%;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 10%;
+	align-items: center;
+	background-color: var(--light-purple);
+}
+
+.page__content h3 {
+	font-size: 24px;
+	color: var(--purple);
+}
+
+.page__content p {
+	color: var(--black);
+	width: 80%;
+	text-align: center;
+}
+
+.cta__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
+	margin-top: 35px;
+	padding: 1rem;
+}
+
+.explore__cta {
+	padding: 12px;
+	font-weight: 500;
+	font-size: 14px;
+	color: var(--light-purple);
+	background-color: var(--purple);
+	border-radius: 4px;
+	border: none;
+	width: 100%;
+	max-width: 40rem;
+}
+
+.go__to__profile__cta {
+	padding: 12px;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--purple);
+	background-color: transparent;
+	border-radius: 4px;
+	border: none;
+}
+
+.checkmark {
+	width: 57px;
+	height: 57px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 100%;
+	color: var(--purple);
+	border: 3px solid var(--orange);
+	position: absolute;
+	bottom: 3rem;
+	right: 1.5rem;
+	transform: translate(-50%, -50%);
+}
