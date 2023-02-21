@@ -1,6 +1,6 @@
 #wrapper {
 	height: 100vh;
-	background-color: #ff9524;
+	background-color: var(--purple);
 	display: flex;
 	flex-direction: column;
 	position: relative;
