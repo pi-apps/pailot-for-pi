@@ -1,19 +1,25 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import styles from './Home.module.css';
 import { logo } from '../../assets/images/index';
 import { deliveryLady } from '../../assets/images/index';
 import { deliveryMan } from '../../assets/images/index';
 import { deliveryBikeMan } from '../../assets/images/index';
-import { motion } from 'framer-motion';
-import { NavBar } from '../../components/NavBar/NavBar';
-import { HomePlus } from '../../components/HomePlus/HomePlus';
+import { FooterNavBar, HomePlus } from '../../components';
 
 export const Home = () => {
+	const navigate = useNavigate();
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
 				<motion.div initial={{ x: 32 }} animate={{ x: 0 }}>
-					<img src={logo} alt="Profile Photo" className={styles.profile__photo} />
+					<img
+						src={logo}
+						onClick={() => navigate('/settings')}
+						alt="Profile Photo"
+						className={styles.profile__photo}
+					/>
 					<span>Pailot</span>
 				</motion.div>
 			</div>
@@ -96,7 +102,7 @@ export const Home = () => {
 					<HomePlus />
 				</div>
 			</div>
-			<NavBar />
+			<FooterNavBar />
 		</div>
 	);
 };

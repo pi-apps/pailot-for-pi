@@ -1,8 +1,10 @@
 .button {
-	background-color: green;
-	color: black;
+	background-color: #30007e;
+	color: #ff9927;
 	border: none;
-	padding: 15px;
-	font-size: 20px;
-	border-radius: 9px;
+	padding: 10px;
+	font-size: 12px;
+	border-radius: 4px;
+	min-height: 21px;
+	min-width: 63px;
 }

@@ -1,10 +1,10 @@
-import styles from './NavBar.module.css';
-import { pailotPurpleLogo } from '../../assets/images';
+import styles from './FooterNavBar.module.css';
+import { pailotPurpleLogo } from '../../../assets/images';
 import { RiShoppingCart2Line } from 'react-icons/ri';
 import { RiWallet2Line } from 'react-icons/ri';
 import { RiQrScan2Line } from 'react-icons/ri';
 
-export const NavBar = () => {
+export const FooterNavBar = () => {
 	return (
 		<nav className={styles.footer__nav}>
 			<ul className={styles.list}>

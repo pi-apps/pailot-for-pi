@@ -9,10 +9,27 @@ export const scaleRotate = {
 	},
 };
 
+export const scale = (delay: number, duration: number) => {
+	const animateScale = {
+		scale: [0, 1.5, 1],
+		transition: {
+			scale: { duration, delay, ease: 'easeInOut' },
+		},
+	};
+	return animateScale;
+};
+
 export const fadeIn = {
 	opacity: [0, 0, 1, 1, 0],
 	transition: {
 		opacity: { duration: 9 },
+	},
+};
+
+export const fadeInFast = {
+	opacity: [0, 1],
+	transition: {
+		opacity: { duration: 1, exit: 0 },
 	},
 };
 
