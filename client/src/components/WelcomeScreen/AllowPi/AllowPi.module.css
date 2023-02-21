@@ -6,18 +6,25 @@
 	height: 100%;
 	text-align: center;
 	padding: 5%;
+	background-color: var(--purple);
+}
+
+.allowPi img {
+	width: 40px;
+	aspect-ratio: 1;
 }
 
 .allowPi h3 {
-	color: #fff;
+	color: var(--orange);
 	margin: 2% 0;
 	font-size: 20px;
-	font-weight: 400;
+	font-weight: 600;
 	letter-spacing: 5px;
 }
 
 .allowPi p {
-	font-size: 16px;
+	font-size: 3.25vw;
+	color: var(--white);
 }
 .allowBtn {
 	font-weight: bolder;
@@ -29,17 +36,22 @@
 }
 
 .allowBtnActive {
-	background-color: #304596;
+	background-color: var(--orange);
+	color: var(--purple);
 }
 
 .allowBtnInactive {
-	background-color: #424242;
+	background-color: rgba(66, 66, 66, 1);
 }
 
 .terms {
 	font-size: 10px;
 	text-align: left;
 	width: 100%;
+}
+
+.terms a {
+	color: var(--orange);
 }
 
 .tick {
@@ -49,6 +61,11 @@
 }
 
 .tick input {
-	outline: 2px solid black;
-	accent-color: #ff9524;
+	outline: none;
+	accent-color: var(--white);
+}
+
+.tick p {
+	font-size: 3vw;
+	color: var(--white);
 }
