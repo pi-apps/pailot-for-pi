@@ -1,4 +1,4 @@
-import styles from './Location.module.css';
+import styles from './DeliveryLocation.module.css';
 import React, { useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
@@ -17,7 +17,7 @@ interface Props {
 	setProgress: (value: number) => void;
 }
 
-export const Location: React.FC<Props> = ({ setProgress }) => {
+export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 	const [loadingState, setLoadingState] = useState<string>('error');
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const closeModal = () => {

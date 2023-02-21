@@ -1,11 +1,11 @@
 import styles from './CustomizedDelivery.module.css';
 import { logo } from '../../assets/images/index';
 import { GrMapLocation } from 'react-icons/gr';
-import { Upload } from '../../components/CustomizedDelivery/Upload';
-import { Name } from '../../components/CustomizedDelivery/Name';
-import { Size } from '../../components/CustomizedDelivery/Size';
-import { MOD } from '../../components/CustomizedDelivery/MOD';
-import { Location } from '../../components/CustomizedDelivery/Location';
+import { UploadDeliveryImage } from '../../components/CustomizedDelivery/UploadDeliveryImage';
+import { DeliveryDetails } from '../../components/CustomizedDelivery/DeliveryDetails';
+import { DeliveryWeightSize } from '../../components/CustomizedDelivery/DeliveryWeightSize';
+import { ModeOfDelivery } from '../../components/CustomizedDelivery/ModeOfDelivery';
+import { DeliveryLocation } from '../../components/CustomizedDelivery/DeliveryLocation';
 // import { RecieverConfirmed } from '../../components/CustomizedDelivery/RecieverConfirmed';
 // import { Summary } from '../../components/CustomizedDelivery/Summary';
 // import { Payment } from '../../components/CustomizedDelivery/Payment';
@@ -28,11 +28,11 @@ export const CustomizedDelivery = () => {
 				</span>
 			</div>
 			<div className={styles.content}>
-				{progress === 1 && <Upload setProgress={progressHandler} />}
-				{progress === 2 && <Name setProgress={progressHandler} />}
-				{progress === 3 && <Size setProgress={progressHandler} />}
-				{progress === 4 && <MOD setProgress={progressHandler} />}
-				{progress === 5 && <Location setProgress={progressHandler} />}
+				{progress === 1 && <UploadDeliveryImage setProgress={progressHandler} />}
+				{progress === 2 && <DeliveryDetails setProgress={progressHandler} />}
+				{progress === 3 && <DeliveryWeightSize setProgress={progressHandler} />}
+				{progress === 4 && <ModeOfDelivery setProgress={progressHandler} />}
+				{progress === 5 && <DeliveryLocation setProgress={progressHandler} />}
 			</div>
 		</div>
 	);

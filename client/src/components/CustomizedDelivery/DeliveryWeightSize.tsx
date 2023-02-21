@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './Name.module.css';
+import styles from './DeliveryWeightSize.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
-import { GiCancel } from 'react-icons/gi';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { GiCancel } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 	setProgress: (value: number) => void;
 }
 
-export const Name: React.FC<Props> = ({ setProgress }) => {
+export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.top__bar}>
@@ -19,32 +19,34 @@ export const Name: React.FC<Props> = ({ setProgress }) => {
 					<IoMdArrowRoundBack
 						className={styles.back}
 						onClick={() => {
-							setProgress(1);
+							setProgress(2);
 						}}
 					/>
 				</div>
 				<span>Active Request</span>
 				<IoMdArrowRoundForward
 					onClick={() => {
-						setProgress(3);
+						setProgress(4);
 					}}
 				/>
 			</div>
 			<div className={styles.progress}>
 				<div className={styles.inactive__progress}></div>
-				<div className={styles.active__progress}></div>
 				<div className={styles.inactive__progress}></div>
+				<div className={styles.active__progress}></div>
 				<div className={styles.inactive__progress}></div>
 				<div className={styles.inactive__progress}></div>
 				<div className={styles.inactive__progress}></div>
 			</div>
 			<div className={styles.body}>
 				<p className={styles.description}>
-					Tell Pailot how well to manage your delivery with just few details
+					Scaling your delivery for better delivery service experience{' '}
 				</p>
-				<h4 className={styles.header}>Product or Item Details</h4>
-				<label htmlFor="Product Name" className={styles.label}>
-					<p>Product or Service Name</p>
+
+				<h4 className={styles.header}>Weight and Size</h4>
+
+				<label htmlFor="Weight" className={styles.label}>
+					<p>Weight</p>
 					<div>
 						<motion.div
 							initial={{ x: '-100vw', opacity: 0 }}
@@ -56,18 +58,31 @@ export const Name: React.FC<Props> = ({ setProgress }) => {
 							}}
 							className={styles.input__container}
 						>
-							<input type="text" name="Product Name" placeholder="Example: Tesla Model Pi 3" />
+							<input type="number" name="Weight" id="" placeholder="Example: 2" />
 							<GiCancel />
 						</motion.div>
-						<AiOutlineEdit />
+						<motion.select
+							initial={{ x: '100vw', opacity: 0 }}
+							animate={{ x: 0, opacity: 1 }}
+							transition={{
+								delay: 0.1,
+								duration: 0.5,
+								type: 'tween',
+							}}
+							name="Weight"
+							id=""
+							className={styles.select}
+						>
+							<option value={1}>kilogram</option>
+						</motion.select>
+						<AiOutlineEdit className={styles.edit__icon} />
 					</div>
-					<span>Be very accurate about your product or service </span>
+					<span>Weight should be entered in digits</span>
 				</label>
-
-				<label htmlFor="Description" className={styles.label}>
-					<p>Description</p>
+				<label htmlFor="Size" className={styles.label}>
+					<p>Size</p>
 					<div>
-						<motion.textarea
+						<motion.div
 							initial={{ x: '-100vw', opacity: 0 }}
 							animate={{ x: 0, opacity: 1 }}
 							transition={{
@@ -75,35 +90,28 @@ export const Name: React.FC<Props> = ({ setProgress }) => {
 								duration: 0.5,
 								type: 'tween',
 							}}
-							name="Description"
-							className={styles.textarea}
-							// cols={30}
-							rows={10}
-							placeholder="Example: Samsung Ultra 23 Gold"
-						/>
-						<AiOutlineEdit />
-					</div>
-				</label>
-
-				<h4 className={styles.header}>Product Type</h4>
-				<label className={styles.label} htmlFor="Category">
-					<p>Category</p>
-					<div>
+							className={styles.input__container}
+						>
+							<input type="number" name="Size" id="" placeholder="Example: 2" />
+							<GiCancel />
+						</motion.div>
 						<motion.select
-							initial={{ x: '-100vw', opacity: 0 }}
+							initial={{ x: '100vw', opacity: 0 }}
 							animate={{ x: 0, opacity: 1 }}
 							transition={{
-								delay: 0.3,
+								delay: 0.2,
 								duration: 0.5,
 								type: 'tween',
 							}}
-							name="Category"
+							name="Size"
+							id=""
 							className={styles.select}
 						>
-							<option value={0}>Phones and Computers</option>
+							<option value={1}>inches</option>
 						</motion.select>
-						<AiOutlineEdit />
+						<AiOutlineEdit className={styles.edit__icon} />
 					</div>
+					<span>Size should be entered in digits</span>
 				</label>
 			</div>
 			<motion.div
@@ -115,7 +123,7 @@ export const Name: React.FC<Props> = ({ setProgress }) => {
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta} onClick={() => setProgress(3)}>
+				<button type="button" className={styles.cta} onClick={() => setProgress(4)}>
 					Next
 				</button>
 			</motion.div>

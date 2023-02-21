@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Upload.module.css';
+import styles from './UploadDeliveryImage.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { RiUploadCloud2Line } from 'react-icons/ri';
@@ -11,7 +11,7 @@ interface Props {
 	setProgress: (value: number) => void;
 }
 
-export const Upload: React.FC<Props> = ({ setProgress }) => {
+export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
 	const [uploadedImage, setUploadedImage] = useState<string>('xyzfile.extension');
 
 	const navigate = useNavigate();
@@ -64,7 +64,7 @@ export const Upload: React.FC<Props> = ({ setProgress }) => {
 					<span>Tap the Icon to Upload</span>
 					<input
 						type="file"
-						name="avatar"
+						name="image"
 						accept="image/png, image/jpeg, image/jpg"
 						placeholder="None"
 						onChange={onChangeHandler}

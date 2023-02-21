@@ -1,4 +1,4 @@
-import styles from './MOD.module.css';
+import styles from './ModeOfDelivery.module.css';
 import React, { useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
@@ -15,7 +15,7 @@ interface Props {
 	setProgress: (value: number) => void;
 }
 
-export const MOD: React.FC<Props> = ({ setProgress }) => {
+export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 	const [currentValue, setCurrentValue] = useState<string>();
 	const [mods, setMods] = useState<any>([]);
 	const selectRef = useRef<HTMLSelectElement>(null);
