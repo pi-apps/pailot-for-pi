@@ -1,4 +1,4 @@
-import { clearIcon } from '../../../assets/icons';
+import { ClearIcon } from '../../../assets/icons';
 import Styles from './Wallet.module.css';
 import useWallet from './useWallet';
 import { AlertModal } from '../../Common/AlertModal';
@@ -16,7 +16,7 @@ export const Wallet = () => {
 						onChange={(e) => setWalletAddress(e.target.value)}
 						placeholder="Example: GMAHN9830OIPRTYEUI5"
 					/>
-					<img src={clearIcon} onClick={handleClear} />
+					<img src={ClearIcon} onClick={handleClear} />
 				</div>
 
 				<div className={`${!walletAddress ? Styles.settingsBtnDisabled : Styles.settingsBtn}`}>

@@ -18,7 +18,7 @@ export const ScreenOne = ({ setNextScreen }: Props) => {
 				onAnimationComplete={() => setNextScreen('progress_bar')}
 			>
 				<motion.div animate={fadeIn}>
-					<img src={logo} />
+					<img src={logo} alt="Pailot Logo" id={styles.logo} />
 				</motion.div>
 			</motion.div>
 		</div>

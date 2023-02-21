@@ -7,11 +7,16 @@
 }
 
 #logo_wrapper {
-	background-color: #ff9524;
+	background-color: var(--purple);
 	border-radius: 50%;
 	height: 100px;
 	width: 100px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
+}
+
+#logo {
+	border-radius: 100%;
 }

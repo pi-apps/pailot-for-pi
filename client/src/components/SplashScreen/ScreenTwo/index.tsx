@@ -8,7 +8,7 @@ export const ScreenTwo = () => {
 	const navigate = useNavigate();
 	return (
 		<div id={styles.wrapper}>
-			<img src={logo} />
+			<img src={logo} alt="Pailot's Logo" />
 			<div className={styles.progress_bar_background}>
 				<motion.div
 					initial={{ width: '0%' }}

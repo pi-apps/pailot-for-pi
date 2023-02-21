@@ -2,8 +2,9 @@
 export { Button } from './Common/Button/Button';
 export { FingerPrint } from './Common/FingerPrint';
 export { Header } from './Common/Header';
-export { FooterMenu } from './Common/FooterMenu';
+export { FooterNavBar } from './Common/FooterNavBar';
 export { AlertModal } from './Common/AlertModal';
+export { HomePlus } from './Common/HomePlus';
 
 // SplashScreen
 export { ScreenOne } from './SplashScreen/ScreenOne';
@@ -13,11 +14,16 @@ export { ScreenTwo } from './SplashScreen/ScreenTwo';
 export { AllowPi } from './WelcomeScreen/AllowPi';
 export { SelectLanguage } from './WelcomeScreen/SelectLanguage';
 
-// Home Screen
-export { Slider } from './Home/Slider';
-
 // Settings Screen
 export { SettingsHome } from './Settings/SettingsHome';
-export { PersonalDetails } from './Settings/PersonalDetails';
-export { PhoneNumber } from './Settings/PhoneNumber';
 export { Wallet } from './Settings/Wallet';
+
+
+// Customize delivery
+export { DeliveryDetails } from './CustomizedDelivery/DeliveryDetails';
+export { DeliveryLocation } from './CustomizedDelivery/DeliveryLocation';
+export { DeliveryPayment } from './CustomizedDelivery/DeliveryPayment';
+export { DeliverySummary } from './CustomizedDelivery/DeliverySummary';
+export { DeliveryWeightSize } from './CustomizedDelivery/DeliveryWeightSize';
+export { ModeOfDelivery } from './CustomizedDelivery/ModeOfDelivery';
+export { UploadDeliveryImage } from './CustomizedDelivery/UploadDeliveryImage';

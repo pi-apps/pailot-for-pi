@@ -6,7 +6,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 3%;
-	background-color: #ff9524;
+	background-color: var(--purple);
 }
 
 .progress_bar_background {
@@ -17,7 +17,7 @@
 }
 
 .progress_bar {
-	background-color: #304596;
+	background-color: var(--orange);
 	height: 8px;
 	width: 0%;
 	border-radius: 8px;

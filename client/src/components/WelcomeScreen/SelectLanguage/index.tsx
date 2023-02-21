@@ -1,11 +1,11 @@
 import React from 'react';
-import { worldLogo } from '../../../assets/icons';
+import { WorldLogo } from '../../../assets/icons';
 import styles from './SelectLanguage.module.css';
 export const SelectLanguage = () => {
 	return (
 		<div className={styles.language}>
 			<div>
-				<img src={worldLogo} />
+				<img src={WorldLogo} />
 				<select>
 					<option value="english">English</option>
 					<option value="english">French</option>
