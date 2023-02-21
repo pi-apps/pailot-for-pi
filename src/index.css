@@ -23,19 +23,3 @@ body {
 	font-family: 'Roboto', sans-serif;
 	box-sizing: border-box;
 }
-
-:root {
-	--purple: rgba(48, 0, 126, 1);
-	--white: #f5f5f5;
-	--orange: rgba(255, 149, 36, 1);
-	--light-purple: rgba(226, 232, 255, 1);
-	--light-purple-variant: rgba(231, 224, 236, 1);
-	--black: rgba(66, 66, 66, 1);
-}
-
-* {
-	box-sizing: border-box;
-	padding: 0px;
-	margin: 0px;
-	/* font-family: 'Roboto'; */
-}

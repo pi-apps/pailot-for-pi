@@ -10,18 +10,13 @@
 	padding: 5%;
 }
 .finger_print_wrapper h3 {
-	color: var(--purple);
-	font-size: 5vw;
+	color: #304596;
+	letter-spacing: 3px;
+	font-size: 1.5rem;
 	margin: 2% 0;
 }
-
-.finger_print_wrapper > p {
-	font-size: 3vw;
-}
-
 .finger_print_wrapper h4 {
-	margin-top: 15%;
-	font-size: 4vw;
+	font-size: 1.2rem;
 	font-weight: 400;
 }
 
@@ -30,13 +25,13 @@
 	text-align: right;
 }
 .closeIcon {
-	font-size: x-large;
+	font-size: xx-large;
 }
 
 .fingerPrintIcon {
-	width: 19vw;
-	height: 19vw;
-	color: var(--black);
+	width: 5rem;
+	height: 5rem;
+	color: #304596;
 	margin: 2% 0;
 }
 

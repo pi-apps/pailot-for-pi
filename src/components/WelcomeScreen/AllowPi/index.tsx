@@ -20,7 +20,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	};
 	return (
 		<div className={styles.allowPi}>
-			<img src={logo} alt="Pailot Logo" />
+			<img src={logo} />
 			<h3>Welcome to Pailot!</h3>
 			<p>Pailot connect your Pi Network account to experience the best web 3 delivery service</p>
 			<div className={styles.tick}>
