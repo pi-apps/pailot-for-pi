@@ -1,5 +1,5 @@
-import styles from './Payment.module.css';
+import styles from './DeliveryPayment.module.css';
 
-export const Payment = () => {
+export const DeliveryPayment = () => {
 	return <div className={styles.container}>Payment</div>;
 };
