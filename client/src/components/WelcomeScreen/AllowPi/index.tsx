@@ -23,7 +23,6 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	const scopes = ['username', 'payments', 'platform'];
 	const signIn = async () => {
 		if (toggleActive == true) {
-			console.log(window.Pi);
 			const authResult: CreateUserDTO = await window.Pi.authenticate(
 				scopes,
 				onIncompletePaymentFound
