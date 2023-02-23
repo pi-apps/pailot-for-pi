@@ -12,8 +12,9 @@
     "prestart": "npm run build",
     "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
     "start:db": "docker-compose up database",
-    "start": "nodemon build/index",
-    "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"yarn start:db\" \"yarn build:watch\" \"yarn start\"",
+    "start:dev": "nodemon build/index",
+		"start": "node build/index",
+    "dev": "concurrently --raw -n \"tsc,server\" -s \"last\" -c \"magenta,yellow\" \"yarn start:db\" \"yarn build:watch\" \"yarn start:dev\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format:write": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\""
