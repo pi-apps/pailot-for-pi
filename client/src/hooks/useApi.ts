@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface IErrorBase<T> {
 	error: AxiosError<T> | Error;
@@ -33,9 +34,9 @@ export const fetchWithCredentials = async (
 	return axios({
 		url,
 		headers: {
-      ...headerConfig,
-      ...headers
-    },
+			...headerConfig,
+			...headers,
+		},
 		params: {
 			...paramProps,
 		},
@@ -57,6 +58,8 @@ export default function useApi<T, E = never>(
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<IAxiosError<E> | IError<E>>();
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		setLoading(true);
 		setError(undefined);
@@ -67,7 +70,7 @@ export default function useApi<T, E = never>(
 			.catch((err) => {
 				if (axios.isAxiosError(err)) {
 					if (err.response?.status === 401) {
-						// TODO: Log out the user
+						navigate('/welcome');
 					}
 					setError({
 						type: 'axios-error',

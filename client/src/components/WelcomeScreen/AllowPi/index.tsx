@@ -7,6 +7,7 @@ import { PaymentDTO } from '../../../types/payment';
 import { fetchWithCredentials } from '../../../hooks/useApi';
 import { INCOMPLETE_PAYMENT_URL, SIGN_IN_URL } from '../../../constants/url.constants';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 type Props = {
 	setCloseFingerPrint: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,20 +19,6 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	const navigate = useNavigate();
 	const handleCheckbox = () => {
 		setToggleActive(!toggleActive);
-	};
-
-	const scopes = ['username', 'payments', 'platform'];
-	const signIn = async () => {
-		if (toggleActive == true) {
-			const authResult: CreateUserDTO = await window.Pi.authenticate(
-				scopes,
-				onIncompletePaymentFound
-			);
-			console.log(authResult);
-			const user = await signInUser(authResult);
-			console.log(user);
-			navigate('/home');
-		}
 	};
 
 	const onIncompletePaymentFound = async (payment: PaymentDTO) => {
@@ -46,6 +33,30 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 			method: 'POST',
 			data: { authResult },
 		});
+	};
+
+	const scopes = ['username', 'payments', 'platform'];
+	const signIn = async () => {
+		try {
+			if (toggleActive == true) {
+				const authResult: CreateUserDTO = await window.Pi.authenticate(
+					scopes,
+					onIncompletePaymentFound
+				);
+				console.log(authResult);
+				const user = await signInUser(authResult);
+				console.log(user);
+				navigate('/home');
+			}
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 401) {
+					navigate('/welcome');
+				}
+        throw error;
+			}
+      throw error;
+		}
 	};
 
 	return (
