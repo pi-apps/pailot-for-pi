@@ -127,7 +127,33 @@ export async function findUser(userUid: string): Promise<UserResult> {
 	} catch (error) {
 		return {
 			type: Result.ERROR,
-			message: `An unexpected error occurred during updating user with id ${userUid}`,
+			message: `An unexpected error occurred during finding user with id ${userUid}`,
+			error,
+		};
+	}
+}
+
+export async function findUserByUsername(
+	username: string
+): Promise<SuccessResult<User> | NotFoundResult | ErrorResult> {
+	try {
+		const currentUser = await UserRepository.findOne({
+			where: { username },
+		});
+		if (!currentUser) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find user with username: ${username}`,
+			};
+		}
+		return {
+			type: Result.SUCCESS,
+			data: currentUser,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: `An unexpected error occurred during finding user with username ${username}`,
 			error,
 		};
 	}
