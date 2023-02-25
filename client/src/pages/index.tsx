@@ -5,3 +5,4 @@ export { Settings } from './Settings/Settings';
 export { ShareLocation } from './ShareLocation/ShareLocation';
 export { OnboardingCompleted } from './OnboardingCompleted/OnboardingCompleted';
 export { CustomizedDelivery } from './CustomizedDelivery/CustomizedDelivery';
+export { ActiveDelivery } from './ActiveDelivery/ActiveDelivery';

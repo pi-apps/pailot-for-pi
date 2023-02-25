@@ -40,7 +40,7 @@ export const HomePlus = () => {
 							type="button"
 							className={styles.cta}
 							onClick={() => {
-								console.log('Online Couriers');
+								navigate('/active-delivery');
 							}}
 						>
 							<span>
@@ -58,7 +58,6 @@ export const HomePlus = () => {
 							className={styles.cta}
 							onClick={() => {
 								navigate('/customized-delivery');
-								console.log('Cusomized Deliveries');
 							}}
 						>
 							<span>

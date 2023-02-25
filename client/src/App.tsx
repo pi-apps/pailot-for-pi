@@ -7,6 +7,7 @@ import {
 	ShareLocation,
 	OnboardingCompleted,
 	CustomizedDelivery,
+	ActiveDelivery,
 } from './pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,6 +27,7 @@ function App() {
 							<Route path="/home" element={<Home />} />
 							<Route path="/settings/*" element={<Settings />} />
 							<Route path="/customized-delivery" element={<CustomizedDelivery />} />
+							<Route path="/active-delivery" element={<ActiveDelivery />} />
 						</Routes>
 					</AnimatePresence>
 				</motion.div>

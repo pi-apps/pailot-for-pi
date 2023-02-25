@@ -1,7 +1,6 @@
 import styles from './DeliveryLocation.module.css';
 import React, { useState } from 'react';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { IoMdArrowRoundForward } from 'react-icons/io';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 // import { RiEBike2Line } from 'react-icons/ri';
 import { GiCancel } from 'react-icons/gi';
 import { MdOutlineClose } from 'react-icons/md';
@@ -34,7 +33,7 @@ export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 						}}
 					/>
 				</div>
-				<span>Active Request</span>
+				<span>Customized Request</span>
 				<IoMdArrowRoundForward
 					onClick={() => {
 						setProgress(5);
