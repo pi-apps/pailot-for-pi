@@ -46,39 +46,43 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 				console.log(authResult);
 				const user = await signInUser(authResult);
 				console.log(user);
-				navigate('/home');
+				navigate('/share-location');
 			}
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
 					navigate('/welcome');
 				}
-        throw error;
+				throw error;
 			}
-      throw error;
+			throw error;
 		}
 	};
 
 	return (
 		<div className={styles.allowPi}>
-			<img src={logo} alt="Pailot Logo" />
-			<h3>Welcome to Pailot!</h3>
-			<p>Pailot connect your Pi Network account to experience the best web 3 delivery service</p>
-			<div className={styles.tick}>
-				<input type="checkbox" onChange={handleCheckbox} />
-				<p>I agree to allow Pailot connect to my Pi account </p>
+			<div className={styles.img__and__header}>
+				<img src={logo} alt="Pailot Logo" />
+				<h3>Welcome to Pailot!</h3>
 			</div>
-			<button
-				onClick={signIn}
-				className={`${styles.allowBtn} ${
-					toggleActive ? styles.allowBtnActive : styles.allowBtnInactive
-				}`}
-			>
-				Allow Pi Network
-			</button>
-			<p className={styles.terms}>
-				Learn more about Pailot <a href="#terms">terms and conditions</a>
-			</p>
+			<p>Pailot connect your Pi Network account to experience the best web 3 delivery service</p>
+			<div className={styles.cta__container}>
+				<label className={styles.tick}>
+					<input type="checkbox" onChange={handleCheckbox} />
+					<p>I agree to allow Pailot connect to my Pi account </p>
+				</label>
+				<button
+					onClick={signIn}
+					className={`${styles.allowBtn} ${
+						toggleActive ? styles.allowBtnActive : styles.allowBtnInactive
+					}`}
+				>
+					Allow Pi Network
+				</button>
+				<p className={styles.terms}>
+					Learn more about Pailot <a href="#terms">terms and conditions</a>
+				</p>
+			</div>
 		</div>
 	);
 };

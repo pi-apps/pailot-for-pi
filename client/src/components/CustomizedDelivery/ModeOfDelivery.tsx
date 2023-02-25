@@ -226,7 +226,7 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 					<div className={styles.select__container}>
 						<select name="Region" title="Region" className={styles.select}>
 							<option value="1">Local</option>
-							<option value="2">Foreign</option>
+							<option value="2">Inter State</option>
 						</select>
 					</div>
 					<span>Choosing a region shows Pailots within that area</span>

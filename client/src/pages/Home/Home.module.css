@@ -9,7 +9,6 @@
 .profile {
 	display: flex;
 	align-items: center;
-	/* gap: 8px; */
 	width: 100%;
 	padding: 1rem;
 	background-color: var(--purple);
@@ -31,7 +30,29 @@
 	color: var(--white);
 }
 
+.carousel__container {
+	overflow: hidden;
+}
+
 .carousel {
+	position: relative;
+	width: 300%;
+	display: flex;
+}
+
+.slide__one {
+	left: 0%;
+}
+.slide__two {
+	left: -100%;
+	transition: all 250ms ease-in-out;
+}
+.slide__three {
+	left: -200%;
+	transition: all 250ms ease-in-out;
+}
+
+.carousel > div {
 	display: flex;
 	background-color: #f0fbff;
 }
@@ -79,7 +100,6 @@
 }
 
 .navigate {
-	/* background-color: red; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -93,6 +113,7 @@
 	background-color: var(--black);
 	border-radius: 100%;
 	opacity: 0.3;
+	transition: all 250ms ease-in-out;
 }
 
 .navigate > .active__div {
@@ -101,6 +122,7 @@
 	background-color: var(--orange);
 	border-radius: 100%;
 	opacity: 1;
+	transition: all 250ms ease-in-out;
 }
 
 .delivery__and__courier {
