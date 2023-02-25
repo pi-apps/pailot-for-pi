@@ -76,12 +76,12 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					<div className={styles.modes__of__delivery}>
 						<div className={styles.mod}>
 							<RiEBike2Line />
-							<span>Motorbike</span>
+							{/* <span>Motorbike</span> */}
 							<GiCancel />
 						</div>
 						<div className={styles.mod}>
 							<FaBicycle />
-							<span>Bicycle</span>
+							{/* <span>Bicycle</span> */}
 							<GiCancel />
 						</div>
 					</div>
@@ -100,7 +100,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					<p className={styles.title}>Receiver Username:</p>
 					<div className={styles.receivers__username}>
 						<img src={logo} alt="User's Profile Photo" />
-						<p>@piusernamepiusernamepiusernamepiusernamepiusername</p>
+						<p>@piusername</p>
 					</div>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />

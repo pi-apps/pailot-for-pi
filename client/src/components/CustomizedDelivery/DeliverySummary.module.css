@@ -98,14 +98,14 @@
 	gap: 8px;
 	background-color: var(--purple);
 	color: var(--white);
-	padding: 3px;
+	padding: 3px 5px;
 	border-radius: 4px;
 }
 
 .receivers__username {
 	display: flex;
 	align-items: center;
-	gap: 1rem;
+	gap: 0.5rem;
 	flex: 1;
 	overflow: hidden;
 	margin-right: 3px;

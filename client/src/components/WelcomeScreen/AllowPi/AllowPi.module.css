@@ -25,7 +25,8 @@
 }
 
 .allowPi > p {
-	font-size: 10px;
+	font-size: 13px;
+  font-weight: 300;
 	color: var(--white);
 }
 .cta__container {
@@ -76,6 +77,7 @@
 }
 
 .tick p {
-	font-size: 3vw;
+	font-size: 3.5vw;
+  font-weight: 300;
 	color: var(--white);
 }

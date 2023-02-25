@@ -1,6 +1,6 @@
 import styles from './DeliveryPayment.module.css';
 import React from 'react';
-import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { motion } from 'framer-motion';
 
 interface Props {
@@ -21,11 +21,6 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress }) => {
 					/>
 				</div>
 				<span>Payment</span>
-				<IoMdArrowRoundForward
-					onClick={() => {
-						setProgress(7);
-					}}
-				/>
 			</div>
 			<div className={styles.body}>
 				<p className={styles.description}>
@@ -77,7 +72,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress }) => {
 				className={styles.cta__container}
 			>
 				<button type="button" className={styles.cta}>
-					Confirm
+					Pay with Pi
 				</button>
 			</motion.div>
 		</div>

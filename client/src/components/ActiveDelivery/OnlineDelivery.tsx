@@ -24,7 +24,7 @@ export const OnlineDelivery: React.FC<Props> = () => {
 						}}
 					/>
 				</div>
-				<span>Customized Delivery</span>
+				<span>Active Couriers</span>
 				<div className={styles.progress}>
 					<div className={styles.active__progress}></div>
 					<div className={styles.inactive__progress}></div>
