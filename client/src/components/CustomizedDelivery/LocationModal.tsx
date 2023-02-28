@@ -7,9 +7,14 @@ interface Props {
 	closeModal: () => void;
 	// eslint-disable-next-line no-unused-vars
 	setProgress: (value: number) => void;
+	deliveryDetailsSubmitHandler: () => void;
 }
 
-export const LocationModal: React.FC<Props> = ({ setProgress, closeModal }) => {
+export const LocationModal: React.FC<Props> = ({
+	setProgress,
+	closeModal,
+	deliveryDetailsSubmitHandler,
+}) => {
 	return (
 		<div className={styles.container}>
 			<AnimatePresence>
@@ -17,6 +22,7 @@ export const LocationModal: React.FC<Props> = ({ setProgress, closeModal }) => {
 					initial={{ scale: 0, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
 					exit={{ scale: 0, opacity: 0 }}
+					key="modal"
 					className={styles.modal}
 				>
 					<div className={styles.top__bar}>
@@ -37,6 +43,7 @@ export const LocationModal: React.FC<Props> = ({ setProgress, closeModal }) => {
 							type="button"
 							className={styles.cta}
 							onClick={() => {
+								deliveryDetailsSubmitHandler();
 								setProgress(6);
 							}}
 						>
@@ -48,7 +55,11 @@ export const LocationModal: React.FC<Props> = ({ setProgress, closeModal }) => {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
+					key="backdrop"
 					className={styles.backdrop}
+					onClick={() => {
+						closeModal();
+					}}
 				></motion.div>
 			</AnimatePresence>
 		</div>

@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HiOutlinePlusCircle } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deliveryTypeActions } from '../../../store/store';
 
 export const HomePlus = () => {
 	const [active, setActive] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	return (
 		<motion.div
 			animate={{ scale: [0, 1.3, 1] }}
@@ -26,6 +29,7 @@ export const HomePlus = () => {
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
 						transition={{
 							delay: 0.25,
 						}}
@@ -34,6 +38,10 @@ export const HomePlus = () => {
 						<motion.button
 							initial={{ y: 50, opacity: 0 }}
 							animate={{ y: 0, opacity: 1 }}
+							exit={{
+								y: 50,
+								opacity: 0,
+							}}
 							transition={{
 								delay: 0.25,
 							}}
@@ -41,6 +49,7 @@ export const HomePlus = () => {
 							className={styles.cta}
 							onClick={() => {
 								navigate('/active-delivery');
+								dispatch(deliveryTypeActions.setDeliveryType('active'));
 							}}
 						>
 							<span>
@@ -51,6 +60,10 @@ export const HomePlus = () => {
 						<motion.button
 							initial={{ y: 50, opacity: 0 }}
 							animate={{ y: 0, opacity: 1 }}
+							exit={{
+								y: 50,
+								opacity: 0,
+							}}
 							transition={{
 								delay: 0.35,
 							}}
@@ -58,6 +71,7 @@ export const HomePlus = () => {
 							className={styles.cta}
 							onClick={() => {
 								navigate('/customized-delivery');
+								dispatch(deliveryTypeActions.setDeliveryType('customized'));
 							}}
 						>
 							<span>

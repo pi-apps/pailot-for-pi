@@ -8,8 +8,9 @@ import {
 	DeliveryWeightSize,
 	UploadDeliveryImage,
 	DeliverySummary,
-	DeliveryPayment,
+	OrderSucessful,
 } from '../../components';
+import { ActivePayment } from './../../components/ActiveDelivery/ActivePayment';
 import { OnlineDelivery } from '../../components/ActiveDelivery/OnlineDelivery';
 
 export const ActiveDelivery = () => {
@@ -35,7 +36,8 @@ export const ActiveDelivery = () => {
 				{progress === 4 && <DeliveryWeightSize setProgress={progressHandler} />}
 				{progress === 5 && <DeliveryLocation setProgress={progressHandler} />}
 				{progress === 6 && <DeliverySummary setProgress={progressHandler} />}
-				{progress === 7 && <DeliveryPayment setProgress={progressHandler} />}
+				{progress === 7 && <ActivePayment setProgress={progressHandler} />}
+				{progress === 8 && <OrderSucessful />}
 			</div>
 		</div>
 	);

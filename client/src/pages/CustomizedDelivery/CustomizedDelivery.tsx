@@ -10,6 +10,7 @@ import {
 	UploadDeliveryImage,
 	DeliverySummary,
 	DeliveryPayment,
+	OrderSucessful,
 } from '../../components';
 
 export const CustomizedDelivery = () => {
@@ -36,6 +37,7 @@ export const CustomizedDelivery = () => {
 				{progress === 5 && <DeliveryLocation setProgress={progressHandler} />}
 				{progress === 6 && <DeliverySummary setProgress={progressHandler} />}
 				{progress === 7 && <DeliveryPayment setProgress={progressHandler} />}
+				{progress === 8 && <OrderSucessful />}
 			</div>
 		</div>
 	);

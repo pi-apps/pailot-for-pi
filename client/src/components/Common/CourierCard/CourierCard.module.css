@@ -82,6 +82,7 @@
 }
 
 .pending__cta {
+	width: 54px;
 	font-size: 8px;
 	padding: 5px 10px;
 	background-color: var(--orange);
@@ -92,6 +93,7 @@
 	font-weight: 700;
 }
 .picked__cta {
+	width: 54px;
 	font-size: 8px;
 	padding: 5px 10px;
 	background-color: rgba(2, 205, 22, 1);
@@ -103,6 +105,7 @@
 	color: var(--white);
 }
 .pick__cta {
+	width: 54px;
 	font-size: 8px;
 	padding: 5px 10px;
 	background-color: var(--purple);

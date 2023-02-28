@@ -27,6 +27,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress }) => {
 					Final stop! Tell Pailot how much Pi you are willing to pay
 				</p>
 				<h4 className={styles.header}>Pay with Pi</h4>
+
 				<label htmlFor="Amount" className={styles.label}>
 					<p>Amount</p>
 					<div>
@@ -71,7 +72,13 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress }) => {
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta}>
+				<button
+					type="button"
+					className={styles.cta}
+					onClick={() => {
+						setProgress(8);
+					}}
+				>
 					Pay with Pi
 				</button>
 			</motion.div>
