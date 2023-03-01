@@ -57,6 +57,7 @@ export const SettingsHome = () => {
 					</div>
 				</div>
 			</div>
+
 			<div className={styles.body}>
 				<div className={styles.profile__details}>
 					<header className={styles.header}>
@@ -129,6 +130,7 @@ export const SettingsHome = () => {
 					</div>
 				</div>
 			</div>
+
 			<motion.div initial={{ y: '100%' }} animate={{ y: 0 }} className={styles.footer__container}>
 				<motion.footer className={styles.footer}>
 					<h6 className={styles.footer__header}>Pailot 2023</h6>

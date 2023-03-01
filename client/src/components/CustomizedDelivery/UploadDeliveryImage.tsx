@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { RiUploadCloud2Line } from 'react-icons/ri';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useSelector, useDispatch } from 'react-redux';
+import { deliveryDetailsActions } from '../../store/store';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
@@ -12,14 +14,25 @@ interface Props {
 }
 
 export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
-	const [uploadedImage, setUploadedImage] = useState<string>('xyzfile.extension');
-
+	const [uploadedImageName, setUploadedImageName] = useState<string>('xyzfile.extension');
+	const [uploadedImageURL, setUploadedImageURL] = useState<string>('');
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
 	const inputRef = useRef<any>();
 	const onChangeHandler = () => {
 		if (inputRef.current.files && inputRef.current.files.length > 0) {
-			setUploadedImage(inputRef.current.files[0].name);
+			const url = URL.createObjectURL(inputRef.current.files[0]);
+			setUploadedImageName(inputRef.current.files[0].name);
+			setUploadedImageURL(url);
+			console.log(uploadedImageURL);
 		}
+	};
+	const deliveryDetailsSubmitHandler = () => {
+		if (!inputRef.current.files || inputRef.current.files.length === 0 || !uploadedImageURL) return;
+
+		dispatch(deliveryDetailsActions.setImageName(uploadedImageName));
+		dispatch(deliveryDetailsActions.setImageURL(uploadedImageURL));
 	};
 	return (
 		<div className={styles.container}>
@@ -28,11 +41,15 @@ export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
 					<IoMdArrowRoundBack
 						className={styles.back}
 						onClick={() => {
-							navigate('/home');
+							if (deliveryType === 'active') {
+								setProgress(1);
+							} else {
+								navigate('/home');
+							}
 						}}
 					/>
 				</div>
-				<span>Customized Delivery</span>
+				<span>{deliveryType === 'active' ? 'Active Request' : 'Customized Delivery'}</span>
 				<div className={styles.progress}>
 					<div className={styles.active__progress}></div>
 					<div className={styles.inactive__progress}></div>
@@ -51,13 +68,14 @@ export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
 					Upload an Image
 				</label>
 
-				<motion.div
+				<motion.label
 					initial={{ scale: 0, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
 					transition={{
 						delay: 0.1,
 						duration: 0.4,
 					}}
+					htmlFor="image"
 					className={styles.input__container}
 				>
 					<RiUploadCloud2Line className={styles.upload__icon} />
@@ -66,12 +84,11 @@ export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
 						type="file"
 						name="image"
 						accept="image/png, image/jpeg, image/jpg"
-						placeholder="None"
 						onChange={onChangeHandler}
 						ref={inputRef}
 					/>
-				</motion.div>
-				<span className={styles.file__name}>{uploadedImage}</span>
+				</motion.label>
+				<span className={styles.file__name}>{uploadedImageName}</span>
 			</div>
 			<motion.div
 				initial={{ y: 100, opacity: 0 }}
@@ -82,7 +99,18 @@ export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta} onClick={() => setProgress(2)}>
+				<button
+					type="button"
+					className={styles.cta}
+					onClick={() => {
+						if (deliveryType === 'active') {
+							setProgress(3);
+						} else {
+							setProgress(2);
+						}
+						deliveryDetailsSubmitHandler();
+					}}
+				>
 					Next
 				</button>
 			</motion.div>

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './DeliveryDetails.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import { GiCancel } from 'react-icons/gi';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { motion } from 'framer-motion';
+import { useSelector, useDispatch } from 'react-redux';
+import { deliveryDetailsActions } from '../../store/store';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
@@ -12,6 +14,15 @@ interface Props {
 }
 
 export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
+	const [productName, setProductName] = useState<string>('');
+	const [description, setDescription] = useState<string>('');
+	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
+	const dispatch = useDispatch();
+
+	const deliveryDetailsSubmitHandler = () => {
+		dispatch(deliveryDetailsActions.setProductName(productName));
+		dispatch(deliveryDetailsActions.setDescription(description));
+	};
 	return (
 		<div className={styles.container}>
 			<div className={styles.top__bar}>
@@ -19,14 +30,23 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 					<IoMdArrowRoundBack
 						className={styles.back}
 						onClick={() => {
-							setProgress(1);
+							if (deliveryType === 'active') {
+								setProgress(2);
+							} else {
+								setProgress(1);
+							}
 						}}
 					/>
 				</div>
-				<span>Active Request</span>
+				<span>{deliveryType === 'active' ? 'Active Request' : 'Customized Delivery'}</span>
 				<IoMdArrowRoundForward
 					onClick={() => {
-						setProgress(3);
+						if (deliveryType === 'active') {
+							setProgress(4);
+						} else {
+							setProgress(3);
+						}
+						deliveryDetailsSubmitHandler();
 					}}
 				/>
 			</div>
@@ -56,7 +76,14 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 							}}
 							className={styles.input__container}
 						>
-							<input type="text" name="Product Name" placeholder="Example: Tesla Model Pi 3" />
+							<input
+								type="text"
+								name="Product Name"
+								placeholder="Example: Tesla Model Pi 3"
+								onChange={(e) => {
+									setProductName(e.target.value);
+								}}
+							/>
 							<GiCancel />
 						</motion.div>
 						<AiOutlineEdit />
@@ -80,6 +107,9 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 							// cols={30}
 							rows={10}
 							placeholder="Example: Samsung Ultra 23 Gold"
+							onChange={(e) => {
+								setDescription(e.target.value);
+							}}
 						/>
 						<AiOutlineEdit />
 					</div>
@@ -115,7 +145,18 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta} onClick={() => setProgress(3)}>
+				<button
+					type="button"
+					className={styles.cta}
+					onClick={() => {
+						if (deliveryType === 'active') {
+							setProgress(4);
+						} else {
+							setProgress(3);
+						}
+						deliveryDetailsSubmitHandler();
+					}}
+				>
 					Next
 				</button>
 			</motion.div>

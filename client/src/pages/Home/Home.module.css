@@ -36,7 +36,7 @@
 
 .carousel {
 	position: relative;
-	width: 300%;
+	width: 300vw;
 	display: flex;
 }
 
@@ -44,16 +44,18 @@
 	left: 0%;
 }
 .slide__two {
-	left: -100%;
+	left: -100vw;
 	transition: all 250ms ease-in-out;
 }
 .slide__three {
-	left: -200%;
+	left: -200vw;
 	transition: all 250ms ease-in-out;
 }
 
 .carousel > div {
+	width: 100vw;
 	display: flex;
+	justify-content: space-between;
 	background-color: #f0fbff;
 }
 

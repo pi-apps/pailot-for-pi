@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { CgSearch } from 'react-icons/cg';
 import { filter, nigerianFlag } from '../../assets/icons';
 import { CourierCard } from '../Common/CourierCard/CourierCard';
+import { defaultUser } from '../../assets/images';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
 	setProgress: (value: number) => void;
 }
 
-export const OnlineDelivery: React.FC<Props> = () => {
+export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 	const navigate = useNavigate();
 	return (
 		<div className={styles.container}>
@@ -54,17 +55,99 @@ export const OnlineDelivery: React.FC<Props> = () => {
 					</p>
 				</header>
 
-				<CourierCard status="pending" online={true} />
-				<CourierCard status="picked" online={true} />
-				<CourierCard status="pick" online={false} />
-				<CourierCard status="pick" online={true} />
+				<CourierCard
+					setProgress={setProgress}
+					status="pending"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={true}
+				/>
+
+				<CourierCard
+					setProgress={setProgress}
+					status="picked"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={true}
+				/>
+
+				<CourierCard
+					setProgress={setProgress}
+					status="pick"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={false}
+				/>
+
+				<CourierCard
+					setProgress={setProgress}
+					status="pick"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={true}
+				/>
 
 				<header className={styles.header}>
 					<h3>Dispatchers close to your region</h3>
 				</header>
-				<CourierCard status="pick" online={false} />
-				<CourierCard status="pick" online={true} />
-				<CourierCard status="pick" online={true} />
+				<CourierCard
+					setProgress={setProgress}
+					status="pick"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={false}
+				/>
+
+				<CourierCard
+					setProgress={setProgress}
+					status="pick"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={true}
+				/>
+
+				<CourierCard
+					setProgress={setProgress}
+					status="pick"
+					courierImage={defaultUser}
+					courierUserName={'@piusername'}
+					newUser={true}
+					courierCharge={0.00034}
+					startTime={'7am'}
+					endTime={'8pm'}
+					modeOfTransportation={'Motorcycle'}
+					online={true}
+				/>
 			</div>
 		</div>
 	);

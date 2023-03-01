@@ -1,14 +1,15 @@
 import styles from './ModeOfDelivery.module.css';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import { RiEBike2Line } from 'react-icons/ri';
+import { IoMdBicycle } from 'react-icons/io';
 import { GiCancel } from 'react-icons/gi';
 import { BiCar } from 'react-icons/bi';
-import { TbSpeedboat } from 'react-icons/tb';
 import { SlPlane } from 'react-icons/sl';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { deliveryDetailsActions } from '../../store/store';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
@@ -18,7 +19,23 @@ interface Props {
 export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 	const [currentValue, setCurrentValue] = useState<string>();
 	const [mods, setMods] = useState<any>([]);
+	const regionRef = useRef<HTMLSelectElement>(null);
 	const selectRef = useRef<HTMLSelectElement>(null);
+	const dispatch = useDispatch();
+	const deliveryDetailsSubmitHandler = () => {
+		const fullMods = mods.map((mod: string) => {
+			if (mod === '1') return 'Motorbike';
+			if (mod === '2') return 'Car';
+			if (mod === '3') return 'Bicycle';
+			if (mod === '4') return 'Plane';
+		});
+		console.log(fullMods);
+		dispatch(deliveryDetailsActions.setModeOfDelivery(fullMods));
+		if (regionRef.current?.value === '1')
+			dispatch(deliveryDetailsActions.setDeliveryRegion('Local'));
+		if (regionRef.current?.value === '2')
+			dispatch(deliveryDetailsActions.setDeliveryRegion('Inter State'));
+	};
 	const modsGenerator = () => {
 		const newMod = mods.map((mod: any) => {
 			//Creates divs for the selected methods of delivery
@@ -94,8 +111,8 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 						className={styles.mod}
 						key={mod}
 					>
-						<TbSpeedboat />
-						<p>Ship</p>
+						<IoMdBicycle />
+						<p>Bicycle</p>
 						<GiCancel
 							onClick={() => {
 								//Finds and deletes the selected mod
@@ -160,6 +177,7 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 				<IoMdArrowRoundForward
 					onClick={() => {
 						setProgress(5);
+						deliveryDetailsSubmitHandler();
 					}}
 				/>
 			</div>
@@ -181,7 +199,7 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 					<div className={styles.select__container}>
 						{currentValue === '1' && <RiEBike2Line />}
 						{currentValue === '2' && <BiCar />}
-						{currentValue === '3' && <TbSpeedboat />}
+						{currentValue === '3' && <IoMdBicycle />}
 						{currentValue === '4' && <SlPlane />}
 						<select
 							name="Mode Of Delivery"
@@ -207,7 +225,7 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 							<option value={'0'}>Select </option>
 							<option value={'1'}>Motorbike</option>
 							<option value="2">Car</option>
-							<option value="3">Ship</option>
+							<option value="3">Bicycle</option>
 							<option value="4">Plane</option>
 						</select>
 					</div>
@@ -224,7 +242,7 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 				<h4 className={styles.header}>Choose Region</h4>
 				<label htmlFor="Region" className={styles.label}>
 					<div className={styles.select__container}>
-						<select name="Region" title="Region" className={styles.select}>
+						<select name="Region" title="Region" ref={regionRef} className={styles.select}>
 							<option value="1">Local</option>
 							<option value="2">Inter State</option>
 						</select>
@@ -241,7 +259,14 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta} onClick={() => setProgress(5)}>
+				<button
+					type="button"
+					className={styles.cta}
+					onClick={() => {
+						setProgress(5);
+						deliveryDetailsSubmitHandler();
+					}}
+				>
 					Next
 				</button>
 			</motion.div>
