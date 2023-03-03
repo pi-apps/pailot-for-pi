@@ -35,7 +35,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 		});
 	};
 
-	const scopes = ['username', 'payments', 'platform'];
+	const scopes = ['username', 'payments'];
 	const signIn = async () => {
 		try {
 			if (toggleActive == true) {
