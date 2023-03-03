@@ -54,8 +54,10 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
           console.error('Error:', error);
 					navigate('/welcome');
 				}
+        console.error('Error:', error);
 				throw error;
 			}
+      console.error('Error:', error);
 			throw error;
 		}
 	};
