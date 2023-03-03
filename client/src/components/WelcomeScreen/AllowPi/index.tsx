@@ -41,11 +41,11 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	const signIn = async () => {
 		try {
 			if (toggleActive == true) {
+        setIsLoading(true);
 				const authResult: CreateUserDTO = await window.Pi.authenticate(
 					scopes,
 					onIncompletePaymentFound
 				);
-        setIsLoading(true);
 				console.log(authResult);
 				const user = await signInUser(authResult);
 				console.log(user);
