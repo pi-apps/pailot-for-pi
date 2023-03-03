@@ -77,7 +77,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					className={`${styles.allowBtn} ${
 						toggleActive ? styles.allowBtnActive : styles.allowBtnInactive
 					}`}
-          disbabled={!toggleActive}
+          disabled={!toggleActive}
 				>
 					Allow Pi Network
 				</button>
