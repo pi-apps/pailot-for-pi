@@ -134,6 +134,7 @@
 	flex-direction: column;
 	gap: 1rem;
 	flex: 1;
+	overflow: auto;
 }
 
 .modal__container {

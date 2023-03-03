@@ -7,9 +7,14 @@ import { deliveryLady } from '../../assets/images/index';
 import { deliveryMan } from '../../assets/images/index';
 import { deliveryBikeMan } from '../../assets/images/index';
 import { FooterNavBar, HomePlus } from '../../components';
+import { useSelector } from 'react-redux';
+// import { userDetailsActions } from '../../store/store';
+import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
+	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
+	// const dispatch = useDispatch();
 	const navigate = useNavigate();
 	setTimeout(() => {
 		if (carouselCount === 3) {
@@ -22,13 +27,8 @@ export const Home = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
-				<motion.div initial={{ x: 32 }} animate={{ x: 0 }}>
-					<img
-						src={logo}
-						onClick={() => navigate('/settings')}
-						alt="Profile Photo"
-						className={styles.profile__photo}
-					/>
+				<motion.div initial={{ x: 32 }} animate={{ x: 0 }} onClick={() => navigate('/settings')}>
+					<img src={logo} alt="Profile Photo" className={styles.profile__photo} />
 					<span>Pailot</span>
 				</motion.div>
 			</div>
@@ -116,36 +116,52 @@ export const Home = () => {
 						</div>
 					</div>
 				</motion.div>
-				<motion.div
-					initial={{ y: 50, opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
-					transition={{
-						delay: 0.1,
-						duration: 0.5,
-					}}
-					className={styles.modal__container}
-				>
-					<h5 className={styles.header}>Become a Courier</h5>
-					<div className={styles.modal}>
-						<div>
-							<div className={styles.modal__content}>
-								<p>Be a one time</p>
-								<span>Courier</span>
-								<p>and earn Pi for every delivery</p>
+				{!isCourier && (
+					<motion.div
+						initial={{ y: 50, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{
+							delay: 0.1,
+							duration: 0.5,
+						}}
+						className={styles.modal__container}
+					>
+						<h5 className={styles.header}>Become a Courier</h5>
+						<div className={styles.modal}>
+							<div>
+								<div className={styles.modal__content}>
+									<p>Be a one time</p>
+									<span>Courier</span>
+									<p>and earn Pi for every delivery</p>
+								</div>
+								<img src={deliveryBikeMan} alt="Delivery Bike Man" />
 							</div>
-							<img src={deliveryBikeMan} alt="Delivery Bike Man" />
+							<div className={styles.cta__container}>
+								<button
+									className={styles.big__cta}
+									type="button"
+									onClick={() => {
+										navigate('/courier-form');
+										// dispatch(userDetailsActions.setIsCourier());
+									}}
+								>
+									Become a courier
+								</button>
+								<button type="button" className={styles.text__cta}>
+									Learn more
+								</button>
+							</div>
 						</div>
-						<div className={styles.cta__container}>
-							<button className={styles.big__cta}>Become a courier</button>
-							<button className={styles.text__cta}>Learn more</button>
-						</div>
+					</motion.div>
+				)}
+				{!isCourier && (
+					<div className={styles.homeplus__container}>
+						<HomePlus />
 					</div>
-				</motion.div>
-				<div className={styles.homeplus__container}>
-					<HomePlus />
-				</div>
+				)}
+				{isCourier && <CourierDeliveryList />}
 			</div>
-			<FooterNavBar />
+			<FooterNavBar active="home" />
 		</div>
 	);
 };
