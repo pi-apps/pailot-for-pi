@@ -51,6 +51,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
+          console.error('Error:', error);
 					navigate('/welcome');
 				}
 				throw error;
