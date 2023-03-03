@@ -16,6 +16,8 @@ type Props = {
 // eslint-disable-next-line no-unused-vars
 export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	const [toggleActive, setToggleActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 	const navigate = useNavigate();
 	const handleCheckbox = () => {
 		setToggleActive(!toggleActive);
@@ -43,20 +45,25 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					scopes,
 					onIncompletePaymentFound
 				);
+        setIsLoading(true);
 				console.log(authResult);
 				const user = await signInUser(authResult);
 				console.log(user);
+        setIsLoading(false);
 				navigate('/share-location');
 			}
 		} catch (error) {
+      setIsLoading(false);
 			if (axios.isAxiosError(error)) {
 				if (error.response?.status === 401) {
           console.error('Error:', error);
 					navigate('/welcome');
 				}
+        setIsError(true);
         console.error('Error:', error);
 				throw error;
 			}
+      setIsError(true);
       console.error('Error:', error);
 			throw error;
 		}
@@ -64,6 +71,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 
 	return (
 		<div className={styles.allowPi}>
+      {isLoading ? (<p>Loading...</p>) : (
 			<div className={styles.img__and__header}>
 				<img src={logo} alt="Pailot Logo" />
 				<h3>Welcome to Pailot!</h3>
@@ -87,6 +95,8 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					Learn more about Pailot <a href="#terms">terms and conditions</a>
 				</p>
 			</div>
+        )}
+      {isError && (<p>Error Connecting to Pi</>)}
 		</div>
 	);
 };
