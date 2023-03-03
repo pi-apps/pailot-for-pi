@@ -98,7 +98,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 			</div>
        </>
         )}
-      {isError && (<p>Error Connecting to Pi</>)}
+      {isError && (<p>Error Connecting to Pi</p>)}
 		</div>
 	);
 };
