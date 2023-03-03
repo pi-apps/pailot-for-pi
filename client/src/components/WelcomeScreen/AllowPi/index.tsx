@@ -72,6 +72,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	return (
 		<div className={styles.allowPi}>
       {isLoading ? (<p>Loading...</p>) : (
+       <>
 			<div className={styles.img__and__header}>
 				<img src={logo} alt="Pailot Logo" />
 				<h3>Welcome to Pailot!</h3>
@@ -95,6 +96,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					Learn more about Pailot <a href="#terms">terms and conditions</a>
 				</p>
 			</div>
+       </>
         )}
       {isError && (<p>Error Connecting to Pi</>)}
 		</div>
