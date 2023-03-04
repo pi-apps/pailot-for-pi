@@ -9,25 +9,24 @@ import { INCOMPLETE_PAYMENT_URL, SIGN_IN_URL } from '../../../constants/url.cons
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner';
+import { userDetailsActions } from '../../../store/store';
+import { useDispatch } from 'react-redux';
 
-type Props = {
-	setCloseFingerPrint: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-// eslint-disable-next-line no-unused-vars
-export const AllowPi = ({ setCloseFingerPrint }: Props) => {
+export const AllowPi = () => {
 	const [toggleActive, setToggleActive] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const navigate = useNavigate();
-	const handleCheckbox = () => {
-		setToggleActive(!toggleActive);
+	const dispatch = useDispatch();
+	const handleCheckbox = (e: any) => {
+		setToggleActive(e.target.checked);
 	};
 
 	const onIncompletePaymentFound = async (payment: PaymentDTO) => {
 		console.log('onIncompletePaymentFound', payment);
 		return await fetchWithCredentials(INCOMPLETE_PAYMENT_URL, {
-			method: 'GET',
+			method: 'POST',
+			data: { payment },
 		});
 	};
 
@@ -48,11 +47,13 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					scopes,
 					onIncompletePaymentFound
 				);
-				console.log(authResult);
 				const user = await signInUser(authResult);
-				console.log(user);
+				sessionStorage.setItem('user', JSON.stringify(user.data.data));
+				sessionStorage.setItem('token', user.data.token);
+				dispatch(userDetailsActions.setUserDetails({ user: user?.data?.data?.user }));
+				dispatch(userDetailsActions.setCourierDetails({ courier: user?.data?.data?.courier }));
 				setIsLoading(false);
-				navigate('/share-location');
+				navigate('/onboarding-completed');
 			}
 		} catch (error) {
 			setIsLoading(false);
@@ -86,7 +87,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					</p>
 					<div className={styles.cta__container}>
 						<label className={styles.tick}>
-							<input type="checkbox" onChange={handleCheckbox} />
+							<input type="checkbox" onChange={(e) => handleCheckbox(e)} checked={toggleActive} />
 							<p>I agree to allow Pailot connect to my Pi account </p>
 						</label>
 						<button

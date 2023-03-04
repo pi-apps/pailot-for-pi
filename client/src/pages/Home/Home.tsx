@@ -7,14 +7,15 @@ import { deliveryLady } from '../../assets/images/index';
 import { deliveryMan } from '../../assets/images/index';
 import { deliveryBikeMan } from '../../assets/images/index';
 import { FooterNavBar, HomePlus } from '../../components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { userDetailsActions } from '../../store/store';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
+import { deliveryTypeActions, RootState } from '../../store/store';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
-	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
-	// const dispatch = useDispatch();
+	const isCourier = useSelector((state: RootState) => state.userDetails.isCourier);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	setTimeout(() => {
 		if (carouselCount === 3) {
@@ -107,7 +108,14 @@ export const Home = () => {
 							<img src={deliveryMan} alt="Delivery Man" />
 						</div>
 						<div className={styles.cta__container}>
-							<button type="button" className={styles.big__cta}>
+							<button
+								onClick={() => {
+                  navigate('/customized-delivery');
+                  dispatch(deliveryTypeActions.setDeliveryType('customized'));
+                }}
+								type="button"
+								className={styles.big__cta}
+							>
 								Make a delivery
 							</button>
 							<button type="button" className={styles.text__cta}>

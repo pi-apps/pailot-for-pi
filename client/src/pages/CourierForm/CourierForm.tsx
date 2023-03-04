@@ -4,7 +4,7 @@ import styles from './CourierForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GiCancel } from 'react-icons/gi';
 import { useDispatch } from 'react-redux';
-import { userCourierDetailsActions, userDetailsActions } from '../../store/store';
+import { createCourierDetailsActions, userDetailsActions } from '../../store/store';
 
 export const CourierForm = () => {
 	const [validated, setValidated] = useState<boolean>(false);
@@ -41,16 +41,26 @@ export const CourierForm = () => {
 
 	const onSubmitHandler = () => {
 		// if (!validated) return;
-
+		if (
+			!modRef.current ||
+			!regionRef.current ||
+			!startTimeRef.current ||
+			!endTimeRef.current ||
+			!amountRef.current
+		)
+			return;
+      // TODO: Make an API call and save the courier and save the result in the store
 		dispatch(
-			userCourierDetailsActions.setUserCourierDetails({
-				modeOfTransportation: modRef.current?.value,
-				regionOfOperation: regionRef.current?.value,
-				startTime: startTimeRef.current?.value,
-				endTime: endTimeRef.current?.value,
-				amount: amountRef.current?.value,
-			})
-		);
+			createCourierDetailsActions.setCreateCourierDetails({
+        modeOfTransportation: modRef.current.value,
+        regionOfOperation: regionRef.current.value,
+        startTime: startTimeRef.current.value,
+        endTime: endTimeRef.current.value,
+        preferredDeliveryAmount: Number(amountRef.current.value),
+        courierUserId: ''
+      })
+      );
+      // dispatch(userDetailsActions.setCourierDetails(data.data))
 		dispatch(userDetailsActions.setIsCourier());
 		navigate('/home');
 	};

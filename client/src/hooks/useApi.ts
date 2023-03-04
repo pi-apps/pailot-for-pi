@@ -29,6 +29,7 @@ export const fetchWithCredentials = async (
 	{ headers: headerProps, params: paramProps, ...rest }: AxiosRequestConfig
 ) => {
 	const headers = {
+    Authorization: "Bearer " + sessionStorage.getItem('token'),
 		...headerProps,
 	};
 	return axios({

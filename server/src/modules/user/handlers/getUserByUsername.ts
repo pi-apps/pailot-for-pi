@@ -4,6 +4,7 @@ import { findUserByUsername } from '../services/user.services';
 
 export async function getUserByUsername(req: Request, res: Response) {
 	const username = req.params.username;
+	console.log(username);
 	const userResult = await findUserByUsername(username);
 
 	if (userResult.type === Result.ERROR) {

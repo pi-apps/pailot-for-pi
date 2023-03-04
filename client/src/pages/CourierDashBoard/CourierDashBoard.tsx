@@ -6,7 +6,7 @@ import { defaultUser } from '../../assets/images';
 import { FaStar } from 'react-icons/fa';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { IoMdBicycle } from 'react-icons/io';
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+// import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 // eslint-disable-next-line no-unused-vars
 import { RiEBikeLine, RiTruckLine, RiFootprintLine } from 'react-icons/ri';
 
@@ -14,7 +14,7 @@ export const CourierDashBoard = () => {
 	const navigate = useNavigate();
 	return (
 		<div className={styles.container}>
-			<LoadingSpinner />
+			{/* <LoadingSpinner />  */}
 			<div className={styles.top__bar}>
 				<motion.div initial={{ x: 26 }} animate={{ x: 0 }} onClick={() => navigate('/settings')}>
 					<span>Dashboard</span>

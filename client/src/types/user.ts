@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface IUser {
 	userUid: string;
 	username: string;
@@ -5,6 +6,12 @@ export interface IUser {
 	profileImg: string | null;
 	accessToken: string;
 	imagePublicId: string | null;
+  userRole: UserRole;
+}
+
+export enum UserRole {
+	USER = 1,
+	COURIER = 2,
 }
 
 export interface ICourier {
