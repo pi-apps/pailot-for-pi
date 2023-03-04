@@ -35,6 +35,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 		size,
 		category,
 	} = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+  const userDetails = useSelector((state: RootState) => state.userDetails);
 
 	const handlePayment = async () => {
 		try {
@@ -75,7 +76,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 
 	const handleSubmitTransaction = async () => {
 		const formData = new FormData();
-		formData.append('senderUserId', '64f51653-6e50-40db-80bf-087461a130bf');
+		formData.append('senderUserId', userDetails.user.userUid);
 		formData.append('courierUserId', courierDetails.courier?.courierUserId ?? '');
 		formData.append('receiverUserId', receiverDetails.userUid);
 		formData.append('preferredModeOfDelivery', modeOfDelivery.join(','));
