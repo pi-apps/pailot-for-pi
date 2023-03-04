@@ -20,9 +20,9 @@ export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 export async function createUserEntry(
 	user: CreateUserDTO
 ): Promise<SuccessResult<UserCourier> | ErrorResult> {
+	let userData: UserCourier;
+	let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
 	try {
-		let userData: UserCourier;
-		let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
 		if (currentUser) {
 			currentUser.accessToken = user.accessToken;
 			currentUser = await UserRepository.save(currentUser);
