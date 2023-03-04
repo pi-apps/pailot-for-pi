@@ -6,3 +6,5 @@ export { ShareLocation } from './ShareLocation/ShareLocation';
 export { OnboardingCompleted } from './OnboardingCompleted/OnboardingCompleted';
 export { CustomizedDelivery } from './CustomizedDelivery/CustomizedDelivery';
 export { ActiveDelivery } from './ActiveDelivery/ActiveDelivery';
+export { CourierForm } from './CourierForm/CourierForm';
+export { CourierDashBoard } from './CourierDashBoard/CourierDashBoard';

@@ -1,6 +1,11 @@
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
 
-export interface DeliveryTypeState {
+interface UserDetailsState {
+	isCourier: boolean;
+	isDelivery: boolean;
+}
+
+interface DeliveryTypeState {
 	deliveryType: string;
 }
 
@@ -42,6 +47,44 @@ type ReceiverDetails = {
 export interface DeliveryDetailsTypeState {
 	deliveryDetails: DeliveryDetailsType;
 }
+
+interface UserCourierDetailstypeState {
+	userCourierDetails: object;
+}
+
+const userCourierDetailsSlice = createSlice({
+	name: 'userCourierDetails',
+	initialState: {
+		userCourierDetails: {
+			modeOfTransportation: '',
+			regionOfOperation: '',
+			startTime: '',
+			endTime: '',
+			amount: 0,
+		},
+	} as UserCourierDetailstypeState,
+	reducers: {
+		setUserCourierDetails: (state, action: PayloadAction<object>) => {
+			state.userCourierDetails = action.payload;
+		},
+	},
+});
+
+const userDetailsSlice = createSlice({
+	name: 'userDetails',
+	initialState: {
+		isCourier: false,
+		isDelivery: false,
+	} as UserDetailsState,
+	reducers: {
+		setIsCourier: (state) => {
+			state.isCourier = !state.isCourier;
+		},
+		setIsDelivery: (state) => {
+			state.isDelivery = !state.isDelivery;
+		},
+	},
+});
 
 const deliveryTypeSlice = createSlice({
 	name: 'deliveryType',
@@ -133,6 +176,8 @@ const deliveryDetailsSlice = createSlice({
 
 const store = configureStore({
 	reducer: {
+		userDetails: userDetailsSlice.reducer,
+		userCourierDetails: userCourierDetailsSlice.reducer,
 		deliveryType: deliveryTypeSlice.reducer,
 		deliveryDetails: deliveryDetailsSlice.reducer,
 	},
@@ -149,6 +194,8 @@ const store = configureStore({
   }),
 });
 
+export const userDetailsActions = userDetailsSlice.actions;
+export const userCourierDetailsActions = userCourierDetailsSlice.actions;
 export const deliveryTypeActions = deliveryTypeSlice.actions;
 export const deliveryDetailsActions = deliveryDetailsSlice.actions;
 

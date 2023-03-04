@@ -29,8 +29,10 @@ import { GrFormSchedule } from 'react-icons/gr';
 import { motion } from 'framer-motion';
 import { logo } from '../../../assets/images';
 import styles from './SettingsHome.module.css';
+import { useSelector } from 'react-redux';
 
 export const SettingsHome = () => {
+	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
@@ -51,7 +53,7 @@ export const SettingsHome = () => {
 								className={styles.cta}
 								type="button"
 							>
-								Switch to Courier
+								{isCourier ? 'Switch to Sender' : 'Switch to Courier'}
 							</motion.button>
 						</div>
 					</div>
