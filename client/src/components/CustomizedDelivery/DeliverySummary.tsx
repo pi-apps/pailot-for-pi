@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import styles from './DeliverySummary.module.css';
 import React, { Dispatch, SetStateAction } from 'react';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
@@ -13,12 +12,7 @@ import { motion } from 'framer-motion';
 import { defaultUser, logo } from '../../assets/images';
 import { summaryImage } from '../../assets/images';
 import { useSelector } from 'react-redux';
-import { DeliveryTypeState, DeliveryDetailsTypeState, RootState } from '../../store/store';
-import { CREATE_TRANSACTION_URL } from '../../constants/url.constants';
-import { fetchWithCredentials } from '../../hooks/useApi';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
+import { RootState } from '../../store/store';
 interface Props {
 	setProgress: Dispatch<SetStateAction<number>>;
 }
@@ -26,7 +20,6 @@ interface Props {
 export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 	const deliveryType = useSelector((state: RootState) => state.deliveryType);
 	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails);
-	const navigate = useNavigate();
 
 	console.log(deliveryType.deliveryType);
 

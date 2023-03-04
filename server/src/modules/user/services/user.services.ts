@@ -7,7 +7,7 @@ import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/
 import { CreateUserDTO, ICourier, UpdateCourierDTO, UpdateUserDTO } from '../../../interfaces/user';
 import { uploadeImageToCloudinary } from '../../../middlewares/cloudinary';
 
-export type CreateOrUpdateUserResult = SuccessResult<User> | ErrorResult;
+export type UpdateUserResult = SuccessResult<User> | ErrorResult;
 export type CreateOrUpdateCourierResult = SuccessResult<Courier> | ErrorResult;
 export type DeleteUserResult = SuccessResult<null> | ErrorResult;
 export type UsersResult = SuccessResult<User[]> | ErrorResult;
@@ -17,12 +17,19 @@ export const UserRepository = AppDataSource.getRepository(User);
 export const CourierRepository = AppDataSource.getRepository(Courier);
 export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 
-export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpdateUserResult> {
+export async function createUserEntry(
+	user: CreateUserDTO
+): Promise<SuccessResult<UserCourier> | ErrorResult> {
 	try {
+		let userData: UserCourier;
 		let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
 		if (currentUser) {
 			currentUser.accessToken = user.accessToken;
 			currentUser = await UserRepository.save(currentUser);
+
+			userData = await UserCourierRepository.findOne({
+				where: { user: { userUid: user.user.uid } },
+			});
 		} else {
 			const createdUser = UserRepository.create({
 				userUid: user.user.uid,
@@ -34,11 +41,11 @@ export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpda
 			const courierUser = UserCourierRepository.create({
 				user: currentUser,
 			});
-			await UserCourierRepository.save(courierUser);
+			userData = await UserCourierRepository.save(courierUser);
 		}
 		return {
 			type: Result.SUCCESS,
-			data: currentUser,
+			data: userData,
 		};
 	} catch (error) {
 		return {
@@ -52,7 +59,7 @@ export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpda
 export async function updateUserEntry(
 	userUid: string,
 	userData: UpdateUserDTO
-): Promise<CreateOrUpdateUserResult> {
+): Promise<UpdateUserResult> {
 	try {
 		const user = await UserRepository.findOne({
 			where: {

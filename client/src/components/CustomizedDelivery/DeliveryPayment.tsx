@@ -1,144 +1,99 @@
-/* eslint-disable no-unused-vars */
 import styles from './DeliveryPayment.module.css';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import { fetchWithCredentials } from '../../hooks/useApi';
-import {
-	APPROVE_PAYMENT_URL,
-	CANCELLED_PAYMENT_URL,
-	COMPLETE_PAYMENT_URL,
-	CREATE_TRANSACTION_URL,
-	INCOMPLETE_PAYMENT_URL,
-} from '../../constants/url.constants';
+import { APPROVE_PAYMENT_URL, CREATE_TRANSACTION_URL } from '../../constants/url.constants';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deliveryDetailsActions, RootState } from '../../store/store';
 import axios from 'axios';
 import { convertStringToNumber } from '../../utils/utils';
-import { PaymentDTO } from '../../types/payment';
+import { onCancel, onError, onReadyForServerCompletion } from '../../utils/paymentsCallback';
 
 interface Props {
 	setProgress: Dispatch<SetStateAction<number>>;
 	uploadedImage: File | undefined;
 }
 
-// const NETWORK_FEE = 0.003;
 const PLATFORM_FEE = 0.001;
 
 export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage }) => {
 	const [transactionAmount, setTransactionAmount] = useState<number>(0);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails);
+	const {
+		courierDetails,
+		receiverDetails,
+		modeOfDelivery,
+		pickupLocation,
+		dropLocation,
+		deliveryRegion,
+		productName,
+		description,
+		weight,
+		size,
+		category,
+	} = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
 
 	const handlePayment = async () => {
-    try {
-      const transaction = await handleSubmitTransaction();
+		try {
+			const transaction = await handleSubmitTransaction();
 
-      const onIncompletePaymentFound = async (payment: PaymentDTO) => {
-        console.log('onIncompletePaymentFound', payment);
-        return await fetchWithCredentials(INCOMPLETE_PAYMENT_URL, {
-          method: 'POST',
-          data: { payment },
-        });
-      };
+			const onReadyForServerApproval = async (paymentId: string) => {
+				console.log('onReadyForServerApproval', paymentId);
+				return await fetchWithCredentials(APPROVE_PAYMENT_URL, {
+					method: 'POST',
+					data: { paymentId, deliveryId: transaction.id },
+				});
+			};
 
-      const onReadyForServerApproval = async (paymentId: string) => {
-        console.log('onReadyForServerApproval', paymentId);
-        return await fetchWithCredentials(APPROVE_PAYMENT_URL, {
-          method: 'POST',
-          data: { paymentId, deliveryId: transaction.id },
-        });
-      };
-
-      const onReadyForServerCompletion = async (paymentId: string, txid: string) => {
-        console.log('onReadyForServerCompletion', paymentId, txid);
-        return await fetchWithCredentials(COMPLETE_PAYMENT_URL, {
-          method: 'POST',
-          data: { paymentId, txid },
-        });
-      };
-
-      const onCancel = async (paymentId: string) => {
-        console.log('onCancel', paymentId);
-        return await fetchWithCredentials(CANCELLED_PAYMENT_URL, {
-          method: 'POST',
-          data: { paymentId },
-        });
-      };
-
-      const onError = (error: Error, payment?: PaymentDTO) => {
-        console.log('onError', error);
-        if (payment) {
-          console.log(payment);
-          // handle the error accordingly
-        }
-      };
-
-      const paymentData = {
-        amount: transaction.transactionAmount,
-        memo: transaction.itemName,
-        metadata: {
-          deliveryId: transaction.id,
-        },
-      };
-      const callbacks = {
-        onReadyForServerApproval,
-        onReadyForServerCompletion,
-        onCancel,
-        onError,
-      };
-      console.log(window);
-      const payment = await window.Pi.createPayment(paymentData, callbacks);
-      console.log(payment);
-      setProgress(8);
-    } catch (error) {
-      console.log(error);
-    }
-
+			const paymentData = {
+				amount: transaction.transactionAmount,
+				memo: transaction.itemName,
+				metadata: {
+					deliveryId: transaction.id,
+				},
+			};
+			const callbacks = {
+				onReadyForServerApproval,
+				onReadyForServerCompletion,
+				onCancel,
+				onError,
+			};
+			console.log(window);
+			const payment = await window.Pi.createPayment(paymentData, callbacks);
+			console.log(payment);
+			setProgress(8);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleSubmitTransaction = async () => {
 		const formData = new FormData();
-		const transactionData = {
-			senderUserId: '64f51653-6e50-40db-80bf-087461a130bf',
-			courierUserId: deliveryDetails.deliveryDetails.courierDetails.courierUserId,
-			receiverUserId: deliveryDetails.deliveryDetails.receiverDetails.receiverUserId,
-			preferredModeOfDelivery: deliveryDetails.deliveryDetails.modeOfDelivery.join(','),
-			fromAddress: deliveryDetails.deliveryDetails.pickupLocation,
-			toAddress: deliveryDetails.deliveryDetails.dropLocation,
-			itemImage: uploadedImage ? uploadedImage : '',
-			itemName: deliveryDetails.deliveryDetails.productName,
-			itemDescription: deliveryDetails.deliveryDetails.description,
-			itemWeight: convertStringToNumber(deliveryDetails.deliveryDetails.weight),
-			itemSize: convertStringToNumber(deliveryDetails.deliveryDetails.size),
-			transactionAmount: transactionAmount,
-			itemCategory: deliveryDetails.deliveryDetails.category,
-			deliveryRange: deliveryDetails.deliveryDetails.deliveryRegion,
-		};
-		formData.append('senderUserId', transactionData.senderUserId);
-		formData.append('courierUserId', transactionData.courierUserId);
-		formData.append('receiverUserId', transactionData.receiverUserId);
-		formData.append('preferredModeOfDelivery', transactionData.preferredModeOfDelivery);
-		formData.append('fromAddress', transactionData.fromAddress);
-		formData.append('toAddress', transactionData.toAddress);
-		formData.append('image', transactionData.itemImage);
-		formData.append('itemName', transactionData.itemName);
-		formData.append('itemDescription', transactionData.itemDescription);
-		formData.append('itemWeight', `${transactionData.itemWeight}`);
-		formData.append('itemSize', `${transactionData.itemSize}`);
-		formData.append('transactionAmount', `${transactionData.transactionAmount}`);
-		formData.append('itemCategory', transactionData.itemCategory);
-		formData.append('deliveryRange', transactionData.deliveryRange);
-    console.log(formData);
+		formData.append('senderUserId', '64f51653-6e50-40db-80bf-087461a130bf');
+		formData.append('courierUserId', courierDetails.courierUserId);
+		formData.append('receiverUserId', receiverDetails.receiverUserId);
+		formData.append('preferredModeOfDelivery', modeOfDelivery.join(','));
+		formData.append('fromAddress', pickupLocation);
+		formData.append('toAddress', dropLocation);
+		formData.append('image', uploadedImage ? uploadedImage : '');
+		formData.append('itemName', productName);
+		formData.append('itemDescription', description);
+		formData.append('itemWeight', `${convertStringToNumber(weight)}`);
+		formData.append('itemSize', `${convertStringToNumber(size)}`);
+		formData.append('transactionAmount', `${transactionAmount}`);
+		formData.append('itemCategory', category);
+		formData.append('deliveryRange', deliveryRegion);
+		console.log(formData);
 		try {
 			const transaction = await fetchWithCredentials(CREATE_TRANSACTION_URL, {
 				method: 'POST',
 				data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
 			});
 			console.log(transaction);
 			return transaction.data;
@@ -152,6 +107,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 			throw error;
 		}
 	};
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.top__bar}>
@@ -200,10 +156,6 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 				</label>
 				<div className={styles.charges}>
 					<div className={styles.fees}>
-						{/* <div>
-							<p>Network fee:</p>
-							<span>{NETWORK_FEE}</span>
-						</div> */}
 						<div>
 							<p>Platform fee:</p>
 							<span>{PLATFORM_FEE}</span>
@@ -224,11 +176,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 				}}
 				className={styles.cta__container}
 			>
-				<button
-					type="button"
-					className={styles.cta}
-					onClick={handlePayment}
-				>
+				<button type="button" className={styles.cta} onClick={handlePayment}>
 					Pay with Pi
 				</button>
 			</motion.div>

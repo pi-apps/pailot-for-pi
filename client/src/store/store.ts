@@ -1,15 +1,28 @@
+/* eslint-disable no-unused-vars */
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserDetailsState {
 	isCourier: boolean;
 	isDelivery: boolean;
+	accessToken: string;
+	imagePublicId: string;
+	profileImg: string;
+	userRole: UserRole;
+	userUid: string;
+	username: string;
+	walletAddress: string;
+}
+
+export enum UserRole {
+	USER = 1,
+	COURIER = 2,
 }
 
 interface DeliveryTypeState {
 	deliveryType: string;
 }
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
 type DeliveryDetailsType = {
 	imageName: string;
@@ -27,7 +40,7 @@ type DeliveryDetailsType = {
 	receiversUsername: string;
 	pickupLocation: string;
 	dropLocation: string;
-  transactionAmount?: number;
+	transactionAmount?: number;
 };
 
 type CourierDetails = {
@@ -75,6 +88,13 @@ const userDetailsSlice = createSlice({
 	initialState: {
 		isCourier: false,
 		isDelivery: false,
+		accessToken: '',
+		imagePublicId: '',
+		profileImg: '',
+		userRole: UserRole.USER,
+		userUid: '',
+		username: '',
+		walletAddress: '',
 	} as UserDetailsState,
 	reducers: {
 		setIsCourier: (state) => {
@@ -125,7 +145,7 @@ const deliveryDetailsSlice = createSlice({
 			deliveryRegion: '',
 			pickupLocation: '',
 			dropLocation: '',
-      transactionAmount: 0,
+			transactionAmount: 0,
 		},
 	} as DeliveryDetailsTypeState,
 	reducers: {
@@ -168,9 +188,9 @@ const deliveryDetailsSlice = createSlice({
 		setDropLocation: (state, action: PayloadAction<string>) => {
 			state.deliveryDetails = { ...state.deliveryDetails, dropLocation: action.payload };
 		},
-    setTransactionAmount: (state, action: PayloadAction<number>) => {
-      state.deliveryDetails = { ...state.deliveryDetails, transactionAmount: action.payload };
-    }
+		setTransactionAmount: (state, action: PayloadAction<number>) => {
+			state.deliveryDetails = { ...state.deliveryDetails, transactionAmount: action.payload };
+		},
 	},
 });
 
@@ -181,17 +201,17 @@ const store = configureStore({
 		deliveryType: deliveryTypeSlice.reducer,
 		deliveryDetails: deliveryDetailsSlice.reducer,
 	},
-  middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware({
-    serializableCheck: {
-      // Ignore these action types
-      // ignoredActions: ['your/action/type'],
-      // Ignore these field paths in all actions
-      ignoredActionPaths: ['payload.image'],
-      // Ignore these paths in the state
-      ignoredPaths: ['deliveryDetails.image'],
-    },
-  }),
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				// Ignore these action types
+				// ignoredActions: ['your/action/type'],
+				// Ignore these field paths in all actions
+				ignoredActionPaths: ['payload.image'],
+				// Ignore these paths in the state
+				ignoredPaths: ['deliveryDetails.image'],
+			},
+		}),
 });
 
 export const userDetailsActions = userDetailsSlice.actions;

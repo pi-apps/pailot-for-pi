@@ -1,13 +1,13 @@
+// const API_URL_BASE = 'https://pailot-backend.onrender.com';
 const API_URL_BASE = 'http://localhost:3333';
 
 // Auth Endpoints
 export const SIGN_IN_URL = `${API_URL_BASE}/user/sign-in`;
-export const LOG_OUT_URL = `${API_URL_BASE}/user/sign-out`;
 
 // User Endpoints
 export const CREATE_USER_URL = `${API_URL_BASE}/user`;
 export const GET_ALL_USER_URL = `${API_URL_BASE}/user`;
-export const GET_USER_URL = (userId: string) => `${API_URL_BASE}/user/${userId}`;
+export const GET_USER_URL = `${API_URL_BASE}/user/profile`;
 export const GET_USER_BY_USERNAME_URL = (username: string) => `${API_URL_BASE}/user/${username}`;
 export const UPDATE_USER_URL = (userId: string) => `${API_URL_BASE}/user/${userId}`;
 export const DELETE_USER_URL = (userId: string) => `${API_URL_BASE}/user/${userId}`;

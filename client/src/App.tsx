@@ -11,13 +11,13 @@ import {
 	CourierForm,
 	CourierDashBoard,
 } from './pages';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeInFast } from './animations';
 
 function App() {
 	return (
-		<BrowserRouter>
+		<Router initialEntries={['/']}>
 			<AnimatePresence>
 				<motion.div animate={fadeInFast}>
 					<AnimatePresence>
@@ -36,7 +36,7 @@ function App() {
 					</AnimatePresence>
 				</motion.div>
 			</AnimatePresence>
-		</BrowserRouter>
+		</Router>
 	);
 }
 

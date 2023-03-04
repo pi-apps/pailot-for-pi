@@ -20,8 +20,8 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const navigate = useNavigate();
-	const handleCheckbox = () => {
-		setToggleActive(!toggleActive);
+	const handleCheckbox = (e: any) => {
+		setToggleActive(e.target.checked);
 	};
 
 	const onIncompletePaymentFound = async (payment: PaymentDTO) => {
@@ -50,6 +50,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 				);
 				console.log(authResult);
 				const user = await signInUser(authResult);
+        sessionStorage.setItem('user', JSON.stringify(user.data.data));
 				console.log(user);
 				setIsLoading(false);
 				navigate('/share-location');
@@ -86,7 +87,7 @@ export const AllowPi = ({ setCloseFingerPrint }: Props) => {
 					</p>
 					<div className={styles.cta__container}>
 						<label className={styles.tick}>
-							<input type="checkbox" onChange={handleCheckbox} />
+							<input type="checkbox" onChange={(e) => handleCheckbox(e)} />
 							<p>I agree to allow Pailot connect to my Pi account </p>
 						</label>
 						<button
