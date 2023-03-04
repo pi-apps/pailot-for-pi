@@ -43,11 +43,13 @@ export async function createUserEntry(
 			});
 			userData = await UserCourierRepository.save(courierUser);
 		}
+		console.log(userData);
 		return {
 			type: Result.SUCCESS,
 			data: userData,
 		};
 	} catch (error) {
+		console.error(error);
 		return {
 			type: Result.ERROR,
 			message: `An unexpected error occurred while creating user`,
