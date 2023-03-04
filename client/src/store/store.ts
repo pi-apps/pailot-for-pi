@@ -1,11 +1,46 @@
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
 
-interface DeliveryTypeState {
+export interface DeliveryTypeState {
 	deliveryType: string;
 }
 
-interface DeliveryDetailsTypeState {
-	deliveryDetails: object;
+export type RootState = ReturnType<typeof store.getState>
+
+type DeliveryDetailsType = {
+	imageName: string;
+	imageURL: string;
+	productName: string;
+	description: string;
+	weight: string;
+	size: string;
+	category: string;
+	modeOfDelivery: string[];
+	courierDetails: CourierDetails;
+	receiverDetails: ReceiverDetails;
+	deliveryRegion: string;
+	receiverProfilePicture: string;
+	receiversUsername: string;
+	pickupLocation: string;
+	dropLocation: string;
+  transactionAmount?: number;
+};
+
+type CourierDetails = {
+	courierUserName: string;
+	courierUserId: string;
+	courierProfileImage: string;
+	newUser: boolean;
+	status: 'pending' | 'pick';
+};
+
+type ReceiverDetails = {
+	receiverUserName: string;
+	receiverUserId: string;
+	receiverProfileImage: string;
+};
+
+export interface DeliveryDetailsTypeState {
+	deliveryDetails: DeliveryDetailsType;
 }
 
 const deliveryTypeSlice = createSlice({
@@ -26,18 +61,28 @@ const deliveryDetailsSlice = createSlice({
 		deliveryDetails: {
 			imageName: 'file name',
 			imageURL: '',
-			productName: 'Product name sample',
-			description: 'Description details.....',
-			weight: 'Weight info',
-			size: 'Size info',
-			category: 'Phone and Tablet',
-			modeOfDelivery: ['No data'],
-			courierDetails: 'No courier',
-			deliveryRegion: 'Region',
-			receiverProfilePicture: '',
-			receiversUsername: '@piusername',
-			pickupLocation: 'Location Merchant',
-			dropLocation: 'Location Receiver',
+			productName: '',
+			description: '',
+			weight: '',
+			size: '',
+			category: '',
+			modeOfDelivery: [''],
+			courierDetails: {
+				courierUserName: '@piCourierUsername',
+				courierProfileImage: '',
+				courierUserId: '',
+				newUser: true,
+				status: 'pending',
+			},
+			receiverDetails: {
+				receiverUserName: '@piReceiverUsername',
+				receiverUserId: '64f51653-6e50-40db-80bf-087461a130bf',
+				receiverProfileImage: '',
+			},
+			deliveryRegion: '',
+			pickupLocation: '',
+			dropLocation: '',
+      transactionAmount: 0,
 		},
 	} as DeliveryDetailsTypeState,
 	reducers: {
@@ -80,6 +125,9 @@ const deliveryDetailsSlice = createSlice({
 		setDropLocation: (state, action: PayloadAction<string>) => {
 			state.deliveryDetails = { ...state.deliveryDetails, dropLocation: action.payload };
 		},
+    setTransactionAmount: (state, action: PayloadAction<number>) => {
+      state.deliveryDetails = { ...state.deliveryDetails, transactionAmount: action.payload };
+    }
 	},
 });
 
@@ -88,6 +136,17 @@ const store = configureStore({
 		deliveryType: deliveryTypeSlice.reducer,
 		deliveryDetails: deliveryDetailsSlice.reducer,
 	},
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      // Ignore these action types
+      // ignoredActions: ['your/action/type'],
+      // Ignore these field paths in all actions
+      ignoredActionPaths: ['payload.image'],
+      // Ignore these paths in the state
+      ignoredPaths: ['deliveryDetails.image'],
+    },
+  }),
 });
 
 export const deliveryTypeActions = deliveryTypeSlice.actions;

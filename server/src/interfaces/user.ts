@@ -14,7 +14,7 @@ export interface ICourier {
 	modeOfTransportation: string;
 	regionOfOperation: string;
 	preferredDeliveryAmount: number;
-	country: string;
+	isActive: boolean;
 	earnings: number;
 }
 
@@ -24,7 +24,7 @@ export interface UpdateCourierDTO {
 	preferredDeliveryAmount?: number;
 	numberOfLikes?: number;
 	rating?: number;
-	country?: string;
+	isActive?: boolean;
 	earnings?: number;
 }
 
@@ -32,6 +32,7 @@ export interface UpdateUserDTO {
 	walletAddress?: string;
 	profileImg?: string;
 	accessToken?: string;
+	userRole?: UserRole;
 }
 
 export type CreateUserDTO = {
@@ -45,4 +46,27 @@ export type CreateUserDTO = {
 export enum UserRole {
 	USER = 1,
 	COURIER = 2,
+}
+
+export interface UserCourier {
+	id: string;
+	user: {
+		userUid: string;
+		username: string;
+		walletAddress: string | null;
+		profileImg: string | null;
+		accessToken: string;
+		imagePublicId: string | null;
+		userRole: UserRole;
+	};
+	courier: {
+		courierUserId: string;
+		numberOfLikes: number;
+		rating: number;
+		modeOfTransportation: string;
+		regionOfOperation: string;
+		preferredDeliveryAmount: number;
+		isActive: boolean;
+		earnings: number;
+	} | null;
 }

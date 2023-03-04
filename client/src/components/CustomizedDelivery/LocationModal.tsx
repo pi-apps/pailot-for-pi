@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styles from './LocationModal.module.css';
 import { MdOutlineClose } from 'react-icons/md';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface Props {
 	closeModal: () => void;
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 	deliveryDetailsSubmitHandler: () => void;
 }
 

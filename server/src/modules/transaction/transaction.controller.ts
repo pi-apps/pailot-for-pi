@@ -3,7 +3,7 @@ import { deleteTransaction } from './handlers/deleteTransaction';
 import { getAllTransactions } from './handlers/getAllTransactions';
 import { getTransaction } from './handlers/getTransaction';
 import { isAuthenticated } from '../../middlewares/session';
-import { multerUploadImage } from '../../middlewares/multer';
+import { multerUploadImage, profileImageUpload } from '../../middlewares/multer';
 import { createTransaction } from './handlers/createTransaction';
 import { updateTransactionStatus } from './handlers/updateTransactionStatus';
 import { acceptPendingTransaction } from './handlers/acceptPendingTransaction';
@@ -16,17 +16,17 @@ import { getAllTransactionsForReceiverByUsername } from './handlers/getAllTransa
 
 const transactionRouter = Router();
 
-transactionRouter.post('/', isAuthenticated, multerUploadImage, createTransaction);
 transactionRouter.get('/', isAuthenticated, getAllTransactions);
-transactionRouter.get('/pending', isAuthenticated, getAllPendingTransactions);
+transactionRouter.post('/', profileImageUpload, createTransaction);
 transactionRouter.get('/:id', isAuthenticated, getTransaction);
 transactionRouter.patch('/:id', isAuthenticated, multerUploadImage, updateTransaction);
+transactionRouter.get('/pending', isAuthenticated, getAllPendingTransactions);
+transactionRouter.delete('/:id', isAuthenticated, deleteTransaction);
 transactionRouter.patch('/status/:id', isAuthenticated, updateTransactionStatus);
 transactionRouter.patch('/requests/accept-pending', isAuthenticated, acceptPendingTransaction);
-transactionRouter.delete('/:id', isAuthenticated, deleteTransaction);
-transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForSender);
-transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForCourier);
-transactionRouter.get('/:id', isAuthenticated, getAllTransactionsForReceiver);
+transactionRouter.get('/sender/:id', isAuthenticated, getAllTransactionsForSender);
+transactionRouter.get('/courier/:id', isAuthenticated, getAllTransactionsForCourier);
+transactionRouter.get('/receiver/:id', isAuthenticated, getAllTransactionsForReceiver);
 transactionRouter.get('/username', isAuthenticated, getAllTransactionsForReceiverByUsername);
 
 export const TransactionController = { router: transactionRouter };

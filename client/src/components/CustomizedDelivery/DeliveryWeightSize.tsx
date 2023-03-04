@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Dispatch, SetStateAction } from 'react';
 import styles from './DeliveryWeightSize.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
@@ -9,8 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deliveryDetailsActions } from '../../store/store';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 }
 
 export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {

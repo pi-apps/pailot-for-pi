@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styles from './UploadDeliveryImage.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
@@ -6,30 +6,44 @@ import { RiUploadCloud2Line } from 'react-icons/ri';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
-import { deliveryDetailsActions } from '../../store/store';
+import { deliveryDetailsActions, RootState } from '../../store/store';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
+	setUploadedImage: Dispatch<SetStateAction<File | undefined>>;
+	uploadedImage: File | undefined;
 }
 
-export const UploadDeliveryImage: React.FC<Props> = ({ setProgress }) => {
-	const [uploadedImageName, setUploadedImageName] = useState<string>('xyzfile.extension');
-	const [uploadedImageURL, setUploadedImageURL] = useState<string>('');
+export const UploadDeliveryImage: React.FC<Props> = ({
+	setProgress,
+	setUploadedImage,
+	uploadedImage,
+}) => {
+	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
+  const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+  
+	const [uploadedImageName, setUploadedImageName] = useState<string>(deliveryDetails.imageName);
+	const [uploadedImageURL, setUploadedImageURL] = useState<string>(deliveryDetails.imageURL);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
 	const inputRef = useRef<any>();
 	const onChangeHandler = () => {
 		if (inputRef.current.files && inputRef.current.files.length > 0) {
 			const url = URL.createObjectURL(inputRef.current.files[0]);
+			setUploadedImage(inputRef.current.files[0]);
 			setUploadedImageName(inputRef.current.files[0].name);
 			setUploadedImageURL(url);
 			console.log(uploadedImageURL);
 		}
 	};
 	const deliveryDetailsSubmitHandler = () => {
-		if (!inputRef.current.files || inputRef.current.files.length === 0 || !uploadedImageURL) return;
+		if (
+			!inputRef.current.files ||
+			inputRef.current.files.length === 0 ||
+			!uploadedImageURL ||
+			!uploadedImage
+		)
+			return;
 
 		dispatch(deliveryDetailsActions.setImageName(uploadedImageName));
 		dispatch(deliveryDetailsActions.setImageURL(uploadedImageURL));

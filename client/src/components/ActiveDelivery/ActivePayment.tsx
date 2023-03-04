@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 interface Props {
 	// eslint-disable-next-line no-unused-vars
 	setProgress: (value: number) => void;
+  uploadedImage: File | undefined;
 }
 
 export const ActivePayment: React.FC<Props> = ({ setProgress }) => {

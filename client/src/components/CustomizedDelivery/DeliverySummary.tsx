@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import styles from './DeliverySummary.module.css';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { RiEBike2Fill } from 'react-icons/ri';
@@ -12,16 +13,22 @@ import { motion } from 'framer-motion';
 import { defaultUser, logo } from '../../assets/images';
 import { summaryImage } from '../../assets/images';
 import { useSelector } from 'react-redux';
+import { DeliveryTypeState, DeliveryDetailsTypeState, RootState } from '../../store/store';
+import { CREATE_TRANSACTION_URL } from '../../constants/url.constants';
+import { fetchWithCredentials } from '../../hooks/useApi';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 }
 
 export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
-	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
-	const deliveryDetails = useSelector((state: any) => state.deliveryDetails.deliveryDetails);
-	console.log(deliveryDetails);
+	const deliveryType = useSelector((state: RootState) => state.deliveryType);
+	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails);
+	const navigate = useNavigate();
+
+	console.log(deliveryType.deliveryType);
 
 	return (
 		<div className={styles.container}>
@@ -46,7 +53,11 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					<div>
 						<div className={styles.delivery__img__container}>
 							<img
-								src={deliveryDetails.imageURL ? deliveryDetails.imageURL : summaryImage}
+								src={
+									deliveryDetails.deliveryDetails.imageURL
+										? deliveryDetails.deliveryDetails.imageURL
+										: summaryImage
+								}
 								alt="Delivery Image"
 							/>
 						</div>
@@ -54,43 +65,45 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 							<AiOutlineEdit className={styles.icon} />
 						</div>
 					</div>
-					<span>{deliveryDetails.imageName} </span>
+					<span>{deliveryDetails.deliveryDetails.imageName} </span>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Product name:</p>
-					<p className={styles.value}>{deliveryDetails.productName}</p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.productName}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Description:</p>
-					<p className={styles.value}>{`${deliveryDetails.description.slice(0, 19)}...`} </p>
+					<p className={styles.value}>
+						{`${deliveryDetails.deliveryDetails.description.slice(0, 19)}...`}{' '}
+					</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Weight:</p>
-					<p className={styles.value}>{deliveryDetails.weight} </p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.weight} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Size:</p>
-					<p className={styles.value}>{deliveryDetails.size} </p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.size} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>
-						{deliveryType === 'customized' ? 'Mode of Delivery:' : 'Your Courier:'}
+						{deliveryType.deliveryType === 'customized' ? 'Mode of Delivery:' : 'Your Courier:'}
 					</p>
-					{deliveryType === 'customized' && (
+					{deliveryType.deliveryType === 'customized' && (
 						<div className={styles.modes__of__delivery}>
-							{deliveryDetails.modeOfDelivery.map((mod: string) => {
+							{deliveryDetails.deliveryDetails.modeOfDelivery.map((mod: string) => {
 								if (mod === 'Bicycle') {
 									return (
 										<div className={styles.bicycle__mod} key={mod}>
@@ -130,19 +143,24 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 							})}
 						</div>
 					)}
-					{deliveryType === 'active' && (
+					{deliveryType.deliveryType === 'active' && (
 						<div className={styles.courier__details}>
-							<img src={defaultUser} alt="Couriers Profile picture" />
+							<img
+								src={
+									deliveryDetails.deliveryDetails.courierDetails.courierProfileImage ?? defaultUser
+								}
+								alt="Couriers Profile picture"
+							/>
 							<span className={styles.courier__username}>
-								{deliveryDetails.courierDetails.courierUserName}{' '}
+								{deliveryDetails.deliveryDetails.courierDetails.courierUserName}{' '}
 							</span>
-							{deliveryDetails.courierDetails.newUser && (
+							{deliveryDetails.deliveryDetails.courierDetails.newUser && (
 								<span className={styles.new__user}>New user</span>
 							)}
-							{deliveryDetails.courierDetails.status === 'pending' && (
+							{deliveryDetails.deliveryDetails.courierDetails.status === 'pending' && (
 								<span className={styles.courier__status__pending}>Pending</span>
 							)}
-							{deliveryDetails.courierDetails.status === 'pick' && (
+							{deliveryDetails.deliveryDetails.courierDetails.status === 'pick' && (
 								<span className={styles.courier__status__picked}>Picked</span>
 							)}
 						</div>
@@ -150,7 +168,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Delivery Region:</p>
-					<p className={styles.value}>{deliveryDetails.dropLocation} </p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.dropLocation} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
@@ -160,13 +178,13 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					<div className={styles.receivers__username}>
 						<img
 							src={
-								deliveryDetails.receiverProfilePicture
-									? deliveryDetails.receiverProfilePicture
+								deliveryDetails.deliveryDetails.receiverProfilePicture
+									? deliveryDetails.deliveryDetails.receiverProfilePicture
 									: logo
 							}
 							alt="User's Profile Photo"
 						/>
-						<p>{deliveryDetails.receiversUsername}</p>
+						<p>{deliveryDetails.deliveryDetails.receiversUsername}</p>
 					</div>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
@@ -174,14 +192,14 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Pickup Location:</p>
-					<p className={styles.value}>{deliveryDetails.pickupLocation}</p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.pickupLocation}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Drop Location:</p>
-					<p className={styles.value}>{deliveryDetails.dropLocation}</p>
+					<p className={styles.value}>{deliveryDetails.deliveryDetails.dropLocation}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>

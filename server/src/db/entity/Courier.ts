@@ -15,8 +15,8 @@ export class Courier {
 	@Column({ type: 'float4', name: 'rating', default: 0.0 })
 	rating: number;
 
-	@Column({ type: 'varchar', length: 255 })
-	country: string;
+	@Column({ type: 'varchar', length: 255, name: 'is_active', default: true })
+	isActive: boolean;
 
 	@Column({ type: 'varchar', length: 255, name: 'mode_of_transportation' })
 	modeOfTransportation: string;

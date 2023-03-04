@@ -1,5 +1,5 @@
 import styles from './DeliveryLocation.module.css';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 // import { RiEBike2Line } from 'react-icons/ri';
 import { GiCancel } from 'react-icons/gi';
@@ -11,20 +11,21 @@ import { motion } from 'framer-motion';
 import { LocationModal } from './LocationModal';
 // import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deliveryDetailsActions } from '../../store/store';
+import { deliveryDetailsActions, RootState } from '../../store/store';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 }
 
 export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
+  const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
+  const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+
 	const [loadingState, setLoadingState] = useState<string>('error');
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [pickupLocation, setPickupLocation] = useState<string>('');
-	const [dropLocation, setDropLocation] = useState<string>('');
-	const [receiverUserName, setReceiverUserName] = useState<string>('');
-	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
+	const [pickupLocation, setPickupLocation] = useState<string>(deliveryDetails.pickupLocation);
+	const [dropLocation, setDropLocation] = useState<string>(deliveryDetails.dropLocation);
+	const [receiverUserName, setReceiverUserName] = useState<string>(deliveryDetails.receiverDetails.receiverUserName);
 	const dispatch = useDispatch();
 	const closeModal = () => {
 		setShowModal(false);

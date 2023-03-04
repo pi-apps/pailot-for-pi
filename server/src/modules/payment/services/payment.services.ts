@@ -21,7 +21,7 @@ export interface PaymentData {
 	amount: number;
 	memo: string;
 	metadata: {
-		test?: string;
+		[x: string]: string;
 	};
 	uid: string;
 }

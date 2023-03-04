@@ -1,4 +1,4 @@
-const API_URL_BASE = 'https://pailot-backend.onrender.com';
+const API_URL_BASE = 'http://localhost:3333';
 
 // Auth Endpoints
 export const SIGN_IN_URL = `${API_URL_BASE}/user/sign-in`;

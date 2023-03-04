@@ -227,7 +227,6 @@ export async function createCourierEntry(courier: ICourier): Promise<CreateOrUpd
 				modeOfTransportation: courier.modeOfTransportation,
 				regionOfOperation: courier.regionOfOperation,
 				preferredDeliveryAmount: courier.preferredDeliveryAmount,
-				country: courier.country,
 			});
 			currentCourier = await CourierRepository.save(createdUser);
 			const courierUser = await UserCourierRepository.findOne({
