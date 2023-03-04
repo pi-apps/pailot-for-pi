@@ -83,3 +83,7 @@
 	font-weight: 300;
 	color: var(--white);
 }
+
+.error {
+  color: #cc0000;
+}
