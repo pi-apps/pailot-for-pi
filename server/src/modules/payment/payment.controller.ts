@@ -9,7 +9,7 @@ import { auth } from '../../middlewares/auth';
 const paymentRouter = Router();
 
 paymentRouter.post('/approve', auth, approveU2APayment);
-paymentRouter.post('/incomplete', auth, incompleteU2APayment);
+paymentRouter.post('/incomplete', incompleteU2APayment);
 paymentRouter.post('/complete', auth, completeU2APayment);
 paymentRouter.post('/cancel', auth, cancelledU2APayment);
 paymentRouter.get('/courier/withdraw', auth, withdrawPI);

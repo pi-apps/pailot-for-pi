@@ -3,14 +3,19 @@ import { logo } from '../../../assets/images';
 import styles from './ScreenTwo.module.css';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userDetailsActions } from '../../../store/store';
 
 export const ScreenTwo = () => {
 	const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 	const handleAnimationComplete = () => {
 		const userData = sessionStorage.getItem('user');
 		if (userData) {
-			console.log(JSON.parse(userData));
+			const data = JSON.parse(userData);
+      dispatch(userDetailsActions.setUserDetails({ user: data.user }));
+      dispatch(userDetailsActions.setCourierDetails({ courier: data.courier }));
 			navigate('/home');
 		} else {
 			navigate('/welcome');

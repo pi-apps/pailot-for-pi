@@ -19,7 +19,7 @@ interface Props {
 
 export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 	const deliveryType = useSelector((state: RootState) => state.deliveryType);
-	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails);
+	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
 
 	console.log(deliveryType.deliveryType);
 
@@ -47,8 +47,8 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 						<div className={styles.delivery__img__container}>
 							<img
 								src={
-									deliveryDetails.deliveryDetails.imageURL
-										? deliveryDetails.deliveryDetails.imageURL
+									deliveryDetails.imageURL
+										? deliveryDetails.imageURL
 										: summaryImage
 								}
 								alt="Delivery Image"
@@ -58,11 +58,11 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 							<AiOutlineEdit className={styles.icon} />
 						</div>
 					</div>
-					<span>{deliveryDetails.deliveryDetails.imageName} </span>
+					<span>{deliveryDetails.imageName} </span>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Product name:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.productName}</p>
+					<p className={styles.value}>{deliveryDetails.productName}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
@@ -70,7 +70,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Description:</p>
 					<p className={styles.value}>
-						{`${deliveryDetails.deliveryDetails.description.slice(0, 19)}...`}{' '}
+						{`${deliveryDetails.description.slice(0, 19)}...`}{' '}
 					</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
@@ -78,14 +78,14 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Weight:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.weight} </p>
+					<p className={styles.value}>{deliveryDetails.weight} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Size:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.size} </p>
+					<p className={styles.value}>{deliveryDetails.size} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
@@ -96,7 +96,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					</p>
 					{deliveryType.deliveryType === 'customized' && (
 						<div className={styles.modes__of__delivery}>
-							{deliveryDetails.deliveryDetails.modeOfDelivery.map((mod: string) => {
+							{deliveryDetails.modeOfDelivery.map((mod: string) => {
 								if (mod === 'Bicycle') {
 									return (
 										<div className={styles.bicycle__mod} key={mod}>
@@ -140,20 +140,20 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 						<div className={styles.courier__details}>
 							<img
 								src={
-									deliveryDetails.deliveryDetails.courierDetails.courierProfileImage ?? defaultUser
+									deliveryDetails.courierDetails.user.profileImg ?? defaultUser
 								}
 								alt="Couriers Profile picture"
 							/>
 							<span className={styles.courier__username}>
-								{deliveryDetails.deliveryDetails.courierDetails.courierUserName}{' '}
+								{deliveryDetails.courierDetails.user.username}{' '}
 							</span>
-							{deliveryDetails.deliveryDetails.courierDetails.newUser && (
+							{deliveryDetails.courierDetails.newUser && (
 								<span className={styles.new__user}>New user</span>
 							)}
-							{deliveryDetails.deliveryDetails.courierDetails.status === 'pending' && (
+							{deliveryDetails.courierDetails.status === 'pending' && (
 								<span className={styles.courier__status__pending}>Pending</span>
 							)}
-							{deliveryDetails.deliveryDetails.courierDetails.status === 'pick' && (
+							{deliveryDetails.courierDetails.status === 'pick' && (
 								<span className={styles.courier__status__picked}>Picked</span>
 							)}
 						</div>
@@ -161,7 +161,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Delivery Region:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.dropLocation} </p>
+					<p className={styles.value}>{deliveryDetails.dropLocation} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
@@ -171,13 +171,13 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 					<div className={styles.receivers__username}>
 						<img
 							src={
-								deliveryDetails.deliveryDetails.receiverProfilePicture
-									? deliveryDetails.deliveryDetails.receiverProfilePicture
+								deliveryDetails.receiverDetails.profileImg
+									? deliveryDetails.receiverDetails.profileImg
 									: logo
 							}
 							alt="User's Profile Photo"
 						/>
-						<p>{deliveryDetails.deliveryDetails.receiversUsername}</p>
+						<p>{deliveryDetails.receiverDetails.username}</p>
 					</div>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
@@ -185,14 +185,14 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Pickup Location:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.pickupLocation}</p>
+					<p className={styles.value}>{deliveryDetails.pickupLocation}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Drop Location:</p>
-					<p className={styles.value}>{deliveryDetails.deliveryDetails.dropLocation}</p>
+					<p className={styles.value}>{deliveryDetails.dropLocation}</p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>

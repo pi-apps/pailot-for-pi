@@ -82,11 +82,17 @@ export async function accountToUserPayment(
 
 export async function cancelledUserToAppPayment(
 	paymentId: string
-): Promise<SuccessResult<string> | ErrorResult> {
+): Promise<SuccessResult<string> | NotFoundResult | ErrorResult> {
 	try {
 		const transaction = await TransactionRepository.findOne({
 			where: { paymentId: { paymentId } },
 		});
+		if (!transaction) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Trabsaction for paymentId ${paymentId} not found`,
+			};
+		}
 		transaction.paymentId = null;
 		await TransactionRepository.save(transaction);
 		await EarningRepository.update({ paymentId }, { paymentStatus: PaymentStatus.CANCELLED });
@@ -110,11 +116,13 @@ export async function approveUserToAppPayment(
 		const transaction = await TransactionRepository.findOne({
 			where: { id: paymentData.deliveryId },
 		});
+		console.log(transaction);
 
 		const createEarning = EarningRepository.create({
 			paymentId: paymentData.paymentId,
 			amount: paymentData.amount,
 		});
+		console.log(createEarning);
 		await EarningRepository.save(createEarning);
 		transaction.paymentId = createEarning;
 		await TransactionRepository.save(transaction);
@@ -191,7 +199,7 @@ export async function completeUserToAppPayment(
 	} catch (error) {
 		return {
 			type: Result.ERROR,
-			message: `An unexpected error occured while trying to complete transaction with txid ${transactionId}`,
+			message: `An unexpected error occured while trying to complete transaction with txid ${transactionId} and paymentId ${paymentId}`,
 			error,
 		};
 	}

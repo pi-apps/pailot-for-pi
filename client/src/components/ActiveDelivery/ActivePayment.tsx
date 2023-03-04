@@ -4,6 +4,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import { defaultUser } from '../../assets/images';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export const ActivePayment: React.FC<Props> = ({ setProgress }) => {
-	const deliveryDetails = useSelector((state: any) => state.deliveryDetails.deliveryDetails);
+	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
 	return (
 		<div className={styles.container}>
 			<div className={styles.top__bar}>
@@ -34,7 +35,7 @@ export const ActivePayment: React.FC<Props> = ({ setProgress }) => {
 				<div className={styles.courier__details}>
 					<img src={defaultUser} alt="Couriers Profile picture" />
 					<span className={styles.courier__username}>
-						{deliveryDetails.courierDetails.courierUserName}{' '}
+						{deliveryDetails.courierDetails.user.username}{' '}
 					</span>
 					{deliveryDetails.courierDetails.newUser && (
 						<span className={styles.new__user}>New user</span>

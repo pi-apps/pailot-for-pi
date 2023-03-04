@@ -44,26 +44,29 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 				console.log('onReadyForServerApproval', paymentId);
 				return await fetchWithCredentials(APPROVE_PAYMENT_URL, {
 					method: 'POST',
-					data: { paymentId, deliveryId: transaction.id },
+					data: {
+						paymentId,
+						deliveryId: transaction.data.id,
+						amount: transaction.data.transactionAmount,
+					},
 				});
 			};
 
 			const paymentData = {
-				amount: transaction.transactionAmount,
-				memo: transaction.itemName,
+				amount: transaction.data.transactionAmount,
+				memo: transaction.data.itemName,
 				metadata: {
-					deliveryId: transaction.id,
+					deliveryId: transaction.data.id,
 				},
 			};
+
 			const callbacks = {
 				onReadyForServerApproval,
 				onReadyForServerCompletion,
 				onCancel,
 				onError,
 			};
-			console.log(window);
-			const payment = await window.Pi.createPayment(paymentData, callbacks);
-			console.log(payment);
+			await window.Pi.createPayment(paymentData, callbacks);
 			setProgress(8);
 		} catch (error) {
 			console.log(error);
@@ -73,8 +76,8 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 	const handleSubmitTransaction = async () => {
 		const formData = new FormData();
 		formData.append('senderUserId', '64f51653-6e50-40db-80bf-087461a130bf');
-		formData.append('courierUserId', courierDetails.courierUserId);
-		formData.append('receiverUserId', receiverDetails.receiverUserId);
+		formData.append('courierUserId', courierDetails.courier?.courierUserId ?? '');
+		formData.append('receiverUserId', receiverDetails.userUid);
 		formData.append('preferredModeOfDelivery', modeOfDelivery.join(','));
 		formData.append('fromAddress', pickupLocation);
 		formData.append('toAddress', dropLocation);

@@ -36,11 +36,11 @@ export const OrderSucessful = () => {
 				Token of your order is available on “My Deliveries”. Be on the look for your courier to
 				accept this delivery order
 			</p>
-			{deliveryType === 'active' && (
+			{(deliveryType === 'active' && deliveryDetails.courierDetails.courier) && (
 				<div className={styles.courier__details}>
 					<img src={defaultUser} alt="Couriers Profile picture" />
 					<span className={styles.courier__username}>
-						{deliveryDetails.courierDetails.courierUserName}
+						{deliveryDetails.courierDetails.user.username}
 					</span>
 					{deliveryDetails.courierDetails.newUser && (
 						<span className={styles.new__user}>New user</span>

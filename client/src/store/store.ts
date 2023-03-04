@@ -1,21 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
+import { IUser, UserRole } from '../types/user';
 
-interface UserDetailsState {
-	isCourier: boolean;
-	isDelivery: boolean;
-	accessToken: string;
-	imagePublicId: string;
-	profileImg: string;
-	userRole: UserRole;
-	userUid: string;
-	username: string;
-	walletAddress: string;
-}
-
-export enum UserRole {
-	USER = 1,
-	COURIER = 2,
+interface UserDetailsState extends IUser {
+	isCourier?: boolean;
+	isDelivery?: boolean;
 }
 
 interface DeliveryTypeState {
@@ -33,52 +22,72 @@ type DeliveryDetailsType = {
 	size: string;
 	category: string;
 	modeOfDelivery: string[];
-	courierDetails: CourierDetails;
-	receiverDetails: ReceiverDetails;
+	courierDetails: CourierDeliveryDetails;
+	receiverDetails: UserDetailsState;
 	deliveryRegion: string;
-	receiverProfilePicture: string;
-	receiversUsername: string;
 	pickupLocation: string;
 	dropLocation: string;
 	transactionAmount?: number;
 };
 
-type CourierDetails = {
-	courierUserName: string;
-	courierUserId: string;
-	courierProfileImage: string;
+interface CourierDeliveryDetails extends Pick<UserCourierDetails, 'courier' | 'user'> {
 	newUser: boolean;
-	status: 'pending' | 'pick';
-};
+	status: string;
+}
 
-type ReceiverDetails = {
-	receiverUserName: string;
-	receiverUserId: string;
-	receiverProfileImage: string;
-};
+interface CourierDetails {
+	courierUserId: string;
+	numberOfLikes?: number;
+	rating?: number;
+	isActive?: boolean;
+	earnings?: number;
+	modeOfTransportation: string;
+	regionOfOperation: string;
+	preferredDeliveryAmount: number;
+	startTime: string;
+	endTime: string;
+}
 
 export interface DeliveryDetailsTypeState {
 	deliveryDetails: DeliveryDetailsType;
 }
 
 interface UserCourierDetailstypeState {
-	userCourierDetails: object;
+	userCourierDetails: UserCourierDetails;
 }
 
-const userCourierDetailsSlice = createSlice({
-	name: 'userCourierDetails',
+type UserCourierDetails = {
+	user: UserDetailsState;
+	courier: CourierDetails | null;
+};
+
+interface UserAuthDetails extends UserCourierDetails {
+	isCourier: boolean;
+	isDelivery: boolean;
+}
+
+interface CreateCourierDetails {
+	createCourierDetails: CourierDetails;
+}
+
+const createCourierDetailsSlice = createSlice({
+	name: 'createCourierDetails',
 	initialState: {
-		userCourierDetails: {
+		createCourierDetails: {
 			modeOfTransportation: '',
 			regionOfOperation: '',
 			startTime: '',
 			endTime: '',
-			amount: 0,
+			preferredDeliveryAmount: 0,
+			numberOfLikes: 0,
+			rating: 0,
+			isActive: true,
+			earnings: 0,
 		},
-	} as UserCourierDetailstypeState,
+	} as CreateCourierDetails,
 	reducers: {
-		setUserCourierDetails: (state, action: PayloadAction<object>) => {
-			state.userCourierDetails = action.payload;
+		setCreateCourierDetails: (state, action: PayloadAction<CourierDetails>) => {
+			state.createCourierDetails = action.payload;
 		},
 	},
 });
@@ -86,16 +95,30 @@ const userCourierDetailsSlice = createSlice({
 const userDetailsSlice = createSlice({
 	name: 'userDetails',
 	initialState: {
+		user: {
+			accessToken: '',
+			imagePublicId: '',
+			profileImg: '',
+			userRole: UserRole.USER,
+			userUid: '',
+			username: '',
+			walletAddress: '',
+		},
+		courier: {
+			numberOfLikes: 0,
+			rating: 0.0,
+			modeOfTransportation: '',
+			regionOfOperation: '',
+			preferredDeliveryAmount: 0.0,
+			isActive: true,
+			earnings: 0.0,
+			courierUserId: '',
+			startTime: '',
+			endTime: '',
+		},
 		isCourier: false,
 		isDelivery: false,
-		accessToken: '',
-		imagePublicId: '',
-		profileImg: '',
-		userRole: UserRole.USER,
-		userUid: '',
-		username: '',
-		walletAddress: '',
-	} as UserDetailsState,
+	} as UserAuthDetails,
 	reducers: {
 		setIsCourier: (state) => {
 			state.isCourier = !state.isCourier;
@@ -103,6 +126,12 @@ const userDetailsSlice = createSlice({
 		setIsDelivery: (state) => {
 			state.isDelivery = !state.isDelivery;
 		},
+    setUserDetails: (state, action: PayloadAction<Pick<UserCourierDetails, 'user'>>) => {
+      state.user = action.payload.user;
+    },
+    setCourierDetails: (state, action:PayloadAction<Pick<UserCourierDetails, 'courier'>>) => {
+      state.courier = action.payload.courier;
+    }
 	},
 });
 
@@ -131,16 +160,38 @@ const deliveryDetailsSlice = createSlice({
 			category: '',
 			modeOfDelivery: [''],
 			courierDetails: {
-				courierUserName: '@piCourierUsername',
-				courierProfileImage: '',
-				courierUserId: '',
+				user: {
+					accessToken: '',
+					imagePublicId: '',
+					profileImg: '',
+					userRole: UserRole.USER,
+					userUid: '',
+					username: '',
+					walletAddress: '',
+				},
+				courier: {
+					numberOfLikes: 0,
+					rating: 0.0,
+					modeOfTransportation: '',
+					regionOfOperation: '',
+					preferredDeliveryAmount: 0.0,
+					isActive: true,
+					earnings: 0.0,
+					courierUserId: '',
+					startTime: '',
+					endTime: '',
+				},
 				newUser: true,
 				status: 'pending',
 			},
 			receiverDetails: {
-				receiverUserName: '@piReceiverUsername',
-				receiverUserId: '64f51653-6e50-40db-80bf-087461a130bf',
-				receiverProfileImage: '',
+				accessToken: '',
+				imagePublicId: '',
+				profileImg: '',
+				userRole: UserRole.USER,
+				userUid: '',
+				username: '',
+				walletAddress: '',
 			},
 			deliveryRegion: '',
 			pickupLocation: '',
@@ -148,6 +199,7 @@ const deliveryDetailsSlice = createSlice({
 			transactionAmount: 0,
 		},
 	} as DeliveryDetailsTypeState,
+
 	reducers: {
 		setImageName: (state, action: PayloadAction<string>) => {
 			state.deliveryDetails = { ...state.deliveryDetails, imageName: action.payload };
@@ -179,8 +231,8 @@ const deliveryDetailsSlice = createSlice({
 		setDeliveryRegion: (state, action: PayloadAction<string>) => {
 			state.deliveryDetails = { ...state.deliveryDetails, deliveryRegion: action.payload };
 		},
-		setReceiversUsername: (state, action: PayloadAction<string>) => {
-			state.deliveryDetails = { ...state.deliveryDetails, receiversUsername: action.payload };
+		setReceiverDetails: (state, action: PayloadAction<UserDetailsState>) => {
+			state.deliveryDetails = { ...state.deliveryDetails, receiverDetails: action.payload };
 		},
 		setPickupLocation: (state, action: PayloadAction<string>) => {
 			state.deliveryDetails = { ...state.deliveryDetails, pickupLocation: action.payload };
@@ -197,25 +249,14 @@ const deliveryDetailsSlice = createSlice({
 const store = configureStore({
 	reducer: {
 		userDetails: userDetailsSlice.reducer,
-		userCourierDetails: userCourierDetailsSlice.reducer,
+		createCourierDetails: createCourierDetailsSlice.reducer,
 		deliveryType: deliveryTypeSlice.reducer,
 		deliveryDetails: deliveryDetailsSlice.reducer,
 	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			serializableCheck: {
-				// Ignore these action types
-				// ignoredActions: ['your/action/type'],
-				// Ignore these field paths in all actions
-				ignoredActionPaths: ['payload.image'],
-				// Ignore these paths in the state
-				ignoredPaths: ['deliveryDetails.image'],
-			},
-		}),
 });
 
 export const userDetailsActions = userDetailsSlice.actions;
-export const userCourierDetailsActions = userCourierDetailsSlice.actions;
+export const createCourierDetailsActions = createCourierDetailsSlice.actions;
 export const deliveryTypeActions = deliveryTypeSlice.actions;
 export const deliveryDetailsActions = deliveryDetailsSlice.actions;
 

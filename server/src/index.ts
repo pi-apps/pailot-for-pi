@@ -5,7 +5,6 @@ import logger from 'morgan';
 import { corsMiddleware } from './middlewares/cors';
 import { apiRouter } from './modules/router';
 import { AppDataSource } from './db/dataSource';
-import './middlewares/session';
 
 const PORT = process.env.PORT || 3333;
 const app = express();

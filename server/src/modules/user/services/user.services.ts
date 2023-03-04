@@ -144,6 +144,12 @@ export async function findUserByUsername(
 	username: string
 ): Promise<SuccessResult<User> | NotFoundResult | ErrorResult> {
 	try {
+		if (!username) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find user because no username was passed`,
+			};
+		}
 		const currentUser = await UserRepository.findOne({
 			where: { username },
 		});

@@ -15,17 +15,16 @@ export interface CustomRequest extends Request {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const token = req.header('Authorization')?.replace('Bearer ', '');
-
-		if (!token) {
-			throw new Error();
-		}
+		const token = req.headers.authorization.split(' ')[1];
 
 		const decoded = jwt.verify(token, SECRET_KEY) as JWTToken;
 		(req as CustomRequest).token = decoded;
 
-		next();
+		console.log('decoded', decoded);
+
+		return next();
 	} catch (err) {
-		res.status(401).send('Please authenticate');
+		console.log(err);
+		return res.status(401).json({ message: 'Please authenticate' });
 	}
 };

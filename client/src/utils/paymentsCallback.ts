@@ -27,7 +27,8 @@ export const onCancel = async (paymentId: string) => {
 };
 
 export const onError = (error: Error, payment?: PaymentDTO) => {
-  console.log('onError', error);
+  console.log('onError', error.stack);
+  console.log('onError', error.message);
   if (payment) {
     console.log(payment);
     // handle the error accordingly

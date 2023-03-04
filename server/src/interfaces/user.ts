@@ -5,6 +5,7 @@ export interface IUser {
 	profileImg: string | null;
 	accessToken: string;
 	imagePublicId: string | null;
+	userRole?: UserRole;
 }
 
 export interface ICourier {
@@ -16,6 +17,8 @@ export interface ICourier {
 	preferredDeliveryAmount: number;
 	isActive: boolean;
 	earnings: number;
+	startTime?: string;
+	endTime?: string;
 }
 
 export interface UpdateCourierDTO {
@@ -50,23 +53,6 @@ export enum UserRole {
 
 export interface UserCourier {
 	id: string;
-	user: {
-		userUid: string;
-		username: string;
-		walletAddress: string | null;
-		profileImg: string | null;
-		accessToken: string;
-		imagePublicId: string | null;
-		userRole: UserRole;
-	};
-	courier: {
-		courierUserId: string;
-		numberOfLikes: number;
-		rating: number;
-		modeOfTransportation: string;
-		regionOfOperation: string;
-		preferredDeliveryAmount: number;
-		isActive: boolean;
-		earnings: number;
-	} | null;
+	user: IUser;
+	courier: ICourier | null;
 }
