@@ -64,30 +64,48 @@ type UserCourierDetails = {
 interface UserAuthDetails extends UserCourierDetails {
 	isCourier: boolean;
 	isDelivery: boolean;
+  hasMadeFirstDelivery: boolean;
 }
 
 interface CreateCourierDetails {
 	createCourierDetails: CourierDetails;
 }
 
+const userData = JSON.parse(sessionStorage.getItem('user') as string);
+
 const createCourierDetailsSlice = createSlice({
 	name: 'createCourierDetails',
 	initialState: {
 		createCourierDetails: {
-			modeOfTransportation: '',
-			regionOfOperation: '',
-			startTime: '',
-			endTime: '',
-			preferredDeliveryAmount: 0,
-			numberOfLikes: 0,
-			rating: 0,
-			isActive: true,
-			earnings: 0,
+			modeOfTransportation: userData?.courier?.modeOfTransportation || '',
+			regionOfOperation: userData?.courier?.regionOfOperation || '',
+			startTime: userData?.courier?.startTime || '',
+			endTime: userData?.courier?.endTime || '',
+			preferredDeliveryAmount: userData?.courier?.preferredDeliveryAmount || 0,
+			numberOfLikes: userData?.courier?.numberOfLikes || 0,
+			rating: userData?.courier?.rating || 0,
+			isActive: userData?.courier?.isActive || true,
+			earnings: userData?.courier?.earnings || 0,
 		},
 	} as CreateCourierDetails,
 	reducers: {
 		setCreateCourierDetails: (state, action: PayloadAction<CourierDetails>) => {
 			state.createCourierDetails = action.payload;
+		},
+		setIsActive: (state, action: PayloadAction<boolean>) => {
+			state.createCourierDetails.isActive = action.payload;
+		},
+		setNumberOfLikes: (state, action: PayloadAction<number>) => {
+			state.createCourierDetails.numberOfLikes = action.payload;
+		},
+		setRating: (state, action: PayloadAction<number>) => {
+			state.createCourierDetails.rating = action.payload;
+		},
+		setEarnings: (state, action: PayloadAction<number>) => {
+			state.createCourierDetails.earnings = action.payload;
+		},
+		setUserId: (state, action: PayloadAction<string>) => {
+			state.createCourierDetails.courierUserId = action.payload;
 		},
 	},
 });
@@ -96,35 +114,54 @@ const userDetailsSlice = createSlice({
 	name: 'userDetails',
 	initialState: {
 		user: {
-			accessToken: '',
-			imagePublicId: '',
-			profileImg: '',
-			userRole: UserRole.USER,
-			userUid: '',
-			username: '',
-			walletAddress: '',
+			accessToken: userData?.user.accessToken || '',
+			imagePublicId:  userData?.user.imagePublicId || '',
+			profileImg:  userData?.user.profileImg || '',
+			userRole:  userData?.user.userRole || UserRole.USER,
+			userUid:  userData?.user.userUid || '',
+			username: userData?.user.username || '',
+			walletAddress:  userData?.user.walletAddress || '',
 		},
 		courier: {
-			numberOfLikes: 0,
-			rating: 0.0,
-			modeOfTransportation: '',
-			regionOfOperation: '',
-			preferredDeliveryAmount: 0.0,
-			isActive: true,
-			earnings: 0.0,
-			courierUserId: '',
-			startTime: '',
-			endTime: '',
+      modeOfTransportation: userData?.courier?.modeOfTransportation || '',
+			regionOfOperation: userData?.courier?.regionOfOperation || '',
+			startTime: userData?.courier?.startTime || '',
+			endTime: userData?.courier?.endTime || '',
+			preferredDeliveryAmount: userData?.courier?.preferredDeliveryAmount || 0.0,
+			numberOfLikes: userData?.courier?.numberOfLikes || 0,
+			rating: userData?.courier?.rating || 0.0,
+			isActive: userData?.courier?.isActive || true,
+			earnings: userData?.courier?.earnings || 0.0,
+			courierUserId: userData?.courier?.courierUserId || '',
 		},
-		isCourier: false,
+		isCourier: userData?.courier ? true : false,
+    hasMadeFirstDelivery: sessionStorage.getItem('hasMadeFirstDelivery') ? true : false,
 		isDelivery: false,
 	} as UserAuthDetails,
 	reducers: {
 		setIsCourier: (state) => {
 			state.isCourier = !state.isCourier;
 		},
-		setIsDelivery: (state) => {
-			state.isDelivery = !state.isDelivery;
+		setHasMadeFirstDelivery: (state) => {
+			state.hasMadeFirstDelivery = !state.hasMadeFirstDelivery;
+		},
+		setUsername: (state, action: PayloadAction<string>) => {
+			state.user.username = action.payload;
+		},
+		setWalletAddress: (state, action: PayloadAction<string>) => {
+			state.user.walletAddress = action.payload;
+		},
+		setProfileImg: (state, action: PayloadAction<string>) => {
+			state.user.profileImg = action.payload;
+		},
+		setAccessToken: (state, action: PayloadAction<string>) => {
+			state.user.accessToken = action.payload;
+		},
+		setImagePublicId: (state, action: PayloadAction<string>) => {
+			state.user.imagePublicId = action.payload;
+		},
+		setUserId: (state, action: PayloadAction<string>) => {
+			state.user.userUid = action.payload;
 		},
     setUserDetails: (state, action: PayloadAction<Pick<UserCourierDetails, 'user'>>) => {
       state.user = action.payload.user;

@@ -3,22 +3,29 @@ import { HiOutlineArrowLeft } from 'react-icons/hi';
 import styles from './CourierForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GiCancel } from 'react-icons/gi';
-import { useDispatch } from 'react-redux';
-import { createCourierDetailsActions, userDetailsActions } from '../../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { CourierFormMods } from '../../components/Common/CourierFormMods/CourierFormMods';
+import { createCourierDetailsActions, RootState, userDetailsActions } from '../../store/store';
+import { CREATE_COURIER_URL } from '../../constants/url.constants';
+import { fetchWithCredentials } from '../../hooks/useApi';
 
 export const CourierForm = () => {
 	const [validated, setValidated] = useState<boolean>(false);
+	const [showCourierMods, setShowCourierMods] = useState<boolean>(false);
+	const [selectedMods, setSelectedMods] = useState<string[]>([]);
+
+	const courierUserId = useSelector((state: RootState) => state.userDetails.user.userUid);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const modRef = useRef<HTMLSelectElement>(null);
+
 	const startTimeRef = useRef<HTMLInputElement>(null);
 	const endTimeRef = useRef<HTMLInputElement>(null);
-	const regionRef = useRef<HTMLSelectElement>(null);
+	const regionRef = useRef<HTMLInputElement>(null);
 	const amountRef = useRef<HTMLInputElement>(null);
 	const validityChecker = () => {
-		// console.log(startTimeRef.current?.value);
 		if (
-			!modRef.current?.value ||
+			selectedMods.length === 0 ||
 			regionRef.current?.value === '' ||
 			amountRef.current?.value === '0' ||
 			amountRef.current?.value === '' ||
@@ -28,7 +35,7 @@ export const CourierForm = () => {
 			setValidated(false);
 		}
 		if (
-			modRef.current?.value &&
+			selectedMods.length > 0 &&
 			regionRef.current?.value !== '' &&
 			amountRef.current?.value !== '0' &&
 			amountRef.current?.value !== '' &&
@@ -39,71 +46,103 @@ export const CourierForm = () => {
 		}
 	};
 
-	const onSubmitHandler = () => {
-		// if (!validated) return;
+	const addMods = (value: string) => {
+		setSelectedMods([...selectedMods, value]);
+		const array = selectedMods;
+		const newArray = array.filter((item, index) => array.indexOf(item) === index);
+		// setSelectedMods(newArray);
+		if (newArray.length >= 4) {
+			setShowCourierMods(false);
+			setSelectedMods(newArray);
+			console.log(newArray);
+		}
+	};
+
+	const MODhandler = () => {
+		return selectedMods;
+	};
+
+	const handleCreateCourier = async (courierData: any) => {
+		return await fetchWithCredentials(CREATE_COURIER_URL, {
+			method: 'POST',
+			data: {
+				...courierData,
+			},
+		});
+	};
+
+	const onSubmitHandler = async () => {
 		if (
-			!modRef.current ||
+			!selectedMods ||
 			!regionRef.current ||
 			!startTimeRef.current ||
 			!endTimeRef.current ||
 			!amountRef.current
 		)
 			return;
-      // TODO: Make an API call and save the courier and save the result in the store
+
+		const courierData = {
+			modeOfTransportation: selectedMods.join(','),
+			regionOfOperation: regionRef.current.value,
+			startTime: startTimeRef.current.value,
+			endTime: endTimeRef.current.value,
+			preferredDeliveryAmount: Number(amountRef.current.value),
+			courierUserId,
+		};
 		dispatch(
 			createCourierDetailsActions.setCreateCourierDetails({
-        modeOfTransportation: modRef.current.value,
-        regionOfOperation: regionRef.current.value,
-        startTime: startTimeRef.current.value,
-        endTime: endTimeRef.current.value,
-        preferredDeliveryAmount: Number(amountRef.current.value),
-        courierUserId: ''
-      })
-      );
-      // dispatch(userDetailsActions.setCourierDetails(data.data))
+				...courierData,
+			})
+		);
+		const courier = await handleCreateCourier(courierData);
+    
+		sessionStorage.setItem('user', JSON.stringify(courier.data.data));
+		dispatch(userDetailsActions.setUserDetails({ user: courier?.data?.data?.user }));
+		dispatch(userDetailsActions.setCourierDetails({ courier: courier?.data?.data?.courier }));
 		dispatch(userDetailsActions.setIsCourier());
 		navigate('/home');
 	};
 	return (
 		<div className={styles.container}>
+			{showCourierMods && (
+				<CourierFormMods setShowCourierMods={setShowCourierMods} addMods={addMods} />
+			)}
 			<div className={styles.top__bar}>
 				<HiOutlineArrowLeft onClick={() => [navigate('/home')]} />
 				<span>BECOME A COURIER</span>
 			</div>
 			<form className={styles.form}>
 				<p>Fill in your Courier data</p>
-				<label htmlFor="Mode Of Transportation" className={styles.label}>
+				<div
+					className={styles.mod}
+					onClick={() => {
+						setShowCourierMods(true);
+					}}
+				>
 					<p>Mode of Transportation</p>
-					<select
-						name="Mode Of Transportation"
-						className={styles.select}
-						ref={modRef}
-						onChange={() => {
-							validityChecker();
-						}}
-					>
-						<option value="Foot">Foot</option>
-						<option value="Bicycle">Bicycle</option>
-						<option value="Drone">Drone</option>
-						<option value="Motorbike">Motorbike</option>
-						<option value="Tricycle">Tricycle</option>
-						<option value="Car">Car</option>
-						<option value="Truck">Truck</option>
-					</select>
-				</label>
+					<span>{MODhandler().join(', ')}</span>
+					<GiCancel onClick={() => setSelectedMods([])} className={styles.cancel__icon} />
+				</div>
+
 				<label htmlFor="Region Of Operation" className={styles.label}>
 					<p>Region Of Operation</p>
 					<div>
-						<select
-							className={styles.select}
+						<input
+							type="text"
+							className={styles.input}
 							ref={regionRef}
+							placeholder="Yaba, Lagos"
 							onChange={() => {
 								validityChecker();
 							}}
-						>
-							<option value="Local">Local</option>
-							<option value="Interstate">Interstate</option>
-						</select>
+						/>
+						<GiCancel
+							onClick={() => {
+								if (regionRef.current) {
+									regionRef.current.value = '';
+								}
+							}}
+						/>
 					</div>
 				</label>
 
@@ -136,7 +175,7 @@ export const CourierForm = () => {
 							type="number"
 							className={styles.input}
 							ref={amountRef}
-							placeholder="8"
+							placeholder="Example: 8"
 							onChange={() => {
 								validityChecker();
 							}}

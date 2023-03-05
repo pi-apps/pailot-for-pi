@@ -6,12 +6,7 @@ export interface IUser {
 	profileImg: string | null;
 	accessToken: string;
 	imagePublicId: string | null;
-  userRole: UserRole;
-}
-
-export enum UserRole {
-	USER = 1,
-	COURIER = 2,
+	userRole?: UserRole;
 }
 
 export interface ICourier {
@@ -21,8 +16,15 @@ export interface ICourier {
 	modeOfTransportation: string;
 	regionOfOperation: string;
 	preferredDeliveryAmount: number;
-	country: string;
+	isActive: boolean;
 	earnings: number;
+	startTime?: string;
+	endTime?: string;
+}
+
+export enum UserRole {
+	USER = 1,
+	COURIER = 2,
 }
 
 export interface UpdateCourierDTO {
@@ -48,3 +50,9 @@ export type CreateUserDTO = {
 	};
 	accessToken: string;
 };
+
+export interface IUserCourier {
+	id: string;
+	user: IUser;
+	courier: ICourier | null;
+}

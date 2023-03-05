@@ -30,16 +30,20 @@ import { motion } from 'framer-motion';
 import { logo } from '../../../assets/images';
 import styles from './SettingsHome.module.css';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+import { RootState, userDetailsActions } from '../../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 export const SettingsHome = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 	const userDetails = useSelector((state: RootState) => state.userDetails);
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
-				<img src={userDetails.user.profileImg ?? logo} alt="Profile Photo" className={styles.profile__photo} />
+				<img src={userDetails.user.profileImg ? userDetails.user.profileImg : logo} alt="Profile Photo" className={styles.profile__photo} />
 				<div className={styles.profile__content}>
-					<p className={styles.full__name}>Firstname Lastname</p>
+					<p className={styles.full__name}>@{userDetails.user.username}</p>
 					<div className={styles.other__details}>
 						<div className={styles.username__and__date}>
 							<span className={styles.username}>@{userDetails.user.username}</span>
@@ -53,6 +57,10 @@ export const SettingsHome = () => {
 								animate={{ scale: [1, 1.1, 1] }}
 								className={styles.cta}
 								type="button"
+                onClick={() => {
+                  dispatch(userDetailsActions.setIsCourier());
+                  navigate('/home')
+                }}
 							>
 								{userDetails.isCourier ? 'Switch to Sender' : 'Switch to Courier'}
 							</motion.button>

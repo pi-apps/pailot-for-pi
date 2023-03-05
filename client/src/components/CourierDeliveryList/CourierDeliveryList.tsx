@@ -87,7 +87,7 @@ export const CourierDeliveryList = () => {
 			</div>
 			<div className={styles.body}>
 				{!showAllDeliveries &&
-					deliveries.slice(0, 2).map((delivery: any, index) => {
+					deliveries.slice(0, 3).map((delivery: any, index) => {
 						return (
 							<DeliveryCard
 								username={delivery.username}

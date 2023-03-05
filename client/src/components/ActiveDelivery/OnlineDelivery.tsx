@@ -56,7 +56,7 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 				</header>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pending"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -66,10 +66,11 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={true}
+					dispatcher={false}
 				/>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="picked"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -79,10 +80,11 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={true}
+					dispatcher={false}
 				/>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pick"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -92,10 +94,11 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={false}
+					dispatcher={false}
 				/>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pick"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -105,13 +108,14 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={true}
+					dispatcher={false}
 				/>
 
 				<header className={styles.header}>
 					<h3>Dispatchers close to your region</h3>
 				</header>
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pick"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -121,10 +125,11 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={false}
+					dispatcher={false}
 				/>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pick"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -134,10 +139,11 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={true}
+					dispatcher={false}
 				/>
 
 				<CourierCard
-					setProgress={setProgress}
+					propFunction={setProgress}
 					status="pick"
 					courierImage={defaultUser}
 					courierUserName={'@piusername'}
@@ -147,6 +153,7 @@ export const OnlineDelivery: React.FC<Props> = ({ setProgress }) => {
 					endTime={'8pm'}
 					modeOfTransportation={'Motorcycle'}
 					online={true}
+					dispatcher={false}
 				/>
 			</div>
 		</div>

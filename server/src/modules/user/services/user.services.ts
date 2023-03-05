@@ -1,3 +1,4 @@
+import { IsNull, Not } from 'typeorm';
 import { Result } from '../../../constants/result';
 import { AppDataSource } from '../../../db/dataSource';
 import { Courier } from '../../../db/entity/Courier';
@@ -237,38 +238,49 @@ export async function getUsersEntry(): Promise<UsersResult> {
 	}
 }
 
-export async function createCourierEntry(courier: ICourier): Promise<CreateOrUpdateCourierResult> {
+export async function getCourierUsersEntry(): Promise<SuccessResult<IUserCourier[]> | ErrorResult> {
 	try {
-		let currentCourier = await CourierRepository.findOne({
-			where: { courierUserId: courier.courierUserId },
-		});
-		if (!currentCourier) {
-			const createdUser = CourierRepository.create({
-				courierUserId: courier.courierUserId,
-				modeOfTransportation: courier.modeOfTransportation,
-				regionOfOperation: courier.regionOfOperation,
-				preferredDeliveryAmount: courier.preferredDeliveryAmount,
-			});
-			currentCourier = await CourierRepository.save(createdUser);
-			const courierUser = await UserCourierRepository.findOne({
-				where: { user: { userUid: courier.courierUserId } },
-			});
-			if (courierUser) {
-				await UserCourierRepository.save({
-					id: courierUser.id,
-					courier: currentCourier,
-				});
-			}
-		}
+		const results = await UserCourierRepository.find({ where: { courier: Not(IsNull()) } });
 		return {
 			type: Result.SUCCESS,
-			data: currentCourier,
+			data: results,
+		};
+	} catch (error) {
+		return {
+			type: Result.ERROR,
+			message: error.message,
+			error,
+		};
+	}
+}
+
+export async function createCourierEntry(
+	courier: ICourier
+): Promise<SuccessResult<IUserCourier> | ErrorResult> {
+	try {
+		const currentCourierUser = await UserCourierRepository.findOne({
+			where: { user: { userUid: courier.courierUserId } },
+		});
+		const createdUser = CourierRepository.create({
+			courierUserId: courier.courierUserId,
+			modeOfTransportation: courier.modeOfTransportation,
+			regionOfOperation: courier.regionOfOperation,
+			preferredDeliveryAmount: courier.preferredDeliveryAmount,
+			startTime: courier.startTime,
+			endTime: courier.endTime,
+		});
+		const currentCourier = await CourierRepository.save(createdUser);
+		currentCourierUser.courier = currentCourier;
+		const courierUser = await UserCourierRepository.save(currentCourierUser);
+		return {
+			type: Result.SUCCESS,
+			data: courierUser,
 		};
 	} catch (error) {
 		console.log(error);
 		return {
 			type: Result.ERROR,
-			message: `An unexpected error occurred while creating user`,
+			message: `An unexpected error occurred while creating courier`,
 			error,
 		};
 	}

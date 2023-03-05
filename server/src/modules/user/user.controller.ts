@@ -9,12 +9,14 @@ import { signInUser } from './handlers/signInUser';
 import { createCourier } from './handlers/createCourier';
 import { updateCourier } from './handlers/updateCourier';
 import { deleteCourier } from './handlers/deleteCourier';
+import { getAllCourierUsers } from './handlers/getAllCourierUsers';
 import { profileImageUpload } from '../../middlewares/multer';
 import { auth } from '../../middlewares/auth';
 
 const userRouter = Router();
 
 userRouter.get('/', auth, getAllUsers);
+userRouter.get('/couriers', auth, getAllCourierUsers);
 userRouter.post('/', auth, createUser);
 userRouter.get('/profile', auth, getUser);
 userRouter.get('/:username', auth, getUserByUsername);

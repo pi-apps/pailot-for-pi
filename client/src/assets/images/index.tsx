@@ -12,3 +12,4 @@ export { default as logo__noBg } from './logo__noBg.svg';
 export { default as summaryImage } from './summaryImage.svg';
 export { default as defaultUser } from './defaultUser.svg';
 export { default as defaultUser2 } from './defaultUser2.svg';
+export { default as chart } from './chart.svg';

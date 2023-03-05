@@ -7,16 +7,37 @@ import { deliveryLady } from '../../assets/images/index';
 import { deliveryMan } from '../../assets/images/index';
 import { deliveryBikeMan } from '../../assets/images/index';
 import { FooterNavBar, HomePlus } from '../../components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { userDetailsActions } from '../../store/store';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
-import { deliveryTypeActions, RootState } from '../../store/store';
+import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
+import { userDetailsActions, RootState } from '../../store/store';
+// import { useApi } from '../../hooks/useApi';
+// import {
+// 	GET_ALL_COURIER_USER_URL,
+// 	GET_PENDING_TRANSACTIONS_URL,
+// } from '../../constants/url.constants';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
-	const isCourier = useSelector((state: RootState) => state.userDetails.isCourier);
+	const { isCourier, courier } = useSelector((state: RootState) => state.userDetails);
+	const hasMadeFirstDelivery = useSelector(
+		(state: RootState) => state.userDetails.hasMadeFirstDelivery
+	);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	// const {  data } = useApi<any>(
+	// 	isCourier ? GET_PENDING_TRANSACTIONS_URL : GET_ALL_COURIER_USER_URL,
+	// 	{
+	// 		method: 'GET',
+	// 	},
+	// 	[isCourier]
+	// );
+
+  // console.log(data);
+
 	setTimeout(() => {
 		if (carouselCount === 3) {
 			setCarouselCount(1);
@@ -25,6 +46,7 @@ export const Home = () => {
 			setCarouselCount(carouselCount + 1);
 		}
 	}, 3000);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
@@ -89,42 +111,45 @@ export const Home = () => {
 				</div>
 			</div>
 			<div className={styles.delivery__and__courier}>
-				<motion.div
-					initial={{ y: 50, opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
-					transition={{
-						duration: 0.5,
-					}}
-					className={styles.modal__container}
-				>
-					<h5 className={styles.header}>Create your first delivery</h5>
-					<div className={styles.modal}>
-						<div>
-							<div className={styles.modal__content}>
-								<p>Be in charge by creating</p>
-								<span>Delivery</span>
-								<p>that is safe, fast & conveniently pay with Pi coin</p>
+				{!hasMadeFirstDelivery && (
+					<motion.div
+						initial={{ y: 50, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{
+							duration: 0.5,
+						}}
+						className={styles.modal__container}
+					>
+						<h5 className={styles.header}>Create your first delivery</h5>
+						<div className={styles.modal}>
+							<div>
+								<div className={styles.modal__content}>
+									<p>Be in charge by creating</p>
+									<span>Delivery</span>
+									<p>that is safe, fast & conveniently pay with Pi coin</p>
+								</div>
+								<img src={deliveryMan} alt="Delivery Man" />
 							</div>
-							<img src={deliveryMan} alt="Delivery Man" />
+							<div className={styles.cta__container}>
+								<button
+									type="button"
+									className={styles.big__cta}
+									onClick={() => {
+										navigate('/customized-delivery');
+										sessionStorage.setItem('hasMadeFirstDelivery', 'true');
+										dispatch(userDetailsActions.setHasMadeFirstDelivery());
+									}}
+								>
+									Make a delivery
+								</button>
+								<button type="button" className={styles.text__cta}>
+									Learn more
+								</button>
+							</div>
 						</div>
-						<div className={styles.cta__container}>
-							<button
-								onClick={() => {
-                  navigate('/customized-delivery');
-                  dispatch(deliveryTypeActions.setDeliveryType('customized'));
-                }}
-								type="button"
-								className={styles.big__cta}
-							>
-								Make a delivery
-							</button>
-							<button type="button" className={styles.text__cta}>
-								Learn more
-							</button>
-						</div>
-					</div>
-				</motion.div>
-				{!isCourier && (
+					</motion.div>
+				)}
+				{!courier || !isCourier &&  (
 					<motion.div
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -162,11 +187,12 @@ export const Home = () => {
 						</div>
 					</motion.div>
 				)}
-				{!isCourier && (
+				{!courier || !isCourier && (
 					<div className={styles.homeplus__container}>
 						<HomePlus />
 					</div>
 				)}
+				{hasMadeFirstDelivery && <DispatchersList />}
 				{isCourier && <CourierDeliveryList />}
 			</div>
 			<FooterNavBar active="home" />

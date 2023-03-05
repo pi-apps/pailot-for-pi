@@ -5,7 +5,7 @@
 	padding: 0.5rem;
 	padding-right: 0.5rem;
 	border-radius: 4px;
-	background-color: rgba(245, 245, 245, 1);
+	background-color: rgba(0, 0, 0, 0.05);
 }
 
 .picked__container {
