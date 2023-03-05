@@ -126,7 +126,7 @@ export async function approveUserToAppPayment(
 		await EarningRepository.save(createEarning);
 		transaction.paymentId = createEarning;
 		await TransactionRepository.save(transaction);
-		await platformAPIClient.post(`/v2/payments/${paymentData.paymentId}/approve`, {});
+		await platformAPIClient.post(`/v2/payments/${paymentData.paymentId}/approve`);
 		return {
 			type: Result.SUCCESS,
 			data: `Approved the payment ${paymentData.paymentId}`,

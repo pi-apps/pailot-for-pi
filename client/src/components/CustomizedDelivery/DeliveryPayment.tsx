@@ -68,8 +68,10 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 				onCancel,
 				onError,
 			};
-			await window.Pi.createPayment(paymentData, callbacks);
-			setProgress(8);
+			const payment = await window.Pi.createPayment(paymentData, callbacks);
+      if (payment) {
+        setProgress(8);
+      }
 		} catch (error) {
 			console.log(error);
 		}
