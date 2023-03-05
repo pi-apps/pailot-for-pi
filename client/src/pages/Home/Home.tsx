@@ -11,12 +11,12 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { userDetailsActions } from '../../store/store';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
 import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
-import { userDetailsActions } from '../../store/store';
+import { userDetailsActions, RootState } from '../../store/store';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
-	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
-	const hasMadeFirstDelivery = useSelector((state: any) => state.userDetails.hasMadeFirstDelivery);
+	const isCourier = useSelector((state: RootState) => state.userDetails.isCourier);
+	const hasMadeFirstDelivery = useSelector((state: RootState) => state.userDetails.hasMadeFirstDelivery);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	setTimeout(() => {
@@ -115,6 +115,7 @@ export const Home = () => {
 									type="button"
 									className={styles.big__cta}
 									onClick={() => {
+                    navigate('/customized-delivery');
 										dispatch(userDetailsActions.setHasMadeFirstDelivery());
 									}}
 								>

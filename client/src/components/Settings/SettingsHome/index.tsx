@@ -30,18 +30,19 @@ import { motion } from 'framer-motion';
 import { logo } from '../../../assets/images';
 import styles from './SettingsHome.module.css';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 export const SettingsHome = () => {
-	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
+	const userDetails = useSelector((state: RootState) => state.userDetails);
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
-				<img src={logo} alt="Profile Photo" className={styles.profile__photo} />
+				<img src={userDetails.user.profileImg ?? logo} alt="Profile Photo" className={styles.profile__photo} />
 				<div className={styles.profile__content}>
 					<p className={styles.full__name}>Firstname Lastname</p>
 					<div className={styles.other__details}>
 						<div className={styles.username__and__date}>
-							<span className={styles.username}>@username</span>
+							<span className={styles.username}>@{userDetails.user.username}</span>
 							<span className={styles.date}>
 								<RiCalendarTodoLine /> <span>Joined 2023</span>
 							</span>
@@ -53,7 +54,7 @@ export const SettingsHome = () => {
 								className={styles.cta}
 								type="button"
 							>
-								{isCourier ? 'Switch to Sender' : 'Switch to Courier'}
+								{userDetails.isCourier ? 'Switch to Sender' : 'Switch to Courier'}
 							</motion.button>
 						</div>
 					</div>
@@ -70,7 +71,7 @@ export const SettingsHome = () => {
 						<img src={UserIcon} alt="Profile Icon" className={styles.profile__icon} />
 						<div className={styles.text}>
 							<span className={styles.username__title}>Pi username</span>
-							<span className={styles.username}>@piusername</span>
+							<span className={styles.username}>@{userDetails.user.username}</span>
 						</div>
 					</div>
 				</div>

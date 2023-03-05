@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Dispatch, SetStateAction } from 'react';
 import styles from './DeliveryWeightSize.module.css';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
@@ -6,11 +6,10 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { GiCancel } from 'react-icons/gi';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
-import { deliveryDetailsActions } from '../../store/store';
+import { deliveryDetailsActions, RootState } from '../../store/store';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 }
 
 export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
@@ -23,7 +22,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 	const sizeMeasurementRef = useRef<HTMLSelectElement>(null);
 
 	const dispatch = useDispatch();
-	const deliveryType = useSelector((state: any) => state.deliveryType.deliveryType);
+	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
 
 	const deliveryDetailsSubmitHandler = () => {
 		if (!weight || !size || !sizeRef.current?.value || !weightRef.current?.value) {
@@ -108,6 +107,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 								name="Weight"
 								id=""
 								placeholder="Example: 2"
+                inputMode="numeric"
 								onChange={(e) => {
 									setWeight(e.target.value);
 								}}
@@ -159,6 +159,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 								name="Size"
 								id=""
 								placeholder="Example: 2"
+                inputMode="numeric"
 								onChange={(e) => {
 									setSize(e.target.value);
 								}}
@@ -204,7 +205,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={(!weight || !size) ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						if (deliveryType === 'active') {
 							setProgress(5);
@@ -213,6 +214,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 						}
 						deliveryDetailsSubmitHandler();
 					}}
+          disabled={(!weight || !size)}
 				>
 					Next
 				</button>

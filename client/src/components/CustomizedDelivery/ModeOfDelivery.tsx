@@ -1,5 +1,5 @@
 import styles from './ModeOfDelivery.module.css';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Dispatch, SetStateAction } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import { RiEBike2Line } from 'react-icons/ri';
@@ -12,8 +12,7 @@ import { useDispatch } from 'react-redux';
 import { deliveryDetailsActions } from '../../store/store';
 
 interface Props {
-	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	setProgress: Dispatch<SetStateAction<number>>;
 }
 
 export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
@@ -31,10 +30,9 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 		});
 		console.log(fullMods);
 		dispatch(deliveryDetailsActions.setModeOfDelivery(fullMods));
-		if (regionRef.current?.value === '1')
-			dispatch(deliveryDetailsActions.setDeliveryRegion('Local'));
-		if (regionRef.current?.value === '2')
-			dispatch(deliveryDetailsActions.setDeliveryRegion('Inter State'));
+		if (regionRef.current && regionRef.current.value) {
+      dispatch(deliveryDetailsActions.setDeliveryRegion(regionRef.current.value));
+    }
 	};
 	const modsGenerator = () => {
 		const newMod = mods.map((mod: any) => {
@@ -243,8 +241,8 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 				<label htmlFor="Region" className={styles.label}>
 					<div className={styles.select__container}>
 						<select name="Region" title="Region" ref={regionRef} className={styles.select}>
-							<option value="1">Local</option>
-							<option value="2">Inter State</option>
+							<option value="Local Delivery">Local Delivery</option>
+							<option value="Inter State">Inter State</option>
 						</select>
 					</div>
 					<span>Choosing a region shows Pailots within that area</span>
@@ -261,11 +259,12 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={(!mods.length || !regionRef?.current?.value) ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						setProgress(5);
 						deliveryDetailsSubmitHandler();
 					}}
+          disabled={!mods.length || !regionRef?.current?.value}
 				>
 					Next
 				</button>

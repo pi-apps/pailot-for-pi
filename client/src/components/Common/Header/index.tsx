@@ -18,6 +18,16 @@ export const Header = ({
 	title,
 }: Props) => {
 	const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    if (title === 'Settings') {
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      navigate('/welcome');
+    } else {
+      navigate(right_route_location);
+    }
+  }
 	return (
 		<div id={styles.wrapper}>
 			<div>
@@ -31,7 +41,7 @@ export const Header = ({
 					src={right_icon}
 					alt="right icon"
 					className={styles.right__icon}
-					onClick={() => navigate(right_route_location)}
+					onClick={handleNavigation}
 				/>
 			</div>
 		</div>

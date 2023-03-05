@@ -62,7 +62,7 @@
 }
 
 .icon {
-	font-size: 12px;
+	font-size: 0.9rem;
 
 	/* flex: 0; */
 }
@@ -99,7 +99,7 @@
 }
 
 .value {
-	font-size: 14px;
+	font-size: 0.95rem;
 	flex: 1;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .modes__of__delivery .mod {
-	font-size: 12px;
+	font-size: 0.9rem;
 	display: flex;
 	align-items: center;
 	gap: 8px;
@@ -128,7 +128,7 @@
 	display: grid;
 	place-content: center;
 	border-radius: 100px;
-	font-size: 20px;
+	font-size: 1.25rem;
 }
 .car__mod {
 	color: #000;
@@ -138,7 +138,7 @@
 	display: grid;
 	place-content: center;
 	border-radius: 100px;
-	font-size: 20px;
+	font-size: 1.25rem;
 }
 .motorbike__mod {
 	color: var(--white);
@@ -148,7 +148,7 @@
 	display: grid;
 	place-content: center;
 	border-radius: 100px;
-	font-size: 20px;
+	font-size: 1.25rem;
 }
 .plane__mod {
 	color: #000;
@@ -158,13 +158,13 @@
 	display: grid;
 	place-content: center;
 	border-radius: 100px;
-	font-size: 16px;
+	font-size: 1rem;
 }
 
 .courier__details {
 	display: flex;
 	align-items: center;
-	font-size: 8px;
+	font-size: 0.75rem;
 	gap: 4px;
 }
 
@@ -174,7 +174,7 @@
 
 .courier__username {
 	display: flex;
-	font-size: 10px;
+	font-size: 0.65rem;
 }
 
 .new__user {
@@ -215,7 +215,7 @@
 }
 
 .receivers__username p {
-	font-size: 14px;
+	font-size: 0.95rem;
 }
 
 .cta__container {

@@ -4,25 +4,38 @@ import { Courier } from '../../../db/entity/Courier';
 import { User } from '../../../db/entity/User';
 import { UserCourier } from '../../../db/entity/UserCourier';
 import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/result';
-import { CreateUserDTO, ICourier, UpdateCourierDTO, UpdateUserDTO } from '../../../interfaces/user';
+import {
+	CreateUserDTO,
+	ICourier,
+	IUserCourier,
+	UpdateCourierDTO,
+	UpdateUserDTO,
+} from '../../../interfaces/user';
 import { uploadeImageToCloudinary } from '../../../middlewares/cloudinary';
 
-export type CreateOrUpdateUserResult = SuccessResult<User> | ErrorResult;
+export type UpdateUserResult = SuccessResult<User> | ErrorResult;
 export type CreateOrUpdateCourierResult = SuccessResult<Courier> | ErrorResult;
 export type DeleteUserResult = SuccessResult<null> | ErrorResult;
 export type UsersResult = SuccessResult<User[]> | ErrorResult;
-export type UserResult = SuccessResult<UserCourier> | NotFoundResult | ErrorResult;
+export type UserResult = SuccessResult<IUserCourier> | NotFoundResult | ErrorResult;
 
 export const UserRepository = AppDataSource.getRepository(User);
 export const CourierRepository = AppDataSource.getRepository(Courier);
 export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 
-export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpdateUserResult> {
+export async function createUserEntry(
+	user: CreateUserDTO
+): Promise<SuccessResult<IUserCourier> | ErrorResult> {
 	try {
+		let userData: IUserCourier;
 		let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
 		if (currentUser) {
 			currentUser.accessToken = user.accessToken;
 			currentUser = await UserRepository.save(currentUser);
+
+			userData = await UserCourierRepository.findOne({
+				where: { user: { userUid: user.user.uid } },
+			});
 		} else {
 			const createdUser = UserRepository.create({
 				userUid: user.user.uid,
@@ -34,13 +47,15 @@ export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpda
 			const courierUser = UserCourierRepository.create({
 				user: currentUser,
 			});
-			await UserCourierRepository.save(courierUser);
+			userData = await UserCourierRepository.save(courierUser);
 		}
+		console.log(userData);
 		return {
 			type: Result.SUCCESS,
-			data: currentUser,
+			data: userData,
 		};
 	} catch (error) {
+		console.error(error);
 		return {
 			type: Result.ERROR,
 			message: `An unexpected error occurred while creating user`,
@@ -52,7 +67,7 @@ export async function createUserEntry(user: CreateUserDTO): Promise<CreateOrUpda
 export async function updateUserEntry(
 	userUid: string,
 	userData: UpdateUserDTO
-): Promise<CreateOrUpdateUserResult> {
+): Promise<UpdateUserResult> {
 	try {
 		const user = await UserRepository.findOne({
 			where: {
@@ -137,6 +152,12 @@ export async function findUserByUsername(
 	username: string
 ): Promise<SuccessResult<User> | NotFoundResult | ErrorResult> {
 	try {
+		if (!username) {
+			return {
+				type: Result.NOT_FOUND,
+				message: `Could not find user because no username was passed`,
+			};
+		}
 		const currentUser = await UserRepository.findOne({
 			where: { username },
 		});
@@ -227,7 +248,6 @@ export async function createCourierEntry(courier: ICourier): Promise<CreateOrUpd
 				modeOfTransportation: courier.modeOfTransportation,
 				regionOfOperation: courier.regionOfOperation,
 				preferredDeliveryAmount: courier.preferredDeliveryAmount,
-				country: courier.country,
 			});
 			currentCourier = await CourierRepository.save(createdUser);
 			const courierUser = await UserCourierRepository.findOne({
