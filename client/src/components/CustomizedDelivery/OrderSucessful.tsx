@@ -58,7 +58,7 @@ export const OrderSucessful = () => {
 					type="button"
 					className={styles.cta__top}
 				>
-					Track Delivery Order
+					Transaction Details
 				</motion.button>
 				<motion.button
 					initial={{ y: 100, opacity: 0 }}
@@ -69,7 +69,7 @@ export const OrderSucessful = () => {
 					type="button"
 					className={styles.cta__mid}
 				>
-					Transaction Details
+					Make Another Delivery
 				</motion.button>
 				<motion.button
 					initial={{ y: 100, opacity: 0 }}
@@ -80,7 +80,7 @@ export const OrderSucessful = () => {
 					type="button"
 					className={styles.cta__bottom}
 				>
-					Make Another Delivery
+          Back to Home
 				</motion.button>
 			</div>
 		</div>
