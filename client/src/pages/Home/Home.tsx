@@ -20,7 +20,7 @@ import { userDetailsActions, RootState } from '../../store/store';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
-	const { isCourier, courier } = useSelector((state: RootState) => state.userDetails);
+	const { isCourier } = useSelector((state: RootState) => state.userDetails);
 	const hasMadeFirstDelivery = useSelector(
 		(state: RootState) => state.userDetails.hasMadeFirstDelivery
 	);
@@ -149,7 +149,7 @@ export const Home = () => {
 						</div>
 					</motion.div>
 				)}
-				{!courier || !isCourier &&  (
+				{!isCourier &&  (
 					<motion.div
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -187,7 +187,7 @@ export const Home = () => {
 						</div>
 					</motion.div>
 				)}
-				{!courier || !isCourier && (
+				{!isCourier && (
 					<div className={styles.homeplus__container}>
 						<HomePlus />
 					</div>
