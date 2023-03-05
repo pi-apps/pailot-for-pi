@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './CourierCard.module.css';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { RiEBikeLine } from 'react-icons/ri';
+import { TbDrone, TbSteeringWheel } from 'react-icons/tb';
+import { IoMdBicycle } from 'react-icons/io';
+import { RiEBikeLine, RiCarLine, RiFootprintLine, RiTruckLine } from 'react-icons/ri';
+
 import { GoClock } from 'react-icons/go';
 // import { defaultUser } from '../../../assets/images';
 import { PiIcon } from '../../../assets/icons';
@@ -19,7 +22,11 @@ interface Props {
 	modeOfTransportation: string;
 	online: boolean;
 	// eslint-disable-next-line no-unused-vars
-	setProgress: (value: number) => void;
+	// moveToFront: (value: any) => void;
+	// eslint-disable-next-line no-unused-vars
+	dispatcher: any;
+	// eslint-disable-next-line no-unused-vars
+	propFunction: (value: number) => void;
 }
 
 export const CourierCard: React.FC<Props> = ({
@@ -32,7 +39,8 @@ export const CourierCard: React.FC<Props> = ({
 	endTime,
 	modeOfTransportation,
 	online,
-	setProgress,
+	dispatcher,
+	propFunction,
 }) => {
 	const [courierStatus, setCourierStatus] = useState<string>('');
 	const dispatch = useDispatch();
@@ -79,9 +87,8 @@ export const CourierCard: React.FC<Props> = ({
 								type="button"
 								className={styles.pick__cta}
 								onClick={() => {
-									setCourierStatus('picked');
 									deliveryDetailsSubmitHandler();
-									setProgress(2);
+									propFunction(dispatcher ? dispatcher : 2);
 								}}
 							>
 								Pick
@@ -115,25 +122,43 @@ export const CourierCard: React.FC<Props> = ({
 					{modeOfTransportation === 'Motorbike' && (
 						<span className={styles.vehicle}>
 							<RiEBikeLine className={styles.icon} />
-							Motorcycle
+							Motorbike
 						</span>
 					)}
-					{modeOfTransportation === 'Motorbike' && (
+					{modeOfTransportation === 'Drone' && (
 						<span className={styles.vehicle}>
-							<RiEBikeLine className={styles.icon} />
-							Motorcycle
+							<TbDrone className={styles.icon} />
+							Drone
 						</span>
 					)}
-					{modeOfTransportation === 'Motorbike' && (
+					{modeOfTransportation === 'Tricycle' && (
 						<span className={styles.vehicle}>
-							<RiEBikeLine className={styles.icon} />
-							Motorcycle
+							<TbSteeringWheel className={styles.icon} />
+							Tricycle
 						</span>
 					)}
-					{modeOfTransportation === 'Motorbike' && (
+					{modeOfTransportation === 'Bicycle' && (
 						<span className={styles.vehicle}>
-							<RiEBikeLine className={styles.icon} />
-							Motorcycle
+							<IoMdBicycle className={styles.icon} />
+							Bicycle
+						</span>
+					)}
+					{modeOfTransportation === 'Car' && (
+						<span className={styles.vehicle}>
+							<RiCarLine className={styles.icon} />
+							Car
+						</span>
+					)}
+					{modeOfTransportation === 'Foot' && (
+						<span className={styles.vehicle}>
+							<RiFootprintLine className={styles.icon} />
+							Foot
+						</span>
+					)}
+					{modeOfTransportation === 'Truck' && (
+						<span className={styles.vehicle}>
+							<RiTruckLine className={styles.icon} />
+							Truck
 						</span>
 					)}
 				</div>

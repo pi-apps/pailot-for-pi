@@ -2,7 +2,13 @@ import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserDetailsState {
 	isCourier: boolean;
-	isDelivery: boolean;
+	hasMadeFirstDelivery: boolean;
+	username: string;
+	walletAddress: string;
+	profileImg: string;
+	accessToken: string;
+	imagePublicId: string;
+	userId: string;
 }
 
 interface DeliveryTypeState {
@@ -13,8 +19,13 @@ interface DeliveryDetailsTypeState {
 	deliveryDetails: object;
 }
 
-interface UserCourierDetailstypeState {
+interface UserCourierDetailsTypeState {
 	userCourierDetails: object;
+	isActive: boolean;
+	numberOfLikes: number;
+	rating: number;
+	earnings: number;
+	userId: string;
 }
 
 const userCourierDetailsSlice = createSlice({
@@ -27,10 +38,30 @@ const userCourierDetailsSlice = createSlice({
 			endTime: '',
 			amount: 0,
 		},
-	} as UserCourierDetailstypeState,
+		isActive: false,
+		numberOfLikes: 0,
+		rating: 0,
+		earnings: 0,
+		userId: '',
+	} as UserCourierDetailsTypeState,
 	reducers: {
 		setUserCourierDetails: (state, action: PayloadAction<object>) => {
 			state.userCourierDetails = action.payload;
+		},
+		setIsActive: (state, action: PayloadAction<boolean>) => {
+			state.isActive = action.payload;
+		},
+		setNumberOfLikes: (state, action: PayloadAction<number>) => {
+			state.numberOfLikes = action.payload;
+		},
+		setRating: (state, action: PayloadAction<number>) => {
+			state.rating = action.payload;
+		},
+		setEarnings: (state, action: PayloadAction<number>) => {
+			state.earnings = action.payload;
+		},
+		setUserId: (state, action: PayloadAction<string>) => {
+			state.userId = action.payload;
 		},
 	},
 });
@@ -39,14 +70,38 @@ const userDetailsSlice = createSlice({
 	name: 'userDetails',
 	initialState: {
 		isCourier: false,
-		isDelivery: false,
+		hasMadeFirstDelivery: false,
+		username: '',
+		walletAddress: '',
+		profileImg: '',
+		accessToken: '',
+		imagePublicId: '',
+		userId: '',
 	} as UserDetailsState,
 	reducers: {
 		setIsCourier: (state) => {
 			state.isCourier = !state.isCourier;
 		},
-		setIsDelivery: (state) => {
-			state.isDelivery = !state.isDelivery;
+		setHasMadeFirstDelivery: (state) => {
+			state.hasMadeFirstDelivery = !state.hasMadeFirstDelivery;
+		},
+		setUsername: (state, action: PayloadAction<string>) => {
+			state.username = action.payload;
+		},
+		setWalletAddress: (state, action: PayloadAction<string>) => {
+			state.walletAddress = action.payload;
+		},
+		setProfileImg: (state, action: PayloadAction<string>) => {
+			state.profileImg = action.payload;
+		},
+		setAccessToken: (state, action: PayloadAction<string>) => {
+			state.accessToken = action.payload;
+		},
+		setImagePublicId: (state, action: PayloadAction<string>) => {
+			state.imagePublicId = action.payload;
+		},
+		setUserId: (state, action: PayloadAction<string>) => {
+			state.userId = action.payload;
 		},
 	},
 });
