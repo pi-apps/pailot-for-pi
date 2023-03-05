@@ -49,6 +49,7 @@ export const HomePlus = () => {
 							className={styles.cta}
 							onClick={() => {
 								navigate('/active-delivery');
+								sessionStorage.setItem('hasMadeFirstDelivery', 'true');
 								dispatch(deliveryTypeActions.setDeliveryType('active'));
 							}}
 						>
@@ -71,6 +72,7 @@ export const HomePlus = () => {
 							className={styles.cta}
 							onClick={() => {
 								navigate('/customized-delivery');
+								sessionStorage.setItem('hasMadeFirstDelivery', 'true');
 								dispatch(deliveryTypeActions.setDeliveryType('customized'));
 							}}
 						>

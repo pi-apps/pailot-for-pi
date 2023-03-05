@@ -10,7 +10,7 @@ import { IoMdBicycle } from 'react-icons/io';
 // eslint-disable-next-line no-unused-vars
 import { RiEBike2Line, RiCarLine, RiFootprintLine, RiTruckLine } from 'react-icons/ri';
 import { GiCancel } from 'react-icons/gi';
-import { userCourierDetailsActions } from '../../store/store';
+import { RootState, createCourierDetailsActions } from '../../store/store';
 
 interface Props {
 	// eslint-disable-next-line no-unused-vars
@@ -24,7 +24,7 @@ export const ModPopup: React.FC<Props> = ({ setShowModPopup }) => {
 	const dispatch = useDispatch();
 	const selectRef = useRef<HTMLSelectElement>(null);
 	const userCourierDetails = useSelector(
-		(state: any) => state.userCourierDetails.userCourierDetails
+		(state: RootState) => state.userDetails.courier
 	);
 
 	const onSubmit = () => {
@@ -37,11 +37,14 @@ export const ModPopup: React.FC<Props> = ({ setShowModPopup }) => {
 			if (mod === '6') return 'Foot';
 			if (mod === '7') return 'Tricycle';
 		});
-		console.log(fullMods);
+		if (!userCourierDetails) {
+      setShowModPopup(false);
+      return;
+    }
 		dispatch(
-			userCourierDetailsActions.setUserCourierDetails({
+			createCourierDetailsActions.setCreateCourierDetails({
 				...userCourierDetails,
-				modeOfTransportation: fullMods,
+				modeOfTransportation: fullMods.join(''),
 			})
 		);
 		setShowModPopup(false);

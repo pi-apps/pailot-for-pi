@@ -15,22 +15,23 @@ import { RiEBike2Line, RiCarLine, RiFootprintLine, RiTruckLine } from 'react-ico
 import { piSymbol } from '../../assets/icons';
 import { PricingPopup } from '../../components/DashBoardPopups/PricingPopup';
 import { ModPopup } from '../../components/DashBoardPopups/ModPopup';
+import { RootState } from '../../store/store';
 
 export const CourierDashBoard = () => {
 	const [showPricingPopup, setShowPricingPopup] = useState<boolean>(false);
 	const [showModPopup, setShowModPopup] = useState<boolean>(false);
 	const navigate = useNavigate();
 	//From userDetails
-	const isCourier = useSelector((state: any) => state.userDetails.isCourier);
-	const username = useSelector((state: any) => state.userDetails.username);
+	const isCourier = useSelector((state: RootState) => state.userDetails.isCourier);
+	const username = useSelector((state: RootState) => state.userDetails.user.username);
 	//From userCourierDetails
 	const userCourierDetails = useSelector(
-		(state: any) => state.userCourierDetails.userCourierDetails
+		(state: RootState) => state.userDetails.courier
 	);
-	const isActive = useSelector((state: any) => state.userCourierDetails.isActive);
-	const profileImg = useSelector((state: any) => state.userCourierDetails.profileImg);
-	const rating = useSelector((state: any) => state.userCourierDetails.rating);
-	const earnings = useSelector((state: any) => state.userCourierDetails.earnings);
+	const isActive = useSelector((state: RootState) => state.userDetails.courier?.isActive);
+	const profileImg = useSelector((state: RootState) => state.userDetails.user.profileImg);
+	const rating = useSelector((state: RootState) => state.userDetails.courier?.rating);
+	const earnings = useSelector((state: RootState) => state.userDetails.courier?.earnings);
 	const successfulDeliveries = '25%';
 	const positiveFeedback = '18%';
 	const negativeFeedback = '9%';
@@ -40,16 +41,16 @@ export const CourierDashBoard = () => {
 	}, [isCourier]);
 
 	const endTimeHandler = () => {
-		if (!userCourierDetails.endTime) return '00:00';
+		if (!userCourierDetails?.endTime) return '00:00';
 		const endTime = userCourierDetails.endTime;
 		const time = endTime.split(':');
-		time[0] = +time[0] - 12;
+		time[0] = `${+time[0] - 12}`;
 		const finalTime = time.join(':');
 		return finalTime;
 	};
 
 	const modsGenerator = () => {
-		const mods = userCourierDetails.modeOfTransportation.map((mod: any, i: number) => {
+		const mods = userCourierDetails?.modeOfTransportation.split(',').map((mod: any, i: number) => {
 			if (mod === 'Foot') {
 				return (
 					<div className={`${styles.mod} ${styles.foot}`} key={i}>
@@ -143,7 +144,7 @@ export const CourierDashBoard = () => {
 							.map((_, i) => {
 								return <FaStar className={styles.bright__star} key={i} />;
 							})}
-						{Array(5 - rating)
+						{Array(5 - (rating ?? 0))
 							.fill(true)
 							.map((_, i) => {
 								return <FaStar className={styles.dark__star} key={i} />;
@@ -178,7 +179,7 @@ export const CourierDashBoard = () => {
 									<span>Your Pricing</span> <AiOutlineEdit className={styles.edit__icons} />
 								</p>
 								<div className={styles.value}>
-									<p>{`${userCourierDetails.amount}pi`}</p>
+									<p>{`${userCourierDetails?.preferredDeliveryAmount}pi`}</p>
 									<span className={styles.sub__value}>per trip</span>
 								</div>
 								<span className={styles.description}>
@@ -202,7 +203,7 @@ export const CourierDashBoard = () => {
 									<span>Mode Of Delivery</span> <AiOutlineEdit className={styles.edit__icons} />
 								</p>
 								<div className={styles.mod__value}>
-									{modsGenerator().map((mod: any) => {
+									{modsGenerator()?.map((mod: any) => {
 										return mod;
 									})}
 								</div>
@@ -223,9 +224,9 @@ export const CourierDashBoard = () => {
 									Delivery Areas <AiOutlineEdit className={styles.edit__icons} />
 								</p>
 								<div className={styles.value}>
-									<p>{userCourierDetails.regionOfOperation.trim().split(',')[1]}</p>
+									<p>{userCourierDetails?.regionOfOperation.trim().split(',')[1]}</p>
 									<span className={styles.sub__value}>
-										{userCourierDetails.regionOfOperation.trim().split(',')[0]}
+										{userCourierDetails?.regionOfOperation.trim().split(',')[0]}
 									</span>
 								</div>
 								<span className={styles.description}>Delivery Routes</span>
@@ -244,7 +245,7 @@ export const CourierDashBoard = () => {
 								</p>
 								<div className={styles.value}>
 									{' '}
-									<p>{`${userCourierDetails.startTime}am - ${endTimeHandler()}pm`}</p>
+									<p>{`${userCourierDetails?.startTime}am - ${endTimeHandler()}pm`}</p>
 									<span className={styles.sub__value}>Time Zone: GMT</span>
 								</div>
 								<span className={styles.description}>Most active time when delivery</span>
@@ -412,12 +413,12 @@ export const CourierDashBoard = () => {
 							<div className={styles.bottom}>
 								<div className={styles.location}>
 									<span>Location</span>
-									<span>{userCourierDetails.regionOfOperation}</span>
+									<span>{userCourierDetails?.regionOfOperation}</span>
 								</div>
 
 								<div className={styles.date__and__time}>
 									<span>Date/Time</span>
-									<span>03 Feb {`${userCourierDetails.startTime}am - ${endTimeHandler()}pm`}</span>
+									<span>03 Feb {`${userCourierDetails?.startTime}am - ${endTimeHandler()}pm`}</span>
 								</div>
 							</div>
 						</motion.div>

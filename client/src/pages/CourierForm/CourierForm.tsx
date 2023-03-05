@@ -3,23 +3,27 @@ import { HiOutlineArrowLeft } from 'react-icons/hi';
 import styles from './CourierForm.module.css';
 import { useNavigate } from 'react-router-dom';
 import { GiCancel } from 'react-icons/gi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CourierFormMods } from '../../components/Common/CourierFormMods/CourierFormMods';
-import { createCourierDetailsActions, userDetailsActions } from '../../store/store';
+import { createCourierDetailsActions, RootState, userDetailsActions } from '../../store/store';
+import { CREATE_COURIER_URL } from '../../constants/url.constants';
+import { fetchWithCredentials } from '../../hooks/useApi';
 
 export const CourierForm = () => {
 	const [validated, setValidated] = useState<boolean>(false);
 	const [showCourierMods, setShowCourierMods] = useState<boolean>(false);
-	// eslint-disable-next-line no-unused-vars
 	const [selectedMods, setSelectedMods] = useState<string[]>([]);
+
+	const courierUserId = useSelector((state: RootState) => state.userDetails.user.userUid);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
 	const startTimeRef = useRef<HTMLInputElement>(null);
 	const endTimeRef = useRef<HTMLInputElement>(null);
 	const regionRef = useRef<HTMLInputElement>(null);
 	const amountRef = useRef<HTMLInputElement>(null);
 	const validityChecker = () => {
-		// console.log(startTimeRef.current?.value);
 		if (
 			selectedMods.length === 0 ||
 			regionRef.current?.value === '' ||
@@ -58,8 +62,16 @@ export const CourierForm = () => {
 		return selectedMods;
 	};
 
-	const onSubmitHandler = () => {
-		// if (!validated) return;
+	const handleCreateCourier = async (courierData: any) => {
+		return await fetchWithCredentials(CREATE_COURIER_URL, {
+			method: 'POST',
+			data: {
+				...courierData,
+			},
+		});
+	};
+
+	const onSubmitHandler = async () => {
 		if (
 			!selectedMods ||
 			!regionRef.current ||
@@ -69,18 +81,24 @@ export const CourierForm = () => {
 		)
 			return;
 
-      // TODO: Make an API call and save the courier and save the result in the store
+		const courierData = {
+			modeOfTransportation: selectedMods.join(','),
+			regionOfOperation: regionRef.current.value,
+			startTime: startTimeRef.current.value,
+			endTime: endTimeRef.current.value,
+			preferredDeliveryAmount: Number(amountRef.current.value),
+			courierUserId,
+		};
 		dispatch(
 			createCourierDetailsActions.setCreateCourierDetails({
-        modeOfTransportation: selectedMods.join(','),
-        regionOfOperation: regionRef.current.value,
-        startTime: startTimeRef.current.value,
-        endTime: endTimeRef.current.value,
-        preferredDeliveryAmount: Number(amountRef.current.value),
-        courierUserId: ''
-      })
-      );
-      // dispatch(userDetailsActions.setCourierDetails(data.data))
+				...courierData,
+			})
+		);
+		const courier = await handleCreateCourier(courierData);
+    
+		sessionStorage.setItem('user', JSON.stringify(courier.data.data));
+		dispatch(userDetailsActions.setUserDetails({ user: courier?.data?.data?.user }));
+		dispatch(userDetailsActions.setCourierDetails({ courier: courier?.data?.data?.courier }));
 		dispatch(userDetailsActions.setIsCourier());
 		navigate('/home');
 	};

@@ -47,13 +47,13 @@ export const fetchWithCredentials = async (
 	});
 };
 
-export default function useApi<T, E = never>(
+export const useApi = <T, E = never>(
 	endpoint: string,
 	params: AxiosRequestConfig<T> = {
 		method: 'GET',
 	},
 	dependencies: unknown[] = []
-): Response<T, E> {
+): Response<T, E> => {
 	const api = fetchWithCredentials;
 	const [data, setData] = useState<T | null>(null);
 	const [loading, setLoading] = useState(true);

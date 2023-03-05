@@ -2,7 +2,7 @@ import styles from './PricingPopup.module.css';
 import { IoMdClose } from 'react-icons/io';
 import { PiIcon } from '../../assets/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { userCourierDetailsActions } from '../../store/store';
+import { createCourierDetailsActions, RootState } from '../../store/store';
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 
@@ -14,7 +14,7 @@ interface Props {
 export const PricingPopup: React.FC<Props> = ({ setShowPricingPopup }) => {
 	const dispatch = useDispatch();
 	const userCourierDetails = useSelector(
-		(state: any) => state.userCourierDetails.userCourierDetails
+		(state: RootState) => state.userDetails.courier
 	);
 	const inputRef = useRef<HTMLInputElement>(null);
 	return (
@@ -62,10 +62,11 @@ export const PricingPopup: React.FC<Props> = ({ setShowPricingPopup }) => {
 					type="button"
 					className={styles.cta}
 					onClick={() => {
+            if (!userCourierDetails) return;
 						dispatch(
-							userCourierDetailsActions.setUserCourierDetails({
+							createCourierDetailsActions.setCreateCourierDetails({
 								...userCourierDetails,
-								amount: inputRef.current?.value,
+								preferredDeliveryAmount: Number(inputRef.current?.value),
 							})
 						);
 					}}

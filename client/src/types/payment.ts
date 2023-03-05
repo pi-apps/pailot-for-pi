@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+import { ITransaction } from "./transaction";
+
 export interface PaymentDTO {
 	identifier: string;
 	user_uid: string;
@@ -21,4 +24,20 @@ export interface PaymentDTO {
 		verified: boolean;
 		_link: string;
 	};
+}
+
+export interface IEarning {
+	id: string;
+	delivery: ITransaction;
+	paymentId: string;
+	amount: number;
+	paymentStatus: PaymentStatus;
+	transactionId: string;
+}
+
+export enum PaymentStatus {
+	CREATED = 'created',
+	SUBMITTED = 'submitted',
+	CANCELLED = 'cancelled',
+	COMPLETED = 'completed',
 }

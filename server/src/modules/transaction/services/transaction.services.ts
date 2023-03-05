@@ -329,6 +329,12 @@ export async function getAllPendingTransaction(): Promise<TransactionsResult> {
 		const pendingTransactions = await TransactionRepository.find({
 			where: { deliveryStatus: DeliveryStatus.PENDING, deletedDate: null },
 		});
+		// const pendingTransactions = await TransactionRepository.createQueryBuilder('transaction')
+		// 	.where('transaction.deliveryStatus = :deliveryStatus', {
+		// 		deliveryStatus: DeliveryStatus.PENDING,
+		// 	})
+		// 	.andWhere('transaction.deletedDate IS NULL')
+		// 	.getMany();
 		return {
 			type: Result.SUCCESS,
 			data: pendingTransactions,

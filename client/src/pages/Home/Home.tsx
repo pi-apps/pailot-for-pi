@@ -12,13 +12,32 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
 import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
 import { userDetailsActions, RootState } from '../../store/store';
+// import { useApi } from '../../hooks/useApi';
+// import {
+// 	GET_ALL_COURIER_USER_URL,
+// 	GET_PENDING_TRANSACTIONS_URL,
+// } from '../../constants/url.constants';
 
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
-	const isCourier = useSelector((state: RootState) => state.userDetails.isCourier);
-	const hasMadeFirstDelivery = useSelector((state: RootState) => state.userDetails.hasMadeFirstDelivery);
+	const { isCourier, courier } = useSelector((state: RootState) => state.userDetails);
+	const hasMadeFirstDelivery = useSelector(
+		(state: RootState) => state.userDetails.hasMadeFirstDelivery
+	);
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	// const {  data } = useApi<any>(
+	// 	isCourier ? GET_PENDING_TRANSACTIONS_URL : GET_ALL_COURIER_USER_URL,
+	// 	{
+	// 		method: 'GET',
+	// 	},
+	// 	[isCourier]
+	// );
+
+  // console.log(data);
+
 	setTimeout(() => {
 		if (carouselCount === 3) {
 			setCarouselCount(1);
@@ -27,6 +46,7 @@ export const Home = () => {
 			setCarouselCount(carouselCount + 1);
 		}
 	}, 3000);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.profile}>
@@ -115,7 +135,8 @@ export const Home = () => {
 									type="button"
 									className={styles.big__cta}
 									onClick={() => {
-                    navigate('/customized-delivery');
+										navigate('/customized-delivery');
+										sessionStorage.setItem('hasMadeFirstDelivery', 'true');
 										dispatch(userDetailsActions.setHasMadeFirstDelivery());
 									}}
 								>
@@ -128,7 +149,7 @@ export const Home = () => {
 						</div>
 					</motion.div>
 				)}
-				{!isCourier && (
+				{!courier || !isCourier &&  (
 					<motion.div
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -166,7 +187,7 @@ export const Home = () => {
 						</div>
 					</motion.div>
 				)}
-				{!isCourier && (
+				{!courier || !isCourier && (
 					<div className={styles.homeplus__container}>
 						<HomePlus />
 					</div>

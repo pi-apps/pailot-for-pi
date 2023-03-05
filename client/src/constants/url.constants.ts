@@ -7,6 +7,7 @@ export const SIGN_IN_URL = `${API_URL_BASE}/user/sign-in`;
 // User Endpoints
 export const CREATE_USER_URL = `${API_URL_BASE}/user`;
 export const GET_ALL_USER_URL = `${API_URL_BASE}/user`;
+export const GET_ALL_COURIER_USER_URL = `${API_URL_BASE}/user/couriers`;
 export const GET_USER_URL = `${API_URL_BASE}/user/profile`;
 export const GET_USER_BY_USERNAME_URL = (username: string) => `${API_URL_BASE}/user/${username}`;
 export const UPDATE_USER_URL = (userId: string) => `${API_URL_BASE}/user/${userId}`;
