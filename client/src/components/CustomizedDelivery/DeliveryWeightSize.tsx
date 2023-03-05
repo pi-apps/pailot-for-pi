@@ -107,6 +107,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 								name="Weight"
 								id=""
 								placeholder="Example: 2"
+                inputMode="numeric"
 								onChange={(e) => {
 									setWeight(e.target.value);
 								}}
@@ -158,6 +159,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 								name="Size"
 								id=""
 								placeholder="Example: 2"
+                inputMode="numeric"
 								onChange={(e) => {
 									setSize(e.target.value);
 								}}
@@ -203,7 +205,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={(!weight || !size) ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						if (deliveryType === 'active') {
 							setProgress(5);
@@ -212,6 +214,7 @@ export const DeliveryWeightSize: React.FC<Props> = ({ setProgress }) => {
 						}
 						deliveryDetailsSubmitHandler();
 					}}
+          disabled={(!weight || !size)}
 				>
 					Next
 				</button>

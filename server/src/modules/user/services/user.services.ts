@@ -4,14 +4,20 @@ import { Courier } from '../../../db/entity/Courier';
 import { User } from '../../../db/entity/User';
 import { UserCourier } from '../../../db/entity/UserCourier';
 import { ErrorResult, NotFoundResult, SuccessResult } from '../../../interfaces/result';
-import { CreateUserDTO, ICourier, UpdateCourierDTO, UpdateUserDTO } from '../../../interfaces/user';
+import {
+	CreateUserDTO,
+	ICourier,
+	IUserCourier,
+	UpdateCourierDTO,
+	UpdateUserDTO,
+} from '../../../interfaces/user';
 import { uploadeImageToCloudinary } from '../../../middlewares/cloudinary';
 
 export type UpdateUserResult = SuccessResult<User> | ErrorResult;
 export type CreateOrUpdateCourierResult = SuccessResult<Courier> | ErrorResult;
 export type DeleteUserResult = SuccessResult<null> | ErrorResult;
 export type UsersResult = SuccessResult<User[]> | ErrorResult;
-export type UserResult = SuccessResult<UserCourier> | NotFoundResult | ErrorResult;
+export type UserResult = SuccessResult<IUserCourier> | NotFoundResult | ErrorResult;
 
 export const UserRepository = AppDataSource.getRepository(User);
 export const CourierRepository = AppDataSource.getRepository(Courier);
@@ -19,10 +25,10 @@ export const UserCourierRepository = AppDataSource.getRepository(UserCourier);
 
 export async function createUserEntry(
 	user: CreateUserDTO
-): Promise<SuccessResult<UserCourier> | ErrorResult> {
-	let userData: UserCourier;
-	let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
+): Promise<SuccessResult<IUserCourier> | ErrorResult> {
 	try {
+		let userData: IUserCourier;
+		let currentUser = await UserRepository.findOne({ where: { userUid: user.user.uid } });
 		if (currentUser) {
 			currentUser.accessToken = user.accessToken;
 			currentUser = await UserRepository.save(currentUser);

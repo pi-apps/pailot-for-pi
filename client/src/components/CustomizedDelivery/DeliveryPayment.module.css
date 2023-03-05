@@ -33,14 +33,14 @@
 
 .description {
 	font-weight: lighter;
-	font-size: 16px;
+	font-size: 1rem;
 }
 
 .header {
 	width: 100%;
 	text-align: center;
 	color: var(--purple);
-	font-size: 14px;
+	font-size: 0.97rem;
 }
 
 .courier__details {
@@ -60,7 +60,7 @@
 }
 
 .new__user {
-	font-size: 8px;
+	font-size: 0.75rem;
 	color: var(--purple);
 	font-weight: 700;
 	background-color: rgba(229, 212, 255, 1);
@@ -83,7 +83,7 @@
 }
 
 label > p {
-	font-size: 12px;
+	font-size: 0.9rem;
 }
 
 .label > div {
@@ -110,7 +110,7 @@ label > p {
 	flex: 1;
 	border: none;
 	background-color: transparent;
-	font-size: 12px;
+	font-size: 0.9rem;
 }
 
 .input__container input:focus,
@@ -163,5 +163,14 @@ label > p {
 	border: none;
 	background-color: var(--purple);
 	color: var(--light-purple);
+	font-weight: 500;
+}
+
+.cta__disabled {
+  width: 100%;
+	padding: 10px;
+	border-radius: 4px;
+	border: none;
+	background-color: var(--grey);
 	font-weight: 500;
 }

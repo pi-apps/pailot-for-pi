@@ -22,22 +22,22 @@ interface Props {
 }
 
 export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
-  const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
-  const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
+	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
 
 	const [loadingState, setLoadingState] = useState<'error' | 'loading' | 'success'>('error');
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [pickupLocation, setPickupLocation] = useState<string>(deliveryDetails.pickupLocation);
 	const [dropLocation, setDropLocation] = useState<string>(deliveryDetails.dropLocation);
-	const [receiverUserName, setReceiverUserName] = useState<string>(deliveryDetails.receiverDetails.username);
-  const [receiverUser, setReceiverUser] = useState<IUser>(deliveryDetails.receiverDetails);
+	const [receiverUserName, setReceiverUserName] = useState<string>(
+		deliveryDetails.receiverDetails.username
+	);
+	const [receiverUser, setReceiverUser] = useState<IUser>(deliveryDetails.receiverDetails);
 	const dispatch = useDispatch();
 	const closeModal = () => {
 		setShowModal(false);
 	};
 	const deliveryDetailsSubmitHandler = () => {
-		console.log('PICK UP: ', pickupLocation);
-		console.log('DROP UP: ', dropLocation);
 		dispatch(deliveryDetailsActions.setPickupLocation(pickupLocation));
 		dispatch(deliveryDetailsActions.setDropLocation(dropLocation));
 		dispatch(deliveryDetailsActions.setReceiverDetails(receiverUser));
@@ -45,36 +45,41 @@ export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 		closeModal();
 	};
 
-  // Store the debounced function across renders
-  const debouncedSearch = React.useRef(
-    debounce((criteria: string) => {
+	// Store the debounced function across renders
+	const debouncedSearch = React.useRef(
+		debounce((criteria: string) => {
       handleGetReceiverByUsername(criteria);
-    }, 500)
-  ).current;
+		}, 500)
+    ).current;
 
-  // Cancel the debouncing function on unmount
-  React.useEffect(() => {
+    // Cancel the debouncing function on unmount
+	React.useEffect(() => {
     return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch]);
+			debouncedSearch.cancel();
+		};
+	}, [debouncedSearch]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReceiverUserName(e.target.value);
-    debouncedSearch(e.target.value);
-  };
+		debouncedSearch(e.target.value);
+	};
 
-  const handleGetReceiverByUsername = async (receiverUserName: string) => {
-    const user = await fetchWithCredentials(GET_USER_BY_USERNAME_URL(receiverUserName), {
-      method: 'GET',
-		});
-    if (user?.data?.data.username === receiverUserName) {
-      setReceiverUser(user.data.data);
-      setLoadingState('success');
-    } else {
-      setLoadingState('error')
+	const handleGetReceiverByUsername = async (receiverUserName: string) => {
+    setLoadingState('loading');
+    try {
+      const user = await fetchWithCredentials(GET_USER_BY_USERNAME_URL(receiverUserName), {
+        method: 'GET',
+      });
+      if (user?.data?.data.username === receiverUserName) {
+        setReceiverUser(user.data.data);
+        setLoadingState('success');
+      } else {
+        setLoadingState('error');
+      }
+    } catch (error) {
+      setLoadingState('error');
     }
-  };
+	};
 
 	return (
 		<div className={styles.container}>
@@ -152,7 +157,6 @@ export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 								placeholder="Receiver Pi Username"
 								value={receiverUserName}
 								onChange={(e) => {
-                  setLoadingState('loading');
 									handleChange(e);
 								}}
 							/>
@@ -182,10 +186,15 @@ export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={
+						!receiverUser.username || !pickupLocation || !dropLocation
+							? styles.cta__disabled
+							: styles.cta
+					}
 					onClick={() => {
 						setShowModal(true);
 					}}
+					disabled={!receiverUser.username || !pickupLocation || !dropLocation}
 				>
 					Next
 				</button>

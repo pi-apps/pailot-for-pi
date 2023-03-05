@@ -259,11 +259,12 @@ export const ModeOfDelivery: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={(!mods.length || !regionRef?.current?.value) ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						setProgress(5);
 						deliveryDetailsSubmitHandler();
 					}}
+          disabled={!mods.length || !regionRef?.current?.value}
 				>
 					Next
 				</button>

@@ -18,7 +18,7 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 
 	const [productName, setProductName] = useState<string>(deliveryDetails.productName);
 	const [description, setDescription] = useState<string>(deliveryDetails.description);
-	const [category, setCategory] = useState<string>(deliveryDetails.category);
+	const [category, setCategory] = useState<string>('');
 
 	const dispatch = useDispatch();
 
@@ -132,10 +132,11 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 								type: 'tween',
 							}}
 							name="Category"
-              value={category}
+							value={category}
 							className={styles.select}
 							onChange={(e) => setCategory(e.target.value)}
 						>
+              <option value="">--Select category--</option>
 							<option value="Phone and Computers">Phones and Computers</option>
 							<option value="Food delivery">Food delivery</option>
 							<option value="Electronics">Electronics</option>
@@ -161,7 +162,8 @@ export const DeliveryDetails: React.FC<Props> = ({ setProgress }) => {
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={(!productName || !description || !category) ? styles.cta__disabled : styles.cta}
+					disabled={(!productName || !description || !category)}
 					onClick={() => {
 						if (deliveryType === 'active') {
 							setProgress(4);

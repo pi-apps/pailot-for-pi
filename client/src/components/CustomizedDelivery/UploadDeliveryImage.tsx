@@ -20,8 +20,8 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 	uploadedImage,
 }) => {
 	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
-  const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
-  
+	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+
 	const [uploadedImageName, setUploadedImageName] = useState<string>(deliveryDetails.imageName);
 	const [uploadedImageURL, setUploadedImageURL] = useState<string>(deliveryDetails.imageURL);
 	const navigate = useNavigate();
@@ -92,7 +92,13 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 					htmlFor="image"
 					className={styles.input__container}
 				>
-					<RiUploadCloud2Line className={styles.upload__icon} />
+					{uploadedImageURL ? (
+						<div className={styles.delivery__img__container}>
+							<img src={uploadedImageURL} alt="Delivery Image" />
+						</div>
+					) : (
+						<RiUploadCloud2Line className={styles.upload__icon} />
+					)}
 					<span>Tap the Icon to Upload</span>
 					<input
 						type="file"
@@ -115,7 +121,7 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 			>
 				<button
 					type="button"
-					className={styles.cta}
+					className={!uploadedImageURL ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						if (deliveryType === 'active') {
 							setProgress(3);
@@ -124,6 +130,7 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 						}
 						deliveryDetailsSubmitHandler();
 					}}
+          disabled={!uploadedImageURL}
 				>
 					Next
 				</button>

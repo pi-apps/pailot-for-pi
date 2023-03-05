@@ -1,5 +1,5 @@
 import styles from './DeliveryPayment.module.css';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import { fetchWithCredentials } from '../../hooks/useApi';
@@ -19,7 +19,8 @@ interface Props {
 const PLATFORM_FEE = 0.001;
 
 export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage }) => {
-	const [transactionAmount, setTransactionAmount] = useState<number>(0);
+	const [transactionAmount, setTransactionAmount] = useState<number>();
+  const amountRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const {
@@ -35,7 +36,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 		size,
 		category,
 	} = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
-  const userDetails = useSelector((state: RootState) => state.userDetails);
+	const userDetails = useSelector((state: RootState) => state.userDetails);
 
 	const handlePayment = async () => {
 		try {
@@ -90,7 +91,6 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 		formData.append('transactionAmount', `${transactionAmount}`);
 		formData.append('itemCategory', category);
 		formData.append('deliveryRange', deliveryRegion);
-		console.log(formData);
 		try {
 			const transaction = await fetchWithCredentials(CREATE_TRANSACTION_URL, {
 				method: 'POST',
@@ -145,10 +145,13 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 							className={styles.input__container}
 						>
 							<input
-								value={transactionAmount}
 								type="number"
+                ref={amountRef}
 								name="Amount"
-								placeholder="0.00000"
+								placeholder="0.0000"
+								pattern="[0-9]*"
+                min="0.001"
+								inputMode="numeric"
 								onChange={(e) => {
 									setTransactionAmount(Number(e.target.value));
 									dispatch(deliveryDetailsActions.setTransactionAmount(Number(e.target.value)));
@@ -156,7 +159,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 							/>
 						</motion.div>
 					</div>
-					<span>Amount should not be less than 0.006</span>
+					{/* <span>Amount should not be less than 0.006</span> */}
 				</label>
 				<div className={styles.charges}>
 					<div className={styles.fees}>
@@ -167,7 +170,7 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 					</div>
 					<div className={styles.total}>
 						<p>Total</p>
-						<span>{transactionAmount + PLATFORM_FEE}</span>
+						<span>{((transactionAmount ?? 0) + PLATFORM_FEE).toFixed(4)}</span>
 					</div>
 				</div>
 			</div>
@@ -180,7 +183,12 @@ export const DeliveryPayment: React.FC<Props> = ({ setProgress, uploadedImage })
 				}}
 				className={styles.cta__container}
 			>
-				<button type="button" className={styles.cta} onClick={handlePayment}>
+				<button
+					type="button"
+					className={(!transactionAmount) ? styles.cta__disabled : styles.cta}
+					onClick={handlePayment}
+					disabled={!transactionAmount}
+				>
 					Pay with Pi
 				</button>
 			</motion.div>

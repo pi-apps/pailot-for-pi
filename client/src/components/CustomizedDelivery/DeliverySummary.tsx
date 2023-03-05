@@ -161,7 +161,7 @@ export const DeliverySummary: React.FC<Props> = ({ setProgress }) => {
 				</div>
 				<div className={styles.delivery__details}>
 					<p className={styles.title}>Delivery Region:</p>
-					<p className={styles.value}>{deliveryDetails.dropLocation} </p>
+					<p className={styles.value}>{deliveryDetails.deliveryRegion} </p>
 					<div className={styles.icon__container}>
 						<AiOutlineEdit className={styles.icon} />
 					</div>

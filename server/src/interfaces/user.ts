@@ -51,7 +51,7 @@ export enum UserRole {
 	COURIER = 2,
 }
 
-export interface UserCourier {
+export interface IUserCourier {
 	id: string;
 	user: IUser;
 	courier: ICourier | null;

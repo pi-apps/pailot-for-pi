@@ -70,21 +70,21 @@
 
 .content h3 {
 	color: var(--purple);
-	font-size: 12px;
+	font-size: 0.9rem;
 	font-weight: 700;
 }
 
 .content p {
-	font-size: 10px;
+	font-size: 0.7rem;
 }
 
 .content p > span {
-	font-size: 10px;
+	font-size: 0.8rem;
 	color: var(--orange);
 }
 
 .content > span {
-	font-size: 8px;
+	font-size: 0.65rem;
 }
 
 .content .cta {
@@ -144,8 +144,8 @@
 	gap: 0.5rem;
 }
 
-.modal__container > header {
-	font-size: 12px;
+.modal__container > h5 {
+	font-size: 0.9rem;
 }
 
 .modal {
@@ -170,14 +170,14 @@
 }
 
 .modal__content p {
-	font-size: 12px;
+	font-size: 0.8rem;
 	color: var(--black);
 	opacity: 0.75;
 }
 
 .modal__content > span {
 	color: var(--purple);
-	font-size: 24px;
+	font-size: 1.5rem;
 	font-weight: 700;
 }
 
