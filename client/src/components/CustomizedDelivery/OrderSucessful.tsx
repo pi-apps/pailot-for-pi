@@ -5,11 +5,14 @@ import { defaultUser } from '../../assets/images';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
 
 export const OrderSucessful = () => {
 	// get the deliveryType state from the store
 	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
 	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+
+	const navigate = useNavigate();
 
 	return (
 		<div className={styles.container}>
@@ -36,7 +39,7 @@ export const OrderSucessful = () => {
 				Token of your order is available on “My Deliveries”. Be on the look for your courier to
 				accept this delivery order
 			</p>
-			{(deliveryType === 'active' && deliveryDetails.courierDetails.courier) && (
+			{deliveryType === 'active' && deliveryDetails.courierDetails.courier && (
 				<div className={styles.courier__details}>
 					<img src={defaultUser} alt="Couriers Profile picture" />
 					<span className={styles.courier__username}>
@@ -79,8 +82,11 @@ export const OrderSucessful = () => {
 					}}
 					type="button"
 					className={styles.cta__bottom}
+					onClick={() => {
+						navigate('/home');
+					}}
 				>
-          Back to Home
+					Back to Home
 				</motion.button>
 			</div>
 		</div>
