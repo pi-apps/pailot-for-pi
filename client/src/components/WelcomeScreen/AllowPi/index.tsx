@@ -37,7 +37,7 @@ export const AllowPi = () => {
 		});
 	};
 
-	const scopes = ['username', 'payments'];
+	const scopes = ['username', 'payments', 'wallet_address'];
 	const signIn = async () => {
 		try {
 			if (toggleActive == true) {

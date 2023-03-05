@@ -92,7 +92,7 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 					htmlFor="image"
 					className={styles.input__container}
 				>
-					{uploadedImageURL ? (
+					{inputRef?.current?.files[0] ? (
 						<div className={styles.delivery__img__container}>
 							<img src={uploadedImageURL} alt="Delivery Image" />
 						</div>
@@ -121,7 +121,7 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 			>
 				<button
 					type="button"
-					className={!uploadedImageURL ? styles.cta__disabled : styles.cta}
+					className={!inputRef?.current?.files[0] ? styles.cta__disabled : styles.cta}
 					onClick={() => {
 						if (deliveryType === 'active') {
 							setProgress(3);
@@ -130,7 +130,7 @@ export const UploadDeliveryImage: React.FC<Props> = ({
 						}
 						deliveryDetailsSubmitHandler();
 					}}
-          disabled={!uploadedImageURL}
+          disabled={!inputRef?.current?.files[0]}
 				>
 					Next
 				</button>

@@ -7,6 +7,7 @@ import { createUserEntry } from '../services/user.services';
 
 export async function signInUser(req: Request, res: Response) {
 	const auth = req.body.authResult;
+	console.log(auth);
 	try {
 		await platformAPIClient.get(`/v2/me`, {
 			headers: { Authorization: `Bearer ${auth.accessToken}` },
