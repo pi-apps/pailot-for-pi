@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { userDetailsActions } from '../../store/store';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
 // import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
-import { userDetailsActions, RootState } from '../../store/store';
+import { userDetailsActions, RootState, deliveryTypeActions } from '../../store/store';
 // import { useApi } from '../../hooks/useApi';
 // import {
 // 	GET_ALL_COURIER_USER_URL,
@@ -134,9 +134,10 @@ export const Home = () => {
 								type="button"
 								className={styles.big__cta}
 								onClick={() => {
-									navigate('/customized-delivery');
+									dispatch(deliveryTypeActions.setDeliveryType('customized'));
 									sessionStorage.setItem('hasMadeFirstDelivery', 'true');
 									dispatch(userDetailsActions.setHasMadeFirstDelivery());
+									navigate('/customized-delivery');
 								}}
 							>
 								Make a delivery

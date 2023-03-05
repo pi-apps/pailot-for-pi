@@ -175,7 +175,7 @@ const userDetailsSlice = createSlice({
 const deliveryTypeSlice = createSlice({
 	name: 'deliveryType',
 	initialState: {
-		deliveryType: 'active',
+		deliveryType: 'customized',
 	} as DeliveryTypeState,
 	reducers: {
 		setDeliveryType: (state, action: PayloadAction<string>) => {

@@ -47,11 +47,11 @@ export const HomePlus = () => {
 							}}
 							type="button"
 							className={styles.cta}
-							onClick={() => {
-								navigate('/active-delivery');
-								sessionStorage.setItem('hasMadeFirstDelivery', 'true');
-								dispatch(deliveryTypeActions.setDeliveryType('active'));
-							}}
+							// onClick={() => {
+							// 	navigate('/active-delivery');
+							// 	sessionStorage.setItem('hasMadeFirstDelivery', 'true');
+							// 	dispatch(deliveryTypeActions.setDeliveryType('active'));
+							// }}
 						>
 							<span>
 								<HiOutlinePlusCircle />
