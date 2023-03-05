@@ -10,7 +10,7 @@ import { FooterNavBar, HomePlus } from '../../components';
 import { useSelector, useDispatch } from 'react-redux';
 // import { userDetailsActions } from '../../store/store';
 import { CourierDeliveryList } from '../../components/CourierDeliveryList/CourierDeliveryList';
-import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
+// import { DispatchersList } from '../../components/DispatchersList/DispatchersList';
 import { userDetailsActions, RootState } from '../../store/store';
 // import { useApi } from '../../hooks/useApi';
 // import {
@@ -21,9 +21,9 @@ import { userDetailsActions, RootState } from '../../store/store';
 export const Home = () => {
 	const [carouselCount, setCarouselCount] = useState<number>(1);
 	const { isCourier } = useSelector((state: RootState) => state.userDetails);
-	const hasMadeFirstDelivery = useSelector(
-		(state: RootState) => state.userDetails.hasMadeFirstDelivery
-	);
+	// const hasMadeFirstDelivery = useSelector(
+	// 	(state: RootState) => state.userDetails.hasMadeFirstDelivery
+	// );
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -36,7 +36,7 @@ export const Home = () => {
 	// 	[isCourier]
 	// );
 
-  // console.log(data);
+	// console.log(data);
 
 	setTimeout(() => {
 		if (carouselCount === 3) {
@@ -111,45 +111,43 @@ export const Home = () => {
 				</div>
 			</div>
 			<div className={styles.delivery__and__courier}>
-				{!hasMadeFirstDelivery && (
-					<motion.div
-						initial={{ y: 50, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{
-							duration: 0.5,
-						}}
-						className={styles.modal__container}
-					>
-						<h5 className={styles.header}>Create your first delivery</h5>
-						<div className={styles.modal}>
-							<div>
-								<div className={styles.modal__content}>
-									<p>Be in charge by creating</p>
-									<span>Delivery</span>
-									<p>that is safe, fast & conveniently pay with Pi coin</p>
-								</div>
-								<img src={deliveryMan} alt="Delivery Man" />
+				<motion.div
+					initial={{ y: 50, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					transition={{
+						duration: 0.5,
+					}}
+					className={styles.modal__container}
+				>
+					<h5 className={styles.header}>Create your first delivery</h5>
+					<div className={styles.modal}>
+						<div>
+							<div className={styles.modal__content}>
+								<p>Be in charge by creating</p>
+								<span>Delivery</span>
+								<p>that is safe, fast & conveniently pay with Pi coin</p>
 							</div>
-							<div className={styles.cta__container}>
-								<button
-									type="button"
-									className={styles.big__cta}
-									onClick={() => {
-										navigate('/customized-delivery');
-										sessionStorage.setItem('hasMadeFirstDelivery', 'true');
-										dispatch(userDetailsActions.setHasMadeFirstDelivery());
-									}}
-								>
-									Make a delivery
-								</button>
-								<button type="button" className={styles.text__cta}>
-									Learn more
-								</button>
-							</div>
+							<img src={deliveryMan} alt="Delivery Man" />
 						</div>
-					</motion.div>
-				)}
-				{!isCourier &&  (
+						<div className={styles.cta__container}>
+							<button
+								type="button"
+								className={styles.big__cta}
+								onClick={() => {
+									navigate('/customized-delivery');
+									sessionStorage.setItem('hasMadeFirstDelivery', 'true');
+									dispatch(userDetailsActions.setHasMadeFirstDelivery());
+								}}
+							>
+								Make a delivery
+							</button>
+							<button type="button" className={styles.text__cta}>
+								Learn more
+							</button>
+						</div>
+					</div>
+				</motion.div>
+				{!isCourier && (
 					<motion.div
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -192,7 +190,7 @@ export const Home = () => {
 						<HomePlus />
 					</div>
 				)}
-				{hasMadeFirstDelivery && <DispatchersList />}
+				{/* {hasMadeFirstDelivery && <DispatchersList />} */}
 				{isCourier && <CourierDeliveryList />}
 			</div>
 			<FooterNavBar active="home" />

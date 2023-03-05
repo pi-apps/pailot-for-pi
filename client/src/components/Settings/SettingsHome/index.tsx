@@ -30,13 +30,13 @@ import { motion } from 'framer-motion';
 import { logo } from '../../../assets/images';
 import styles from './SettingsHome.module.css';
 import { useSelector } from 'react-redux';
-import { RootState, userDetailsActions } from '../../../store/store';
+import { RootState } from '../../../store/store';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 export const SettingsHome = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 	const userDetails = useSelector((state: RootState) => state.userDetails);
 	return (
 		<div className={styles.container}>
@@ -58,7 +58,7 @@ export const SettingsHome = () => {
 								className={styles.cta}
 								type="button"
                 onClick={() => {
-                  dispatch(userDetailsActions.setIsCourier());
+                  // dispatch(userDetailsActions.setIsCourier());
                   navigate('/home')
                 }}
 							>
