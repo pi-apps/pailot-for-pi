@@ -176,7 +176,16 @@ export async function incompleteUserToAppPayment(
 			};
 		}
 		await EarningRepository.update(earning.id, { paymentStatus: PaymentStatus.COMPLETED });
-		await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { txid });
+		try {
+			await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { txid });
+		} catch (error) {
+			console.log('incomplete payment error', error);
+			return {
+				type: Result.ERROR,
+				message: `An error occured while completing payment with id ${paymentId} and txId ${txid}`,
+				error,
+			};
+		}
 		return {
 			type: Result.SUCCESS,
 			data: `completed payment ${paymentId} successfully`,
@@ -200,7 +209,16 @@ export async function completeUserToAppPayment(
 			{ transactionId, paymentStatus: PaymentStatus.COMPLETED }
 		);
 		/* let Pi server know that the payment is completed */
-		await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { transactionId });
+		try {
+			await platformAPIClient.post(`/v2/payments/${paymentId}/complete`, { txid: transactionId });
+		} catch (error) {
+			console.log('complete payment error', error);
+			return {
+				type: Result.ERROR,
+				message: `An error occured while completing payment with id ${paymentId} and txId ${transactionId}`,
+				error,
+			};
+		}
 		return {
 			type: Result.SUCCESS,
 			data: `Completed the payment ${paymentId}`,
