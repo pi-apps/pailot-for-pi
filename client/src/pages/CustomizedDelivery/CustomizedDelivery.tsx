@@ -12,9 +12,11 @@ import {
 	DeliveryPayment,
 	OrderSucessful,
 } from '../../components';
+import { useLocation } from 'react-router-dom';
 
 export const CustomizedDelivery = () => {
-	const [progress, setProgress] = useState<number>(1);
+  const { state } = useLocation();
+	const [progress, setProgress] = useState<number>(state ? state.progress : 1);
 	const [uploadedImage, setUploadedImage] = useState<File>();
 	return (
 		<div className={styles.container}>

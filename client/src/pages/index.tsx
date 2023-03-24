@@ -8,3 +8,4 @@ export { CustomizedDelivery } from './CustomizedDelivery/CustomizedDelivery';
 export { ActiveDelivery } from './ActiveDelivery/ActiveDelivery';
 export { CourierForm } from './CourierForm/CourierForm';
 export { CourierDashBoard } from './CourierDashBoard/CourierDashBoard';
+export { PrivacyPolicy } from './PrivacyPolicy/PrivacyPolicy';

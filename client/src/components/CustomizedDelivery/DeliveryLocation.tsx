@@ -16,6 +16,7 @@ import { deliveryDetailsActions, RootState } from '../../store/store';
 import { GET_USER_BY_USERNAME_URL } from '../../constants/url.constants';
 import { fetchWithCredentials } from '../../hooks/useApi';
 import { IUser } from '../../types/user';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
 	setProgress: Dispatch<SetStateAction<number>>;
@@ -24,9 +25,10 @@ interface Props {
 export const DeliveryLocation: React.FC<Props> = ({ setProgress }) => {
 	const deliveryType = useSelector((state: RootState) => state.deliveryType.deliveryType);
 	const deliveryDetails = useSelector((state: RootState) => state.deliveryDetails.deliveryDetails);
+  const { state } = useLocation();
 
 	const [loadingState, setLoadingState] = useState<'error' | 'loading' | 'success'>('error');
-	const [showModal, setShowModal] = useState<boolean>(false);
+	const [showModal, setShowModal] = useState<boolean>(state ? state.showModal : false);
 	const [pickupLocation, setPickupLocation] = useState<string>(deliveryDetails.pickupLocation);
 	const [dropLocation, setDropLocation] = useState<string>(deliveryDetails.dropLocation);
 	const [receiverUserName, setReceiverUserName] = useState<string>(

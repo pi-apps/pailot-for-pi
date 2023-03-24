@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styles from './LocationModal.module.css';
 import { MdOutlineClose } from 'react-icons/md';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
 	closeModal: () => void;
@@ -14,6 +15,8 @@ export const LocationModal: React.FC<Props> = ({
 	closeModal,
 	deliveryDetailsSubmitHandler,
 }) => {
+	const navigate = useNavigate();
+  const { pathname } = useLocation();
 	return (
 		<div className={styles.container}>
 			<AnimatePresence>
@@ -25,7 +28,10 @@ export const LocationModal: React.FC<Props> = ({
 					className={styles.modal}
 				>
 					<div className={styles.top__bar}>
-						<MdOutlineClose onClick={() => closeModal()} />
+						<MdOutlineClose onClick={() => {
+              navigate(pathname, { replace: true });
+              closeModal()
+              }} />
 					</div>
 					<h4 className={styles.header}>Location Agreement</h4>
 					<p className={styles.description}>
@@ -34,8 +40,19 @@ export const LocationModal: React.FC<Props> = ({
 						Location is only shared within the transaction parties.
 					</p>
 					<p className={styles.terms__and__conditions}>
-						Read about our <span>Terms and Conditions, Policies</span> and <span>Privacy</span> in
-						your profile settings
+						Read about our <span>Terms and Conditions, Policies</span> and{' '}
+						<span>
+							<a
+								onClick={() =>
+									navigate('/privacy-policy', {
+										state: { path: '/customized-delivery', progress: 5, showModal: true },
+									})
+								}
+							>
+								Privacy
+							</a>
+						</span>{' '}
+						in your profile settings
 					</p>
 					<div className={styles.cta__container}>
 						<button
@@ -43,6 +60,7 @@ export const LocationModal: React.FC<Props> = ({
 							className={styles.cta}
 							onClick={() => {
 								deliveryDetailsSubmitHandler();
+                navigate(pathname, { replace: true });
 								setProgress(6);
 							}}
 						>

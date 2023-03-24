@@ -10,6 +10,7 @@ import {
 	ActiveDelivery,
 	CourierForm,
 	CourierDashBoard,
+  PrivacyPolicy,
 } from './pages';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -24,6 +25,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<SplashScreen />} />
 							<Route path="/welcome" element={<WelcomeScreen />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 							{/* <Route path="/share-location" element={<ShareLocation />} /> */}
 							<Route path="/onboarding-completed" element={<OnboardingCompleted />} />
 							<Route path="/home" element={<Home />} />
