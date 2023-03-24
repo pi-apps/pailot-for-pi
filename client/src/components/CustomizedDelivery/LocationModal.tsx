@@ -16,7 +16,7 @@ export const LocationModal: React.FC<Props> = ({
 	deliveryDetailsSubmitHandler,
 }) => {
 	const navigate = useNavigate();
-  const { pathname } = useLocation();
+	const { pathname } = useLocation();
 	return (
 		<div className={styles.container}>
 			<AnimatePresence>
@@ -28,10 +28,12 @@ export const LocationModal: React.FC<Props> = ({
 					className={styles.modal}
 				>
 					<div className={styles.top__bar}>
-						<MdOutlineClose onClick={() => {
-              navigate(pathname, { replace: true });
-              closeModal()
-              }} />
+						<MdOutlineClose
+							onClick={() => {
+								navigate(pathname, { replace: true });
+								closeModal();
+							}}
+						/>
 					</div>
 					<h4 className={styles.header}>Location Agreement</h4>
 					<p className={styles.description}>
@@ -40,7 +42,20 @@ export const LocationModal: React.FC<Props> = ({
 						Location is only shared within the transaction parties.
 					</p>
 					<p className={styles.terms__and__conditions}>
-						Read about our <span>Terms and Conditions, Policies</span> and{' '}
+						Read about our{' '}
+						<span>
+							<a
+								onClick={() =>
+									navigate('/terms-and-conditions', {
+										state: { path: '/customized-delivery', progress: 5, showModal: true },
+									})
+								}
+							>
+								Terms and Conditions
+							</a>
+							, Policies
+						</span>{' '}
+						and{' '}
 						<span>
 							<a
 								onClick={() =>
@@ -60,7 +75,7 @@ export const LocationModal: React.FC<Props> = ({
 							className={styles.cta}
 							onClick={() => {
 								deliveryDetailsSubmitHandler();
-                navigate(pathname, { replace: true });
+								navigate(pathname, { replace: true });
 								setProgress(6);
 							}}
 						>

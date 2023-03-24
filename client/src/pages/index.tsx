@@ -9,3 +9,4 @@ export { ActiveDelivery } from './ActiveDelivery/ActiveDelivery';
 export { CourierForm } from './CourierForm/CourierForm';
 export { CourierDashBoard } from './CourierDashBoard/CourierDashBoard';
 export { PrivacyPolicy } from './PrivacyPolicy/PrivacyPolicy';
+export { TermsAndConditions } from './TermsAndConditions/TermsAndCondition';

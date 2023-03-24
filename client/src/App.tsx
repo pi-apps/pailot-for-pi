@@ -11,6 +11,7 @@ import {
 	CourierForm,
 	CourierDashBoard,
   PrivacyPolicy,
+  TermsAndConditions,
 } from './pages';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,6 +27,7 @@ function App() {
 							<Route path="/" element={<SplashScreen />} />
 							<Route path="/welcome" element={<WelcomeScreen />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 							{/* <Route path="/share-location" element={<ShareLocation />} /> */}
 							<Route path="/onboarding-completed" element={<OnboardingCompleted />} />
 							<Route path="/home" element={<Home />} />
